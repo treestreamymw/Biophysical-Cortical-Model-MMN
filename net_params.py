@@ -5,10 +5,6 @@ netParams is a dict containing a set of network parameters using a standardized 
 
 simConfig is a dict containing a set of simulation configurations using a standardized structure
 
-Implements the auditory cortex network model from Beeman et al., BMC Neuroscience, 2017 and Kudela et al.,
-Frontiers in Neural Circuits, 2018. Cell types have been changed!
-
-Contributor: Christoph Metzner, christoph.metzner@gmail.com, 17/09/2018
 """
 
 from netpyne import specs
@@ -27,34 +23,49 @@ def set_params(d1_param, d2_param ,fig_name):
     netParams.sizeZ = 1880
 
     # Population parameters
-    netParams.popParams['PYR23'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR', 'gridSpacing': 40.0, 'yRange': [2000, 2000],
+    netParams.popParams['PYR23'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
+                                    'gridSpacing': 40.0, 'yRange': [2000, 2000],
                                     'color': 'blue'}
-    netParams.popParams['PYR4'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR', 'gridSpacing': 40.0, 'yRange': [2500, 2500],
+    netParams.popParams['PYR4'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
+                                   'gridSpacing': 40.0, 'yRange': [2500, 2500],
                                    'color': 'green'}
-    netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling', 'cellType': 'BASK', 'gridSpacing': 80.0,
-                                     'xRange': [20, 1880], 'zRange': [20, 1880], 'yRange': [2000, 2000], 'color': 'red'}
-    netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling', 'cellType': 'BASK', 'gridSpacing': 80.0,
-                                    'xRange': [20, 1880], 'zRange': [20, 1880], 'yRange': [2500, 2500], 'color': 'yellow'}
+    netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling',
+                                     'cellType': 'BASK', 'gridSpacing': 80.0,
+                                     'xRange': [20, 1880], 'zRange': [20, 1880],
+                                     'yRange': [2000, 2000], 'color': 'red'}
+    netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
+                                    'cellType': 'BASK', 'gridSpacing': 80.0,
+                                    'xRange': [20, 1880], 'zRange': [20, 1880],
+                                    'yRange': [2500, 2500], 'color': 'yellow'}
 
     # Cell parameters
 
     # PYR cell properties
-    cellRule = netParams.importCellParams(label='PYR', conds={'cellType': 'PYR', 'cellModel': 'PYR_Hay'},
-                                          fileName='Cells/fourcompartment.hoc', cellName='fourcompartment')
+    cellRule = netParams.importCellParams(label='PYR', conds={'cellType': 'PYR',
+                                                       'cellModel': 'PYR_Hay'},
+                                          fileName='Cells/fourcompartment.hoc',
+                                          cellName='fourcompartment')
     cellRule['secs']['soma']['vinit'] = -80.0
     cellRule['secs']['dend']['vinit'] = -80.0
     cellRule['secs']['apic_0']['vinit'] = -80.0
     cellRule['secs']['apic_1']['vinit'] = -80.0
 
     # INH cell properties
-    cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK', 'cellModel': 'BASK_Vierling'},
-                                          fileName='Cells/FS.hoc', cellName='Layer2_basket')
+    cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
+                                                  'cellModel': 'BASK_Vierling'},
+                                          fileName='Cells/FS.hoc',
+                                          cellName='Layer2_basket')
 
     # Synaptic mechanism parameters
-    netParams.synMechParams['AMPA'] = {'mod': 'Exp2Syn', 'tau1': 1.0, 'tau2': 3.0, 'e': 0.0}
-    netParams.synMechParams['AMPASTD'] = {'mod': 'FDSExp2Syn', 'tau1': 1.0, 'tau2': 3.0, 'e': 0.0, 'f': 0.0, 'tau_F': 94.0,
-                                          'd1': d1_param, 'tau_D1': 380, 'd2': d2_param, 'tau_D2': 9200}  # only depression
-    netParams.synMechParams['GABA'] = {'mod': 'Exp2Syn', 'tau1': 5.0, 'tau2': 12.0, 'e': -75.0}
+    netParams.synMechParams['AMPA'] = {'mod': 'Exp2Syn', 'tau1': 1.0,
+                                       'tau2': 3.0, 'e': 0.0}
+    netParams.synMechParams['AMPASTD'] = {'mod': 'FDSExp2Syn', 'tau1': 1.0,
+                                          'tau2': 3.0, 'e': 0.0, 'f': 0.0,
+                                          'tau_F': 94.0, 'd1': d1_param,
+                                          'tau_D1': 380, 'd2': d2_param,
+                                          'tau_D2': 9200}  # only depression
+    netParams.synMechParams['GABA'] = {'mod': 'Exp2Syn',
+                                       'tau1': 5.0, 'tau2': 12.0, 'e': -75.0}
 
 
     # Stimulation parameters
@@ -68,31 +79,37 @@ def set_params(d1_param, d2_param ,fig_name):
     pulse1 = [{'start': 500.0, 'end': 700, 'rate': 200, 'noise': 1.0}]
     pulse2 = [{'start': 1500.0, 'end': 1700, 'rate': 200, 'noise': 1.0}]
 
-    netParams.popParams['Stim1000Hz'] = {'cellModel': 'VecStim', 'numCells': 48, 'spkTimes': [0], 'pulses': pulse1 }
+    netParams.popParams['Stim1000Hz'] = {'cellModel': 'VecStim',
+                       'numCells': 48, 'spkTimes': [0], 'pulses': pulse1 }
     netParams.connParams['Stim1000Hz->PYR4'] = {
-        'preConds': {'popLabel': 'Stim1000Hz'}, 'postConds': {'popLabel': 'PYR4', 'x': [679, 681]},
+        'preConds': {'popLabel': 'Stim1000Hz'},
+        'postConds': {'popLabel': 'PYR4', 'x': [679, 681]},
         'convergence': 1,
         'weight': 0.02,
         'threshold': 10,
         'synMech': 'AMPA'}
 
     netParams.connParams['Stim1000Hz->BASK4'] = {
-        'preConds': {'popLabel': 'Stim1000Hz'}, 'postConds': {'popLabel': 'BASK4', 'x': [659, 661]},
+        'preConds': {'popLabel': 'Stim1000Hz'},
+        'postConds': {'popLabel': 'BASK4', 'x': [659, 661]},
         'convergence': 1,
         'weight': 0.02,
         'threshold': 10,
         'synMech': 'AMPA'}
 
-    netParams.popParams['Stim1200Hz'] = {'cellModel': 'VecStim', 'numCells': 48, 'spkTimes': [0], 'pulses': pulse2 }
+    netParams.popParams['Stim1200Hz'] = {'cellModel': 'VecStim',
+        'numCells': 48, 'spkTimes': [0], 'pulses': pulse2 }
     netParams.connParams['Stim1200Hz->PYR4'] = {
-        'preConds': {'popLabel': 'Stim1200Hz'}, 'postConds': {'popLabel': 'PYR4', 'x': [1159, 1161]},
+        'preConds': {'popLabel': 'Stim1200Hz'},
+        'postConds': {'popLabel': 'PYR4', 'x': [1159, 1161]},
         'convergence': 1,
         'weight': 0.02,
         'threshold': 10,
         'synMech': 'AMPA'}
 
     netParams.connParams['Stim1200Hz->BASK4'] = {
-        'preConds': {'popLabel': 'Stim1200Hz'}, 'postConds': {'popLabel': 'BASK4', 'x': [1139, 1141]},
+        'preConds': {'popLabel': 'Stim1200Hz'},
+        'postConds': {'popLabel': 'BASK4', 'x': [1139, 1141]},
         'convergence': 1,
         'weight': 0.02,
         'threshold': 10,
@@ -179,9 +196,9 @@ def set_params(d1_param, d2_param ,fig_name):
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
-    ###############################################################################
+    ########################################################################
     # SIMULATION PARAMETERS
-    ###############################################################################
+    ########################################################################
 
     # Simulation parameters
     simConfig.hParams['celsius'] = 30.0
@@ -209,11 +226,15 @@ def set_params(d1_param, d2_param ,fig_name):
     simConfig.savePickle = False  # True  # Whether or not to write spikes etc. to a .pkl file
 
     # Analysis and plotting
-    simConfig.analysis['plotRaster'] = {'saveFig': '{}_raster.png'.format(fig_name)}  # Plot raster
+    simConfig.analysis['plotRaster'] = {'saveFig':
+        '{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
     #simConfig.analysis['plot2Dnet'] = {'include': [('PYR4', 1000), 'PYR23'], 'view': 'xy', 'showConns': True}  # Plot 2D net cells and connections
-    simConfig.analysis['plotLFP'] = {'includeAxon': False, 'plots': ['timeSeries'], 'figSize': (5, 9), 'saveFig':  '{}_LFP.png'.format(fig_name)}
+    simConfig.analysis['plotLFP'] = {'includeAxon': False,
+         'plots': ['timeSeries'],
+         'figSize': (5, 9),
+         'saveFig': '{}_LFP.png'.format(fig_name)}
 
 
     return (netParams, simConfig)

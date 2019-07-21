@@ -1,3 +1,7 @@
+'''
+This files includes various configurations
+(needs to be modified to different txt files)
+'''
 SAMPLE_VAR = [{'gene_name':'name',
                 'ref':'ref_number',
                 'file':'mod_files/Ca_HVA.mod',
