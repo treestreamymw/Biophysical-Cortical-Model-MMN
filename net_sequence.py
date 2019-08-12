@@ -4,17 +4,17 @@ Frontiers in Neural Circuits, 2018.
 
 """
 
-from net_params_oddball_sequence import set_params
+from net_params import set_params
 from netpyne import sim
 import numpy as np
 from MP_class import PoolManager
 
-from config import D1, D2, LOW_GABA, HIGH_GABA
+#from config import D1, D2, LOW_GABA, HIGH_GABA
 
 def run_sim (params):
     # get params
-    d1, d2, gaba, name = params
-    NP, SC = set_params(d1_param=d1, d2_param=d2, fig_name=name)
+    fig_name, net_type, task=params
+    NP, SC = set_params(fig_name=fig_name, NET_TYPE=net_type, TASK=task)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
 
@@ -27,8 +27,8 @@ if __name__ == '__main__':
     timeout_hrs = 600000000
 
     ## grid_search_array - d1, d2, fig_name
-    grid_search_array = [[0.46, 0.76, 'basic_conf']]
-
+    SIM_TYPE='short'#'full'
+    grid_search_array = ['basic_conf', SIM_TYPE, 'test']
 
 
     sim_pool_manager = PoolManager(num_workers=4)
