@@ -81,14 +81,11 @@ def set_params(fig_name, NET_TYPE, TASK):
     #  netParams.stimTargetParams['bkg->BASK23'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK23'}, 'weight': 0.0005}
     #  netParams.stimTargetParams['bkg->BASK4'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK4'}, 'weight': 0.0005}
 
-    deviant_pulses_indexes = np.random.choice(list(range(int(SIM_PARAMS[NET_TYPE]['duration']/1000))),
+
+
+    sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
+    deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
-
-
-    '''
-    fill in with the right task
-    '''
-    sim_duration=SIM_PARAMS[NET_TYPE]['duration']/1000
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=sim_duration,
                                 spacing=40.0,
