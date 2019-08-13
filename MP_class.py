@@ -10,7 +10,7 @@ class PoolManager:
         self.num_workers = num_workers or default_num_workers
         self.original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
 
-    def worker(self, callable, map_args, timeout=999999999):
+    def worker(self, callable, map_args, timeout):
 
         pool = mp.Pool(processes=self.num_workers,  maxtasksperchild=1)
 

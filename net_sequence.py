@@ -29,4 +29,4 @@ if __name__ == '__main__':
 
 
     sim_pool_manager = PoolManager(num_workers=1)
-    sim_pool_manager.worker(run_sim, grid_search_array)
+    sim_pool_manager.worker(run_sim, grid_search_array, 999999999)
