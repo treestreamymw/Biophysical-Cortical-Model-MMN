@@ -1,7 +1,7 @@
 
-original_params={'duration':10000, 'n_pulses':10, 'size':[1880, 2500, 1880], 'scale'=1}
-short_sim_params={'duration':3000, 'n_pulses':3, 'size':[960, 2500, 560], 'scale'=6}
-full_sim_params={'duration':10000, 'n_pulses':10, 'size':[960, 2500, 320], 'scale'=12}
+original_params={'duration':10000, 'n_pulses':10, 'size':[1880, 2500, 1880], 'scale':1}
+short_sim_params={'duration':3000, 'n_pulses':3, 'size':[560, 2500, 960], 'scale':6}
+full_sim_params={'duration':10000, 'n_pulses':10, 'size':[320, 2500, 960], 'scale':12}
 SIM_PARAMS = {'full':full_sim_params, 'short':short_sim_params, 'orig':original_params}
 
 

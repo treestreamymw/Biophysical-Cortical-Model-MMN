@@ -9,6 +9,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 import numpy as np
 from netpyne import specs
 from config import SIM_PARAMS
+from task_utils import Simulation_Task_Handler
 
 def set_params(fig_name, NET_TYPE, TASK):
 
@@ -33,12 +34,12 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
-                                     'xRange': [.01, 1], 'zRange': [.01, 1],
+                                     'xRange': [.01, .99], 'zRange': [.01, .99],
                                      'yRange': [.8, .8], 'color': 'red'}
 
     netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
-                                    'xRange': [.01, 1], 'zRange': [.01, 1],
+                                    'xRange': [.01, .99], 'zRange': [.01, .99],
                                     'yRange': [1, 1], 'color': 'yellow'}
 
     # Cell parameters
@@ -80,25 +81,31 @@ def set_params(fig_name, NET_TYPE, TASK):
     #  netParams.stimTargetParams['bkg->BASK23'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK23'}, 'weight': 0.0005}
     #  netParams.stimTargetParams['bkg->BASK4'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK4'}, 'weight': 0.0005}
 
+    deviant_pulses_indexes = np.random.choice((SIM_PARAMS[NET_TYPE]['duration']/1000),
 
-    for t in range(SIM_PARAMS[NET_TYPE]['duration']/1000):
-
-        dev_pulses_indexes = np.random.choice((SIM_PARAMS[NET_TYPE]['duration']/1000), SIM_PARAMS[NET_TYPE]['n_pulses'], replace=False)
+            SIM_PARAMS[NET_TYPE]['n_pulses'], replace=False)
+    '''
+    fill in with the right task
+    '''
+    sim_duration=SIM_PARAMS[NET_TYPE]['duration']/1000
+    s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
+                                n_pulses=sim_duration,
+                                spacing=40.0,
+                                dev_indexes=deviant_pulses_indexes,
+                                task=TASK)
+    s_handler.perform_task()
+    x_values = s_handler.x_values
+    pulses = s_handler.get_pulses_range()
+    
+    for t in pulses:
 
         pulse = [{'start': t*1000.0+500.0, 'end': t*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
-        #pulse1 = [{'start': 500.0, 'end': 700, 'rate': 200, 'noise': 1.0}]
-        #pulse2 = [{'start': 1500.0, 'end': 1700, 'rate': 200, 'noise': 1.0}]
         stim = 'Stim'+str(t)
 
         netParams.popParams[stim] = {'cellModel': 'VecStim',
                        'numCells': 24, 'spkTimes': [0], 'pulses': pulse1}
 
-        if t in dev_pulses_indexes:
-            x_pyr=[679, 681] ### verify
-            x_bask=[659, 661]
-        else:
-            x_pyr=[1159, 1161]
-            x_bask=[1139, 1141]
+        x_pyr, x_bask = x_values[t]
 
         netParams.connParams[stim + '->PYR4'] = {
             'preConds': {'popLabel': stim},

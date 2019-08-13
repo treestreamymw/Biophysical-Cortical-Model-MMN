@@ -29,9 +29,9 @@ We model five tasks:
 1. Odd-ball sequences - Oddball introduces repetitive (standard) tone which is replaced randomly by a different (deviant) tone with a low probability. We expect to see SSA to the standard tone thus higher response to the deviant one. SSA is a property explained both by RS and MMN. This helps set the baseline.
 2. Flip-flop sequences - flipflop presents two oddball sequences with the roles of deviant and standard sounds reversed. This helps control for the physical differences between the neurons associated with deviant to those associated with standard and ascribe the phenomena to adaptation rather than physiology.  
 3. Many-standards - presents a sequence of random tones of which one is uniquely equal to the used deviant above. This helps us control for the tone itself being unique by creating a simulation that will not evoke adaptation.  
-4. Descending cascade sequences- Tones are presented in a regular sequence of  descending frequencies over consecutive tones in an organized pattern.
+4. Ascending cascade sequences- Tones are presented in a regular sequence of  ascending frequencies over consecutive tones in an organized pattern.
   (a) Pattern: the pattern should not trigger adaptation, since no specific tone in repeating neither MMN since the pattern is not breaking
-  (b) Pattern break: An irregular tone to the pattern will trigger an MMN response (an interuption to a pattern) but won't result in an RS response.
+  (b) Pattern break: An irregular tone to the pattern will trigger an MMN response (an interruption to a pattern) but won't result in an RS response.
 5. Omission- This paradigm presents a repetitive (standard) tone which is replaced randomly by a lack of stimulus with a low probability. A lack of response to a lack of stimulus is expected in the adaptation framework. Yet, a response will demonstrate neural activity to an absence of stimulus rather than an adaptation, supporting MMN.
 
 
