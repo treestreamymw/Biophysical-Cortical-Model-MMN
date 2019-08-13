@@ -9,7 +9,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 import numpy as np
 from netpyne import specs
 from config import SIM_PARAMS
-from task_utils import Simulation_Task_Handler
+from tasks_utils import Simulation_Task_Handler
 
 def set_params(fig_name, NET_TYPE, TASK):
 
@@ -96,7 +96,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     s_handler.perform_task()
     x_values = s_handler.x_values
     pulses = s_handler.get_pulses_range()
-    
+
     for t in pulses:
 
         pulse = [{'start': t*1000.0+500.0, 'end': t*1000.0+700.0, 'rate': 200, 'noise': 1.0}]

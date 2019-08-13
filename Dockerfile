@@ -1,4 +1,4 @@
-FROM python:2.7.15
+FROM python:3.7.2
 
 MAINTAINER Gili Karni "gili@minerva.kgi.edu"
 
