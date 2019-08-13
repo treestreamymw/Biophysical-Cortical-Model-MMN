@@ -7,7 +7,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 
 """
 import numpy as np
-#from netpyne import specs
+from netpyne import specs
 from config import SIM_PARAMS
 from tasks_utils import Simulation_Task_Handler
 
