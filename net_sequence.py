@@ -22,7 +22,6 @@ def run_sim (params):
 
 if __name__ == '__main__':
     ## basic param modification
-    timeout_hrs = 600000000
 
     ## grid_search_array - d1, d2, fig_name
     SIM_TYPE='short'#'full'
@@ -30,4 +29,4 @@ if __name__ == '__main__':
 
 
     sim_pool_manager = PoolManager(num_workers=1)
-    sim_pool_manager.worker(run_sim, grid_search_array, timeout= 60*60*timeout_hrs)
+    sim_pool_manager.worker(run_sim, grid_search_array)

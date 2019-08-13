@@ -38,7 +38,7 @@ proc init() { /*Procedures do not return a value.*/
  apic[1] {nseg = 1 Ra = 100 diam = 5.04 L = 600.53 cm = 2 V = -80 e_pas = -90}
 
  soma {
-  insert Ca_LVAst //low voltage activated
+  insert Ca_LVAst /*low voltage activated*/
   insert Ca_HVA
   insert SKv3_1
   insert SK_E2

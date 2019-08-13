@@ -10,23 +10,22 @@ WORKDIR /home
 RUN apt-get -qq update
 
 RUN apt-get install -y \
-
-        locales \
-        wget \
-        python2.7 \
-        tar \
-        sudo \
-        vim \
-        git \
-        python2.7-dev \
-        gnome-devel \
-        libcr-dev \
-        mpich \
-        mpich-doc \
-        libncursesw5-dev \
-        ncurses-base \
-        ncurses-bin \
-        ncurses-term
+    locales \
+    wget \
+    python3 \
+    tar \
+    sudo \
+    vim \
+    git \
+    python3-dev \
+    gnome-devel \
+    libcr-dev \
+    mpich \
+    mpich-doc \
+    libncursesw5-dev \
+    ncurses-base \
+    ncurses-bin \
+    ncurses-term
 
 
 
@@ -48,7 +47,7 @@ RUN tar zxf nrn-7.6.2.tar.gz
 RUN mv nrn-7.6 nrn
 
 WORKDIR ./nrn
-RUN ./configure --prefix='/home/nrn/' --with-iv='/home/iv' --with-nrnpython='/usr/local/bin/python' --with-paranrn
+RUN ./configure --prefix='/home/nrn/' --with-iv='/home/iv' --with-nrnpython='/usr/local/bin/python3' --with-paranrn
 RUN make
 RUN make install
 
@@ -60,7 +59,7 @@ ENV LD_LIBRARY_PATH=/usr/local/lib:/home/nrn/x86_64/lib:/home/iv/x86_64/lib
 
 RUN pip install scipy numpy matplotlib cython mpi4py neuronpy netpyne
 
-ENV PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
+ENV PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3/dist-packages
 
 
 
