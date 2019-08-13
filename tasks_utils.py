@@ -41,7 +41,7 @@ class Simulation_Task_Handler(object):
         '''
         returns the correct function given the chosen task
         '''
-        return self.tasks_dict.get(self.task, lambda: print('choose a valid task'))()
+        return self.tasks_dict.get(self.task, lambda: 'choose a valid task')()
 
     def get_pulses_range(self):
         '''
