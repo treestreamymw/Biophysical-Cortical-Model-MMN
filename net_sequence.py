@@ -14,7 +14,7 @@ from MP_class import PoolManager
 def run_sim (params):
     # get params
     fig_name, net_type, task=params
-    NP, SC = set_params(fig_name=fig_name, NET_TYPE=net_type, TASK=task)
+    NP, SC = set_params(fig_name=fig_name, NET_TYPE=net_type, TASK='oddball')
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
 
