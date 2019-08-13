@@ -1,0 +1,210 @@
+/////////////////////////////////////////////////////
+//-------------------
+// Template for Fast Spiking Interneuron (basket)
+//-------------------
+
+// Rest (~-71) closest to Tateno and Robinson, 2004 and Cauli et al., 1997
+// Tau_m (9.6 ms) in line with Beierlein et al., 2003, Kapfer et al., 2007, and Kawaguchi 1995
+// Resistance (185.06) is closest to Kawaguchi, not far off Cauli, chosen to be between extreme reported values
+// FI curve is very close to Tateno and Robinson 04, figure 4C
+// Follows Fanselow et al., 2008 closely until .3nA injection (190 in Fanselow plot).  Rates low compared to Cauli 97
+// Threshold is .11nA and generates 21 Hz activity
+
+begintemplate Layer2_basket
+
+public init, topol, basic_shape, subsets, geom, biophys
+//public synlist, x, y, z, position, connect2target
+//public ampa,nmda,gabaa,gabab
+
+public soma, dend
+public all, somatic, dendritic, apical, basal, dend0, dend1, dend2
+//public pre, ampa, gabaa, gabab, nmda, ampaf, ampad
+public gbar_ar, gbar_cat
+
+objref synlist
+
+proc init() {
+  topol()
+  subsets()
+  geom()
+  biophys()
+  geom_nseg()
+  //synlist = new List()
+  //synapses()
+  x = y = z = 0 // only change via position
+}
+
+create soma, dend[15]
+
+proc topol() { local i
+
+  connect dend(0), soma(1)
+  connect dend[1](0), dend(1)
+  connect dend[4](0), dend(1)
+  for i = 2, 3 connect dend[i](0), dend[1](1)
+
+  // soma->dend -> dend1 -> dend2 + dend3
+  //            -> dend4
+
+  connect dend[5](0), soma(1)
+  connect dend[6](0), dend[5](1)
+  connect dend[9](0), dend[5](1)
+  for i = 7, 8 connect dend[i](0), dend[6](1)
+
+  connect dend[10](0), soma(1)
+  connect dend[11](0), dend[10](1)
+  connect dend[14](0), dend[10](1)
+  for i = 12, 13 connect dend[i](0), dend[11](1)
+
+  basic_shape()
+}
+proc basic_shape() {
+
+  soma {pt3dclear() pt3dadd(-8.2, 0, 0, 1) pt3dadd(0, 0, 0, 1)}
+
+  dend {pt3dclear() pt3dadd(0, 0, 0, 1) pt3dadd(3.4, 0, 0, 1)}
+  dend[1] {pt3dclear() pt3dadd(3.4, 0, 0, 1) pt3dadd(11.8, 0, 0, 1)}
+  dend[2] {pt3dclear() pt3dadd(11.8, 0, 0, 1) pt3dadd(143.8, 55, 0, 1)}
+  dend[3] {pt3dclear() pt3dadd(11.8, 0, 0, 1) pt3dadd(118.8, -45, 0, 1)}
+  dend[4] {pt3dclear() pt3dadd(3.4, 0, 0, 1) pt3dadd(115.4, -84 , 0, 1)}
+
+  dend[5] {pt3dclear() pt3dadd(0, 0, 0, 1) pt3dadd(0, 3.4, 0, 1)}
+  dend[6] {pt3dclear() pt3dadd(0, 3.4, 0, 1) pt3dadd(0, 11.8, 0, 1)}
+  dend[7] {pt3dclear() pt3dadd(0, 11.8, 0, 1) pt3dadd(-55, 143.8, 0, 1)}
+  dend[8] {pt3dclear() pt3dadd(0, 11.8, 0, 1) pt3dadd(45, 118.8, 0, 1)}
+  dend[9] {pt3dclear() pt3dadd(0, 3.4, 0, 1) pt3dadd(84, 115.4, 0, 1)}
+
+  dend[10] {pt3dclear() pt3dadd(0, 0, 0, 1) pt3dadd(0, -3.4, 0, 1)}
+  dend[11] {pt3dclear() pt3dadd(0, -3.4, 0, 1) pt3dadd(0, -11.8, 0, 1)}
+  dend[12] {pt3dclear() pt3dadd(0, -11.8, 0, 1) pt3dadd(55, -143.8, 0, 1)}
+  dend[13] {pt3dclear() pt3dadd(0, -11.8, 0, 1) pt3dadd(-45, -118.8, 0, 1)}
+  dend[14] {pt3dclear() pt3dadd(0, -3.4, 0, 1) pt3dadd(-84, -115.4, 0, 1)}
+}
+
+objref all, somatic, dendritic, apical, basal, dend0, dend1, dend2
+
+proc subsets() { local i
+  objref all, somatic, dendritic, dend0, dend1, dend2
+  all = new SectionList()
+    soma all.append()
+    for i=0, 14 dend[i] all.append()
+
+  somatic = new SectionList()
+    soma somatic.append()
+
+  dendritic = new SectionList()
+    for i=0,14 dend[i] dendritic.append()
+
+  dend0 = new SectionList()
+    for i=0,4 dend[i] dend0.append()
+
+  dend1 = new SectionList()
+    for i=5,9 dend[i] dend1.append()
+
+  dend2 = new SectionList()
+    for i=10,14 dend[i] dend2.append()
+
+}
+
+
+proc geom() {
+  forsec all {  }
+   soma.L = 8.2
+
+   dendlength1=3.4
+
+   dend.L = dendlength1
+   dend[1].L = 8.4
+   dend[2].L = 143
+   dend[3].L = 117
+   dend[4].L = 140
+
+   dend[5].L = dendlength1
+   dend[6].L = 8.4
+   dend[7].L = 143
+   dend[8].L = 117
+   dend[9].L = 140
+
+   dend[10].L = dendlength1
+   dend[11].L = 8.4
+   dend[12].L = 143
+   dend[13].L = 117
+   dend[14].L = 140
+
+   soma.diam = 13.2
+
+   denddiam1=3
+   denddiam2=2
+   denddiam3=1.25
+   denddiam4=1.25
+   denddiam5=1.25
+
+   dend.diam = denddiam1
+   dend[1].diam = denddiam2
+   dend[2].diam = denddiam3
+   dend[3].diam = denddiam4
+   dend[4].diam = denddiam5
+
+   dend[5].diam = denddiam1
+   dend[6].diam = denddiam2
+   dend[7].diam = denddiam3
+   dend[8].diam = denddiam4
+   dend[9].diam = denddiam5
+
+   dend[10].diam = denddiam1
+   dend[11].diam = denddiam2
+   dend[12].diam = denddiam3
+   dend[13].diam = denddiam4
+   dend[14].diam = denddiam5
+ }
+
+proc geom_nseg() {
+  soma area(.5) // make sure diam reflects 3d points
+forsec all { if (L < 50) {nseg=1} else {nseg=int(L/50)} }
+}
+
+/*
+proc geom_nseg() {
+  soma area(.5) // make sure diam reflects 3d points
+forsec all { if (L < 300) {nseg=1} else {nseg=int(L/300)} }
+}
+*/
+
+proc biophys() {
+ forsec all {
+	insert pas
+	insert kv
+	insert na
+	//insert ca
+	//insert kca
+	//insert km
+g_pas=.00012
+e_pas= -73
+Ra=200		// Mike's pyramid tuning, HDv2
+cm = 1
+ek=-55
+ena=75
+ vshift=-10 // article says -10, code was 0
+ //eca = 140 //from original Mainen patdemo code
+ //ion_style("ca_ion",0,1,0,0,0)  //from original Mainen patdemo code
+}
+
+forsec somatic {
+	gbar_na=600
+	gbar_kv=500
+	//gbar_ca = 0
+	//gbar_kca = 0
+	//gbar_km = 0
+	}
+
+forsec dendritic {
+
+	gbar_na=350
+	gbar_kv=350
+	//gbar_ca = 0
+	//gbar_kca = 0
+	//gbar_km = 0
+	}
+
+}  //end proc biophysics
+endtemplate Layer2_basket

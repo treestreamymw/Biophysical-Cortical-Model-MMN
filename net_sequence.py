@@ -9,8 +9,6 @@ from netpyne import sim
 import numpy as np
 from MP_class import PoolManager
 
-#from config import D1, D2, LOW_GABA, HIGH_GABA
-
 def run_sim (params):
     # get params
     fig_name, net_type, task=params
@@ -18,7 +16,7 @@ def run_sim (params):
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
 
-    #import pylab; pylab.show()  # this line is only necessary in certain systems where figures appear empty
+    import pylab; pylab.show()  # this line is only necessary in certain systems where figures appear empty
 
     exit()
 
@@ -31,5 +29,5 @@ if __name__ == '__main__':
     grid_search_array = [['basic_conf', SIM_TYPE, 'oddball']]
 
 
-    sim_pool_manager = PoolManager(num_workers=4)
+    sim_pool_manager = PoolManager(num_workers=1)
     sim_pool_manager.worker(run_sim, grid_search_array, timeout= 60*60*timeout_hrs)
