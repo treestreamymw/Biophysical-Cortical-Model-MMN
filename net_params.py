@@ -7,7 +7,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 
 """
 import numpy as np
-from netpyne import specs
+#from netpyne import specs
 from config import SIM_PARAMS
 from tasks_utils import Simulation_Task_Handler
 
@@ -81,9 +81,10 @@ def set_params(fig_name, NET_TYPE, TASK):
     #  netParams.stimTargetParams['bkg->BASK23'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK23'}, 'weight': 0.0005}
     #  netParams.stimTargetParams['bkg->BASK4'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK4'}, 'weight': 0.0005}
 
-    deviant_pulses_indexes = np.random.choice((SIM_PARAMS[NET_TYPE]['duration']/1000),
+    deviant_pulses_indexes = np.random.choice(list(range(int(SIM_PARAMS[NET_TYPE]['duration']/1000))),
+            SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
 
-            SIM_PARAMS[NET_TYPE]['n_pulses'], replace=False)
+
     '''
     fill in with the right task
     '''
