@@ -233,6 +233,17 @@ proc biophys() {
      insert K_Tst
      insert NaTa_t
      insert CaDynamics_E2
+
+     decay_CaDynamics_E2 = 460.0
+     gamma_CaDynamics_E2 = 0.000501
+     gK_Tstbar_K_Tst = 0.0812
+     gCa_HVAbar_Ca_HVA = 0.000992
+     gSKv3_1bar_SKv3_1 = 0.693
+     gNaTa_tbar_NaTa_t = 2.04
+     ek = -85
+     ena = 50
+     g_pas = 0.0000338
+
      }
 
 
