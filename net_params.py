@@ -96,9 +96,10 @@ def set_params(fig_name, NET_TYPE, TASK):
     ##### modify number of stim populations !
     for pop in populations:
         pop_pulses=[]
+
         for pulse_i in populations[pop]['pulses']:
-            pulse = [{'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
-                'rate': 200, 'noise': 1.0}]
+            pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
+                'rate': 200, 'noise': 1.0}
             pop_pulses.append(pulse)
 
         stim = 'Stim_'+pop
