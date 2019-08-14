@@ -240,9 +240,13 @@ proc biophys() {
      gCa_HVAbar_Ca_HVA = 0.000992
      gSKv3_1bar_SKv3_1 = 0.693
      gNaTa_tbar_NaTa_t = 2.04
+
      ek = -85
      ena = 50
-     g_pas = 0.0000338
+     eca = 140
+
+     g_pas=.00012
+     e_pas= -73
 
      }
 

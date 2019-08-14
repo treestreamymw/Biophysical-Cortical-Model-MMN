@@ -26,7 +26,7 @@ netParams.popParams['PYR'] = {'cellModel': 'PYR', 'cellType': 'PYR', 'numCells':
 ## PYR cell properties
 cellRule = netParams.importCellParams(label='PYR',
 	conds= {'cellType': 'PYR', 'cellModel': 'PYR'},
-	fileName='Cells/pyr_23_asym_stripped.hoc', 
+	fileName='Cells/pyr_23_asym_stripped.hoc',
 	cellName='pyr_23_asym_stripped')
 
 
@@ -38,8 +38,11 @@ threshold_rs = 0.07
 for i,c in enumerate(currents_rs):
 	current = c + threshold_rs
 	delay = 200 + i*2000
-	netParams.stimSourceParams['ic'+str(i)] = {'type': 'IClamp', 'delay': delay, 'dur': 1000.0, 'amp': current}
-	netParams.stimTargetParams['ic->PYR'+str(i)] = {'source': 'ic'+str(i), 'conds': {'popLabel': 'PYR'},'sec':'soma','loc':0.5}
+	netParams.stimSourceParams['ic'+str(i)] = {'type': 'IClamp',
+			'delay': delay, 'dur': 1000.0, 'amp': current}
+	netParams.stimTargetParams['ic->PYR'+str(i)] = {'source': 'ic'+str(i),
+				'conds': {'popLabel': 'PYR'},
+				'sec':'soma','loc':0.5}
 
 
 
