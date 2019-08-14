@@ -37,7 +37,7 @@ class Simulation_Task_Handler(object):
                             'many_standards': self.many_standards_paradigm,
                             'omission': self.omission_paradigm}
 
-        self.x_values =[]
+        #self.x_values =[]
         self.population_values=[]
 
     def perform_task(self):
@@ -101,27 +101,14 @@ class Simulation_Task_Handler(object):
                 roles of deviant and standard sounds reversed
 
         '''
-        x_values = []
-        pop_values = []
+        pop_values = {}
         standard_x_values, deviant_x_values = self._get_std_dev_tones()
 
-        for t in range(self.n_pulses):
-            if t in self.dev_indexes:
-                if not flipflop:
-                    x_values.append(standard_x_values)
-                    pop_values.append('std')
-                elif flipflop:
-                    x_values.append(deviant_x_values)
-                    pop_values.append('dev')
-            else:
-                if not flipflop:
-                    x_values.append(deviant_x_values)
-                    pop_values.append('dev')
-                elif flipflop:
-                    x_values.append(standard_x_values)
-                    pop_values.append('std')
+        pop_values['dev']= {'x_values':deviant_x_values,
+                            'pulses':self.dev_indexes}
+        pop_values['std']= {'x_values':standard_x_values,
+                            'pulses':list(set(range(self.n_pulses)).difference(self.dev_indexes))}
 
-        self.x_values = x_values
         self.population_values = pop_values
 
     def cascade_paradigm(self, oddball=False):
@@ -134,12 +121,12 @@ class Simulation_Task_Handler(object):
         '''
         assert self.n_pulses>=4, 'can not run cascade on short simulation'
         x_values = self._get_all_tones()
-        pop_values = list(range(self.n_pulses))
-        if oddball:
-            x_values[-1]=x_values[0]
-            pop_values[-1]=pop_values[0]
+        pop_values = {i:{'x_values': x_values[i], 'pulses':[i]} for i in range(self.n_pulses)}
 
-        self.x_values = x_values
+        if oddball:
+            pop_values[0]['pulses'].append(self.n_pulses-1)
+            del pop_values[self.n_pulses-1]
+
         self.population_values = pop_values
 
     def omission_paradigm(self):
@@ -148,15 +135,11 @@ class Simulation_Task_Handler(object):
             tone which is replaced randomly by a lack of
             stimulus with a low probability
         '''
-        x_values = []
-        pop_values = []
         standard_x_values, _ = self._get_std_dev_tones()
+        pop_values = {'std':{'x_values':standard_x_values,
+            'pulses':list(set(range(self.n_pulses)).difference(self.dev_indexes))}}
 
-        for t in range(self.n_pulses- len(self.dev_indexes)):
-            x_values.append(standard_x_values)
-            pop_values.append('std')
 
-        self.x_values = x_values
         self.population_values = pop_values
 
 
@@ -169,19 +152,18 @@ class Simulation_Task_Handler(object):
 
         x_values = self._get_all_tones()
         shuffle(x_values)
+        pop_values = {i:{'x_values': x_values[i], 'pulses':[i]} for i in range(self.n_pulses)}
 
-        pop_values = list(range(self.n_pulses))
 
-        self.x_values = x_values
         self.population_values = pop_values
 
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(560,10,40,[2,6],'omission')
+    s=Simulation_Task_Handler(560,6,40,[2],'many_standards')
     #s.oddball_paradigm(, True)
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
     s.perform_task()
-    print(s.x_values)
+    print(s.population_values)
     print(s.get_pulses_range())

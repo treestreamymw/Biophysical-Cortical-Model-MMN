@@ -92,20 +92,20 @@ def set_params(fig_name, NET_TYPE, TASK):
                                 dev_indexes=deviant_pulses_indexes,
                                 task=TASK)
     s_handler.perform_task()
-    x_values = s_handler.x_values
-    pulses = s_handler.get_pulses_range()
     populations = s_handler.population_values
     ##### modify number of stim populations !
+    for pop in populations:
+        pop_pulses=[]
+        for pulse_i in populations[pop]['pulses']:
+            pulse = [{'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
+                'rate': 200, 'noise': 1.0}]
+            pop_pulses.append(pulse)
 
-    for t in pulses:
-
-        pulse = [{'start': t*1000.0+500.0, 'end': t*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
-        stim = 'Stim_'+populations[t]
-
+        stim = 'Stim_'+pop
         netParams.popParams[stim] = {'cellModel': 'VecStim',
-                       'numCells': 24, 'spkTimes': [0], 'pulses': pulse}
+                       'numCells': 24, 'spkTimes': [0], 'pulses': pop_pulses}
 
-        x_pyr, x_bask = x_values[t]
+        x_pyr, x_bask = populations[pop]['x_values']
 
         netParams.connParams[stim + '->PYR4'] = {
             'preConds': {'popLabel': stim},
