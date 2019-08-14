@@ -43,7 +43,7 @@ proc init() {
     geom()
     biophys()
     geom_nseg()
-    synlist = new List()
+    //synlist = new List()
     x = y = z = 0
     reference = $s1
     type = $s2
@@ -290,7 +290,7 @@ proc toString() {
 
 
 //  This function is useful when checking network connections
-
+/*
 proc netInfo() {
     strdef info
     sprint(info, "Cell reference: %s, type: %s", reference, type)
@@ -305,6 +305,7 @@ proc netInfo() {
 
 
 }
+*/
 
 
 endtemplate pyr_23_asym_stripped
