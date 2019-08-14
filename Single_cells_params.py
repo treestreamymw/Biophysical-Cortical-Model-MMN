@@ -71,6 +71,6 @@ simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}
 # Saving
 simConfig.filename = 'test'  # Set file output name
 simConfig.saveFileStep = 1000 # step size in ms to save data to disk
-simConfig.savePickle = True # Whether or not to write spikes etc. to a .pkl file
+simConfig.saveJson = True # Whether or not to write spikes etc. to a .json file
 
 simConfig.analysis['plotTraces'] = {'include': [0]}
