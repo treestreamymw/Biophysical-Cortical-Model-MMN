@@ -94,14 +94,16 @@ def set_params(fig_name, NET_TYPE, TASK):
     s_handler.perform_task()
     x_values = s_handler.x_values
     pulses = s_handler.get_pulses_range()
+    populations = s_handler.population_values
+    ##### modify number of stim populations !
 
     for t in pulses:
 
         pulse = [{'start': t*1000.0+500.0, 'end': t*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
-        stim = 'Stim'+str(t)
+        stim = 'Stim_'+populations[t]
 
         netParams.popParams[stim] = {'cellModel': 'VecStim',
-                       'numCells': 24, 'spkTimes': [0], 'pulses': pulse1}
+                       'numCells': 24, 'spkTimes': [0], 'pulses': pulse}
 
         x_pyr, x_bask = x_values[t]
 
@@ -237,8 +239,8 @@ def set_params(fig_name, NET_TYPE, TASK):
         '{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet'] = {'view': 'xy', 'showConns': True ,
-         'saveFig': '{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
+    #simConfig.analysis['plot2Dnet'] = {'view': 'xy', 'showConns': True ,
+         #'saveFig': '{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
          'figSize': (5, 9),
