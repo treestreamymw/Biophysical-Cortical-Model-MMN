@@ -13,7 +13,7 @@
 begintemplate pyr_23_asym_stripped
 
 public init, topol, basic_shape, subsets, geom, memb
-public synlist, x, y, z, position, connect2target
+//public synlist, x, y, z, position, connect2target
 
 
 //  Some fields for referencing the cells
@@ -24,11 +24,11 @@ strdef reference, type, description, name
 
 //  Some methods for referencing the cells
 
-public toString, netInfo
+//public toString, netInfo
 
 public all
 
-objref synlist
+//objref synlist
 objref all
 objref stringFuncs
 
@@ -279,7 +279,7 @@ proc connect2target() {   //$o1 target point process, $o2 returned NetCon
     print "connect2target called on ", name
 }
 
-
+/*
 //  This function is useful when checking what cells (aot sections) have been created. Run allcells() from nCtools.hoc...
 
 proc toString() {
@@ -290,7 +290,7 @@ proc toString() {
 
 
 //  This function is useful when checking network connections
-/*
+
 proc netInfo() {
     strdef info
     sprint(info, "Cell reference: %s, type: %s", reference, type)
