@@ -25,7 +25,7 @@ netParams.popParams['PYR'] = {'cellModel': 'PYR', 'cellType': 'PYR', 'numCells':
 # Cell parameters
 ## PYR cell properties
 cellRule = netParams.importCellParams(label='PYR', conds= {'cellType': 'PYR', 'cellModel': 'PYR'},
-	fileName='pyr_23_asym_stripped.hoc', cellName='Layer2_pyr') # ToDo: Change!
+	fileName='pyr_23_asym_stripped.hoc', cellName='pyr_23_asym_stripped') # ToDo: Change!
 
 
 # ToDo: Change!
