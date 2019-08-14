@@ -18,8 +18,8 @@ public init, topol, basic_shape, subsets, geom, memb
 
 //  Some fields for referencing the cells
 
-public reference, type, description, name
-strdef reference, type, description, name
+//public reference, type, description, name
+//strdef reference, type, description, name
 
 
 //  Some methods for referencing the cells
@@ -45,7 +45,7 @@ proc init() {
     geom_nseg()
     //synlist = new List()
     x = y = z = 0
-    reference = $s1
+    /*reference = $s1
     type = $s2
     description = $s3
 
@@ -57,6 +57,7 @@ proc init() {
     }
 
     sprint(name, "%s", type)
+    */
 }
 
 create soma
