@@ -18,8 +18,8 @@ public synlist, x, y, z, position, connect2target
 
 //  Some fields for referencing the cells
 
-//public reference, type, description, name
-//strdef reference, type, description, name
+public reference, type, description, name
+strdef reference, type, description, name
 
 
 //  Some methods for referencing the cells
@@ -45,18 +45,18 @@ proc init() {
     geom_nseg()
     synlist = new List()
     x = y = z = 0
-    //reference = $s1
-    //type = $s2
-    //description = $s3
+    reference = $s1
+    type = $s2
+    description = $s3
 
     strdef indexNum
     stringFuncs = new StringFunctions()
-    stringFuncs.tail(indexNum)//reference, "_", indexNum)
+    stringFuncs.tail(reference, "_", indexNum)
     while (stringFuncs.substr( indexNum, "_")>=0) {
         stringFuncs.tail(indexNum, "_", indexNum)
     }
 
-    //sprint(name, "%s", type)
+    sprint(name, "%s", type)
 }
 
 create soma
