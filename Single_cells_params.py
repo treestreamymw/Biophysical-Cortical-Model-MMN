@@ -29,7 +29,7 @@ def set_params(input_rs_threshold):
 
 	# Cell parameters
 	## PYR cell properties
-	cellRule = netParams.importCellParams(label='PYR_{}'.format(input_rs_threshold),
+	cellRule = netParams.importCellParams(label='PYR',
 		conds= {'cellType': 'PYR', 'cellModel': 'PYR'},
 		fileName='Cells/pyr_23_asym_stripped.hoc',
 		cellName='pyr_23_asym_stripped')
@@ -46,7 +46,7 @@ def set_params(input_rs_threshold):
 		netParams.stimSourceParams['ic'+str(i)] = {'type': 'IClamp',
 				'delay': delay, 'dur': 1000.0, 'amp': current}
 		netParams.stimTargetParams['ic->PYR'+str(i)] = {'source': 'ic'+str(i),
-					'conds': {'popLabel': 'PYR_{}'.format(input_rs_threshold)},
+					'conds': {'popLabel': 'PYR'},
 					'sec':'soma','loc':0.5}
 
 
@@ -78,7 +78,7 @@ def set_params(input_rs_threshold):
 	simConfig.saveFileStep = 1000 # step size in ms to save data to disk
 	simConfig.saveJson = False # Whether or not to write spikes etc. to a .json file
 
-	simConfig.analysis['plotTraces'] = {'include': [0]}
+	simConfig.analysis['plotTraces'] = {'include': [0], 'saveFig': 'output_files/{}_Traces.png'.format(input_rs_threshold)}
 	#simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3}
 
 	return (netParams, simConfig)
