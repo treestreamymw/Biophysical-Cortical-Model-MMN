@@ -35,13 +35,13 @@ def set_params(fig_name, NET_TYPE, TASK):
     netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
                                      'xRange': [20, netParams.sizeX-20],
-                                     'zRange': [20,  netParams.sizeX-20],
+                                     'zRange': [20,  netParams.sizeZ-20],
                                      'ynormRange': [.8, .8], 'color': 'red'}
 
     netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
                                     'xRange': [20, netParams.sizeX-20],
-                                    'zRange': [20,  netParams.sizeX-20],
+                                    'zRange': [20,  netParams.sizeZ-20],
                                     'ynormRange': [1, 1], 'color': 'yellow'}
 
     # Cell parameters
