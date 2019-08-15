@@ -231,7 +231,7 @@ proc biophys() {
     soma {
      insert pas
      insert Ca_HVA
-     //insert SKv3_1
+     insert SKv3_1
      insert K_Tst
      insert NaTa_t
      insert CaDynamics_E2
@@ -241,7 +241,7 @@ proc biophys() {
      gamma_CaDynamics_E2 = 0.000501
      gK_Tstbar_K_Tst = 0.0812 // g is max conductance
      gCa_HVAbar_Ca_HVA = 0.000992
-     //gSKv3_1bar_SKv3_1 = 0.693
+     gSKv3_1bar_SKv3_1 = 0.693
      gNaTa_tbar_NaTa_t = 2.04
      gbar_kca = 10
 
