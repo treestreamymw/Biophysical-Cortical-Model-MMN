@@ -36,7 +36,7 @@ def set_params(input_rs_threshold):
 
 
 	# ToDo: Change!
-	currents_rs = [0.0, 0.05, 0.1, 0.15, 0.2]#, 0.25, 0.3]
+	currents_rs = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
 	threshold_rs = input_rs_threshold
 
 
@@ -57,7 +57,7 @@ def set_params(input_rs_threshold):
 
 	# Simulation parameters
 	simConfig.hParams['celsius'] = 30.0
-	simConfig.duration = 10000 # Duration of the simulation, in ms
+	simConfig.duration = 20000 # Duration of the simulation, in ms
 	simConfig.dt = 0.025 # Internal integration timestep to use
 	simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1} # Seeds for randomizers (connectivity, input stimulation and cell locations)
 	simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
