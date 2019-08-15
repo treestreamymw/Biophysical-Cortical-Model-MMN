@@ -247,6 +247,7 @@ proc biophys() {
 
      ek = -85
      ena = 50
+     eca = 140
 
      g_pas=.00012
      e_pas= -73
