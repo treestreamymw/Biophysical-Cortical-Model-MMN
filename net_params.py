@@ -25,22 +25,24 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Population parameters
     netParams.popParams['PYR23'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
-                                    'gridSpacing': 40.0, 'yRange': [.8, .8],
+                                    'gridSpacing': 40.0, 'ynormRange': [.8, .8],
                                     'color': 'blue'}
 
     netParams.popParams['PYR4'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
-                                   'gridSpacing': 40.0, 'yRange': [1, 1],
+                                   'gridSpacing': 40.0, 'ynormRange': [1, 1],
                                    'color': 'green'}
 
     netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
-                                     'xRange': [.01, .99], 'zRange': [.01, .99],
-                                     'yRange': [.8, .8], 'color': 'red'}
+                                     'xRange': [20, netParams.sizeX-20],
+                                     'zRange': [20,  netParams.sizeX-20],
+                                     'ynormRange': [.8, .8], 'color': 'red'}
 
     netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
-                                    'xRange': [.01, .99], 'zRange': [.01, .99],
-                                    'yRange': [1, 1], 'color': 'yellow'}
+                                    'xRange': [20, netParams.sizeX-20],
+                                    'zRange': [20,  netParams.sizeX-20],
+                                    'ynormRange': [1, 1], 'color': 'yellow'}
 
     # Cell parameters
 
@@ -92,9 +94,9 @@ def set_params(fig_name, NET_TYPE, TASK):
                                 dev_indexes=deviant_pulses_indexes,
                                 task=TASK)
     s_handler.perform_task()
-    populations = s_handler.population_values
+    input_populations = s_handler.population_values
     ##### modify number of stim populations !
-    for pop in populations:
+    for pop in input_populations:
         pop_pulses=[]
 
         for pulse_i in populations[pop]['pulses']:
