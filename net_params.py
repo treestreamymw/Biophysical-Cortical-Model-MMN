@@ -99,7 +99,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     for pop in input_populations:
         pop_pulses=[]
 
-        for pulse_i in populations[pop]['pulses']:
+        for pulse_i in input_populations[pop]['pulses']:
             pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
                 'rate': 200, 'noise': 1.0}
             pop_pulses.append(pulse)
@@ -108,7 +108,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         netParams.popParams[stim] = {'cellModel': 'VecStim',
                        'numCells': 24, 'spkTimes': [0], 'pulses': pop_pulses}
 
-        x_pyr, x_bask = populations[pop]['x_values']
+        x_pyr, x_bask = input_populations[pop]['x_values']
 
         netParams.connParams[stim + '->PYR4'] = {
             'preConds': {'popLabel': stim},
