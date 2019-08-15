@@ -19,7 +19,10 @@ simConfig = specs.SimConfig()   # object of class SimConfig to store the simulat
 ###############################################################################
 
 # Population parameters
-netParams.popParams['PYR'] = {'cellModel': 'PYR', 'cellType': 'PYR', 'numCells': 1,  'color': 'blue'}
+netParams.popParams['PYR'] = {'cellModel': 'PYR',
+			'cellType': 'PYR',
+			'numCells': 1,
+			'color': 'blue'}
 
 
 # Cell parameters
@@ -74,3 +77,4 @@ simConfig.saveFileStep = 1000 # step size in ms to save data to disk
 simConfig.saveJson = True # Whether or not to write spikes etc. to a .json file
 
 simConfig.analysis['plotTraces'] = {'include': [0]}
+simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3}
