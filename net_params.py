@@ -234,7 +234,8 @@ def set_params(fig_name, NET_TYPE, TASK):
     # ,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
-    simConfig.recordLFP = [[680, 0, 990], [1160, 0, 990]]  # electrodes at 1000Hz and 1200Hz
+    x_electrodes_locations = ([g[0]+1 for g in [input_populations[i]['x_values'][0] for i in input_populations]])
+    simConfig.recordLFP = [[x_electrodes_locations[0], 0, netParams.sizeZ/2], [x_electrodes_locations[1], 0, netParams.sizeZ/2]]  # electrodes at 1000Hz and 1200Hz
 
     # Saving
     simConfig.filename = fig_name  # Set file output name

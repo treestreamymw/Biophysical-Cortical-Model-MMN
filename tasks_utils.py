@@ -165,4 +165,4 @@ if __name__=="__main__":
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
     s.perform_task()
-    print([s.population_values[i]['x_values'] for i in s.population_values])
+    print([g[0]+1 for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
