@@ -218,12 +218,12 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Simulation parameters
     simConfig.hParams['celsius'] = 30.0
-    simConfig.duration = SIM_PARAMS[NET_TYPE]['duration']  # Duration of the simulation, in ms
+    simConfig.duration = 1000#SIM_PARAMS[NET_TYPE]['duration']  # Duration of the simulation, in ms
     simConfig.dt = 0.05  # Internal integration timestep to use
     simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1}  # Seeds for randomizers (conn., input stim. and cell loc.)
     simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
     simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
-    simConfig.verbose = False  # show detailed messages
+    simConfig.verbose = True  # show detailed messages
     simConfig.hParams['cai0_ca_ion'] = 0.0001
     simConfig.printPopAvgRates = True
 
@@ -237,7 +237,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     simConfig.recordLFP = [[680, 0, 990], [1160, 0, 990]]  # electrodes at 1000Hz and 1200Hz
 
     # Saving
-    simConfig.filename = 'test'  # Set file output name
+    simConfig.filename = fig_name  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
     simConfig.savePickle = False  # True  # Whether or not to write spikes etc. to a .pkl file
 
@@ -246,8 +246,8 @@ def set_params(fig_name, NET_TYPE, TASK):
         'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-    #simConfig.analysis['plot2Dnet'] = {'view': 'xy', 'showConns': True ,
-         #'saveFig': '{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
+    simConfig.analysis['plot2Dnet'] = {'view': 'xy', 'showConns': True ,
+         'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
          'figSize': (5, 9),
