@@ -11,7 +11,7 @@ Contributors: Christoph Metzner, christoph.metzner@gmail.com, 05/08/2019
 from netpyne import specs
 import numpy as np
 
-def set_params(fig_name, input_rs_threshold):
+def set_params(input_rs_threshold):
 
 	netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 	simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
