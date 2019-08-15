@@ -247,7 +247,8 @@ def set_params(fig_name, NET_TYPE, TASK):
         'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet'] = {'view': 'xy', 'showConns': True ,
+    simConfig.analysis['plot2Dnet'] = {'view': 'xz', 'include': ['PYR23','BASK23','PYR4','BASK4'],
+    'showConns': True ,
          'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
