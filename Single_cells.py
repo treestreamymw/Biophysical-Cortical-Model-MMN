@@ -1,18 +1,24 @@
-"""
-Single_cells.py
-
-Contributors: Christoph Metzner, christoph.metzner@gmail.com, 05/08/2019
-"""
-
-import Single_cells_params
+from Single_cells_params import set_params
 from netpyne import sim
 import numpy as np
+from MP_class import PoolManager
+
+def run_sim (params):
+    # get params
+
+    NP, SC = set_params(input_rs_threshold=params)
+
+    sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
+
+    import pylab; pylab.show()  # this line is only necessary in certain systems where figures appear empty
+
+    exit()
+
+if __name__ == '__main__':
+    ## basic param modification
+
+    grid_search_array = [0.001,0.005,0.01,0.02,0.03,0.04]
 
 
-sim.createSimulateAnalyze(netParams = Single_cells_params.netParams, simConfig = Single_cells_params.simConfig)
-
-
-
-
-import pylab; pylab.show()  # this line is only necessary in certain systems where figures appear empty
-exit()
+    sim_pool_manager = PoolManager(num_workers=6)
+    sim_pool_manager.worker(run_sim, grid_search_array, 999999999)
