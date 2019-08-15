@@ -74,9 +74,9 @@ def set_params(input_rs_threshold):
 
 
 	# Saving
-	simConfig.filename = 'test'  # Set file output name
+	simConfig.filename = 'output_files/Data_{}'.format(input_rs_threshold)  # Set file output name
 	simConfig.saveFileStep = 1000 # step size in ms to save data to disk
-	simConfig.saveJson = False # Whether or not to write spikes etc. to a .json file
+	simConfig.saveJson = True # Whether or not to write spikes etc. to a .json file
 
 	simConfig.analysis['plotTraces'] = {'include': [0], 'saveFig': 'output_files/{}_Traces.png'.format(input_rs_threshold)}
 	#simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3}

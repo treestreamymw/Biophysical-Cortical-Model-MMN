@@ -17,8 +17,8 @@ def run_sim (params):
 if __name__ == '__main__':
     ## basic param modification
 
-    grid_search_array = [0.041, 0.043, 0.045, 0.047, 0.049]
+    grid_search_array = [0.045]
 
 
-    sim_pool_manager = PoolManager(num_workers=5)
+    sim_pool_manager = PoolManager(num_workers=1)
     sim_pool_manager.worker(run_sim, grid_search_array, 999999999)
