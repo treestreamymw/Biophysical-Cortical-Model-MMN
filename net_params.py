@@ -218,7 +218,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Simulation parameters
     simConfig.hParams['celsius'] = 30.0
-    simConfig.duration = 1000#SIM_PARAMS[NET_TYPE]['duration']  # Duration of the simulation, in ms
+    simConfig.duration = SIM_PARAMS[NET_TYPE]['duration']  # Duration of the simulation, in ms
     simConfig.dt = 0.05  # Internal integration timestep to use
     simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1}  # Seeds for randomizers (conn., input stim. and cell loc.)
     simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
@@ -247,9 +247,10 @@ def set_params(fig_name, NET_TYPE, TASK):
         'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet'] = {'view': 'xz', 'include': ['PYR23','BASK23','PYR4','BASK4'],
-    'showConns': True ,
-         'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
+    simConfig.analysis['plot2Dnet'] = {'view': 'xz',
+            'include': ['PYR23','BASK23','PYR4','BASK4'],
+            'showConns': True ,
+            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
          'figSize': (5, 9),
