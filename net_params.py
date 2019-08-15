@@ -223,7 +223,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1}  # Seeds for randomizers (conn., input stim. and cell loc.)
     simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
     simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
-    simConfig.verbose = True  # show detailed messages
+    simConfig.verbose = False  # show detailed messages
     simConfig.hParams['cai0_ca_ion'] = 0.0001
     simConfig.printPopAvgRates = True
 
