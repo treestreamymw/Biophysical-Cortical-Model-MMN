@@ -160,10 +160,9 @@ class Simulation_Task_Handler(object):
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(560,6,40,[2],'many_standards')
+    s=Simulation_Task_Handler(560,6,40,[2],'oddball')
     #s.oddball_paradigm(, True)
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
     s.perform_task()
-    print(s.population_values)
-    print(s.get_pulses_range())
+    print([s.population_values[i]['x_values'] for i in s.population_values])
