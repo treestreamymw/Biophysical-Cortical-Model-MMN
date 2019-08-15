@@ -47,8 +47,8 @@ def set_params(fig_name, NET_TYPE, TASK):
     # PYR cell properties
     cellRule = netParams.importCellParams(label='PYR', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
-                                          fileName='Cells/fourcompartment.hoc',
-                                          cellName='fourcompartment')
+                                          fileName='Cells/pyr_23_asym_stripped.hoc',
+                                  		cellName='pyr_23_asym_stripped')
     cellRule['secs']['soma']['vinit'] = -80.0
     cellRule['secs']['dend']['vinit'] = -80.0
     cellRule['secs']['apic_0']['vinit'] = -80.0

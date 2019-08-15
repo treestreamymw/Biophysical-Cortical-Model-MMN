@@ -1,14 +1,11 @@
 import json
 import matplotlib.pyplot as plt
 
-with open('output_files/Data_0.04.json') as json_file:
+with open('output_files/Data_0.045.json') as json_file:
     data = json.load(json_file)
 
 
-
-
-
-bins = {i:0 for i in range(5)}
+bins = {i:0 for i in range(7)}
 
 
 for spike in data['simData']['spkt']:
