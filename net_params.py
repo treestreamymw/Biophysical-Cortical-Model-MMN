@@ -108,8 +108,8 @@ def set_params(fig_name, NET_TYPE, TASK):
         stim='Stim_{}'.format(pulse)
         x_pyr, x_bask=pulses_info[pulse]['values']
 
-        pulses = [{'start': pulse_i*1000+500.0,
-            'end': pulse_i*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
+        pulses = [{'start': pulse*1000+500.0,
+            'end': pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
 
         netParams.popParams[stim] = {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0], 'pulses':pulses}
