@@ -7,6 +7,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 
 """
 import numpy as np
+from mpi4py import MPI
 from netpyne import specs
 from config import SIM_PARAMS
 from tasks_utils import Simulation_Task_Handler
@@ -230,12 +231,14 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Recording
     simConfig.recordCells = ['all']  # which cells to record from
-    simConfig.recordTraces = {'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}}
+    # simConfig.recordTraces = {'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}}
     # ,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
-    x_electrodes_locations = ([g[0]+1 for g in [input_populations[i]['x_values'][0] for i in input_populations]])
-    simConfig.recordLFP = [[x_electrodes_locations[0], 0, netParams.sizeZ/2], [x_electrodes_locations[1], 0, netParams.sizeZ/2]]  # electrodes at 1000Hz and 1200Hz
+    x_electrodes_locations = [[g[0]+1,0,netParams.sizeZ/2]
+                    for g in [input_populations[i]['x_values'][0]
+                    for i in input_populations]]
+    simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
 
     # Saving
     simConfig.filename = fig_name  # Set file output name
@@ -247,10 +250,10 @@ def set_params(fig_name, NET_TYPE, TASK):
         'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet'] = {'view': 'xz',
-            'include': ['PYR23','BASK23','PYR4','BASK4'],
-            'showConns': True ,
-            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
+    #simConfig.analysis['plot2Dnet'] = {'view': 'xz',
+            #'include': ['PYR23','BASK23','PYR4','BASK4'],
+            #'showConns': True ,
+            #'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
          'figSize': (5, 9),
