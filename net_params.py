@@ -232,8 +232,8 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Recording
     simConfig.recordCells = ['all']  # which cells to record from
-    simConfig.recordTraces = {'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}
-     ,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
+    #simConfig.recordTraces = {'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}
+     #,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
     x_electrodes_locations = [[g[0]+1,0,netParams.sizeZ/2]
