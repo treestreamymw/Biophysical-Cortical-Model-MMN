@@ -100,9 +100,10 @@ def set_params(fig_name, NET_TYPE, TASK):
                                 dev_indexes=deviant_pulses_indexes,
                                 task=TASK)
     s_handler.perform_task()
-    #input_populations = s_handler.population_values
+    input_populations = s_handler.population_values
 
     pulses_info=s_handler.get_details_in_pulses()
+
     for pulse in pulses_info.keys():
 
         stim='Stim_{}'.format(pulse)
