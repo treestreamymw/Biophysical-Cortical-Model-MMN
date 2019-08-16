@@ -157,6 +157,15 @@ class Simulation_Task_Handler(object):
 
         self.population_values = pop_values
 
+    def get_details_in_pulses(self):
+        x_values = {i:{'pop_name':'stim', 'values':[]} for i in range(self.n_pulses)}
+        for pop in self.population_values:
+            for pulse in self.population_values[pop]['pulses']:
+                x_values[pulse]['pop_name']=pop
+                x_values[pulse]['values']=self.population_values[pop]['x_values']
+
+        return x_values
+
 
 
 if __name__=="__main__":
@@ -169,6 +178,11 @@ if __name__=="__main__":
     #print([[g[0]+1,0,8] for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
     NET_TYPE='short'
     TASK='oddball'
+    det=s.get_details_in_pulses()
+    for pulse in det.keys():
+        print(pulse)
+        print(det[pulse])
+    '''
     sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
     deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
@@ -189,3 +203,4 @@ if __name__=="__main__":
                 'rate': 200, 'noise': 1.0}
             pop_pulses.append(pulse)
         print(pop_pulses)
+    '''

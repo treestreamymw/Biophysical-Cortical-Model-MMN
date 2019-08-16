@@ -100,9 +100,38 @@ def set_params(fig_name, NET_TYPE, TASK):
                                 dev_indexes=deviant_pulses_indexes,
                                 task=TASK)
     s_handler.perform_task()
-    input_populations = s_handler.population_values
+    #input_populations = s_handler.population_values
+
+    pulses_info=s_handler.get_details_in_pulses()
+    for pulse in pulses_info.keys():
+
+        stim='Stim_{}'.format(pulse)
+        x_pyr, x_bask=pulses_info[pulse]['values']
+
+        pulses = [{'start': pulse_i*1000+500.0,
+            'end': pulse_i*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
+
+        netParams.popParams[stim] = {'cellModel': 'VecStim',
+                   'numCells': 24, 'spkTimes':[0], 'pulses':pulses}
+
+        netParams.connParams[stim + '->PYR4'] = {
+            'preConds': {'popLabel': stim},
+            'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
+            'convergence': 1,
+            'weight': .2,#0.02,
+            'threshold': 10,
+            'synMech': 'AMPA'}
+
+        netParams.connParams[stim + '->BASK4'] = {
+            'preConds': {'popLabel': stim},
+            'postConds': {'popLabel': 'BASK4', 'x': x_bask},
+            'convergence': 1,
+            'weight': .2,#0.02,
+            'threshold': 10,
+            'synMech': 'AMPA'}
 
 
+    '''
     for pop in input_populations:
         x_pyr, x_bask = input_populations[pop]['x_values']
 
@@ -135,7 +164,7 @@ def set_params(fig_name, NET_TYPE, TASK):
                 'threshold': 10,
                 'synMech': 'AMPA'}
 
-
+    '''
     # Connectivity parameters
 
     # Layer 4 intra-laminar connections
