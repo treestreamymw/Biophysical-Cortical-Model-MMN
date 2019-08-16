@@ -1,6 +1,6 @@
 
 original_params={'duration':10000, 'n_pulses':10, 'n_dev':3, 'size':[1880, 2500, 1880], 'scale':1}
-short_sim_params={'duration':3000, 'n_pulses':3, 'n_dev':1, 'size':[280, 2500, 920], 'scale':6}
+short_sim_params={'duration':3000, 'n_pulses':3, 'n_dev':1, 'size':[360, 2500, 920], 'scale':6}
 full_sim_params={'duration':10000, 'n_pulses':10, 'n_dev':3,'size':[520, 2500, 920], 'scale':12}
 SIM_PARAMS = {'full':full_sim_params, 'short':short_sim_params, 'orig':original_params}
 

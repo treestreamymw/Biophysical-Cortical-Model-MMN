@@ -106,7 +106,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     for pulse in pulses_info.keys():
 
-        stim='Stim_{}'.format(pulses_info[pulse]['pop_name'])
+        stim='Stim_{}_{}'.format(pulses_info[pulse]['pop_name'], pulse)
         x_pyr, x_bask=pulses_info[pulse]['values']
 
         pulses = [{'start': pulse*1000+500.0,
