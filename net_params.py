@@ -21,9 +21,10 @@ def set_params(fig_name, NET_TYPE, TASK):
     # NETWORK PARAMETERS
     ###############################################################################
 
+    # Size and scale
     netParams.sizeX, netParams.sizeY, netParams.sizeZ = SIM_PARAMS[NET_TYPE]['size']
-    netParams.scaleConnWeight=  SIM_PARAMS[NET_TYPE]['scale']
-    netParams.scaleConnWeightNetStims=  SIM_PARAMS[NET_TYPE]['scale']
+    netParams.scaleConnWeight = SIM_PARAMS[NET_TYPE]['scale']
+    netParams.scaleConnWeightNetStims = SIM_PARAMS[NET_TYPE]['scale']
 
 
     # Population parameters
@@ -53,7 +54,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Cell parameters
 
-    # PYR cell properties
+    # PYR cell properties (EXC)
     cellRule = netParams.importCellParams(label='PYR', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
@@ -63,7 +64,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     cellRule['secs']['apic_0']['vinit'] = -80.0
     cellRule['secs']['apic_1']['vinit'] = -80.0
 
-    # INH cell properties
+    # BASK cell properties (INH)
     cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
                                                   'cellModel': 'BASK_Vierling'},
                                           fileName='Cells/FS.hoc',
@@ -83,14 +84,9 @@ def set_params(fig_name, NET_TYPE, TASK):
                                       'Beta':0.015, 'e':45.0,'g':1,'gmax':1}
 
 
-    # Stimulation parameters
-    #  netParams.stimSourceParams['bkg'] = {'type': 'NetStim','rate': 40.0,'noise': 1.0, 'start': 0.0}  # background noise
-    #  netParams.stimTargetParams['bkg->PYR23'] = {'source': 'bkg', 'conds': {'popLabel': 'PYR23'}, 'weight': 0.0075}
-    #  netParams.stimTargetParams['bkg->PYR4'] = {'source': 'bkg', 'conds': {'popLabel': 'PYR4'}, 'weight': 0.0075}
-    #  netParams.stimTargetParams['bkg->BASK23'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK23'}, 'weight': 0.0005}
-    #  netParams.stimTargetParams['bkg->BASK4'] = {'source': 'bkg', 'conds': {'popLabel': 'BASK4'}, 'weight': 0.0005}
-
-
+    ###############################################################################
+    # STIMULI PARAMETERS
+    ###############################################################################
 
     sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
 
@@ -133,7 +129,9 @@ def set_params(fig_name, NET_TYPE, TASK):
             'threshold': 10,
             'synMech': 'AMPA'}
 
-    # Connectivity parameters
+    ###############################################################################
+    # CONNECTIVITY PARAMETERS
+    ###############################################################################
 
     # Layer 4 intra-laminar connections
     netParams.connParams['PYR4->PYR4'] = {
@@ -189,6 +187,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'weight': 0.002,
         'threshold': 10,
         'synMech': 'GABA'}
+
     '''
     netParams.connParams['BASK23->BASK23'] = {
         'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'BASK23'},
