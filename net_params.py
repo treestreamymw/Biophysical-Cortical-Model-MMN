@@ -23,6 +23,8 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     netParams.sizeX, netParams.sizeY, netParams.sizeZ = SIM_PARAMS[NET_TYPE]['size']
     netParams.scaleConnWeight=  SIM_PARAMS[NET_TYPE]['scale']
+    netParams.scaleConnWeightNetStims=  SIM_PARAMS[NET_TYPE]['scale']
+
 
     # Population parameters
     netParams.popParams['PYR23'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
@@ -119,7 +121,7 @@ def set_params(fig_name, NET_TYPE, TASK):
             'preConds': {'popLabel': stim},
             'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
             'convergence': 1,
-            'weight': .2,#0.02,
+            'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
 
@@ -127,7 +129,7 @@ def set_params(fig_name, NET_TYPE, TASK):
             'preConds': {'popLabel': stim},
             'postConds': {'popLabel': 'BASK4', 'x': x_bask},
             'convergence': 1,
-            'weight': .2,#0.02,
+            'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
 
@@ -169,7 +171,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.12,0.06],#[0.0012,0.0006],
+        'weight': [0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
@@ -201,7 +203,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 1,#0.3,#0.03,
+        'weight': 0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
