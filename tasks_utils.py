@@ -165,5 +165,27 @@ if __name__=="__main__":
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
     s.perform_task()
-    print(s.population_values)
-    print([[g[0]+1,0,8] for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
+    #print(s.population_values)
+    #print([[g[0]+1,0,8] for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
+    NET_TYPE='short'
+    TASK='oddball'
+    sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
+    deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
+            SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
+
+    s_handler = Simulation_Task_Handler(net_x_size=280,
+                                n_pulses=sim_duration,
+                                spacing=40.0,
+                                dev_indexes=deviant_pulses_indexes,
+                                task=TASK)
+    s_handler.perform_task()
+    input_populations = s_handler.population_values
+    print(input_populations)
+    for pop in input_populations:
+        pop_pulses=[]
+
+        for pulse_i in input_populations[pop]['pulses']:
+            pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
+                'rate': 200, 'noise': 1.0}
+            pop_pulses.append(pulse)
+        print(pop_pulses)
