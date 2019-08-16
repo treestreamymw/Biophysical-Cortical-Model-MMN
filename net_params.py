@@ -92,27 +92,29 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
+
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=sim_duration,
                                 spacing=40.0,
-                                dev_indexes=deviant_pulses_indexes,
+                                dev_indexes=[2]#deviant_pulses_indexes,
                                 task=TASK)
     s_handler.perform_task()
     input_populations = s_handler.population_values
 
     pulses_info=s_handler.get_details_in_pulses()
 
+    stimuli_pulses = [[{'start': t_pulse*1000+500.0,
+        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
+         for t_pulse in pulses_info.keys()]
+
     for t_pulse in pulses_info.keys():
 
-        stim='Stim_{}'.format(pulses_info[t_pulse]['pop_name'])
-        x_pyr, x_bask=pulses_info[t_pulse]['values']
-
-        pulses = [{'start': t_pulse*1000+500.0,
-            'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
+        stim='Stim_' + pulses_info[t_pulse]['pop_name']
 
         netParams.popParams[stim] = {'cellModel': 'VecStim',
-                   'numCells': 24, 'spkTimes':[0], 'pulses':pulses}
+                   'numCells': 24, 'spkTimes':[0], 'pulses':stimuli_pulses[t_pulse]}
 
+        x_pyr, x_bask=pulses_info[t_pulse]['values']
         netParams.connParams[stim + '->PYR4'] = {
             'preConds': {'popLabel': stim},
             'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
