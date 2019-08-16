@@ -106,7 +106,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     for pulse in pulses_info.keys():
 
-        stim='Stim_{}_{}'.format(pulses_info[pulse]['pop_name'], pulse)
+        stim='Stim_{}'.format(pulses_info[pulse]['pop_name'])
         x_pyr, x_bask=pulses_info[pulse]['values']
 
         pulses = [{'start': pulse*1000+500.0,
@@ -131,41 +131,6 @@ def set_params(fig_name, NET_TYPE, TASK):
             'threshold': 10,
             'synMech': 'AMPA'}
 
-
-    '''
-    for pop in input_populations:
-        x_pyr, x_bask = input_populations[pop]['x_values']
-
-        for pulse_i in input_populations[pop]['pulses']:
-
-            stim = '{}_{}'.format(pop,pulse_i)
-
-            pulses = [{'start': pulse_i*1000+500.0,
-                'end': pulse_i*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
-
-
-            netParams.popParams[stim] = {'cellModel': 'VecStim',
-                       'numCells': 24, 'spkTimes':[0], 'pulses':pulses}
-
-
-
-            netParams.connParams[stim + '->PYR4'] = {
-                'preConds': {'popLabel': stim},
-                'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
-                'convergence': 1,
-                'weight': .2,#0.02,
-                'threshold': 10,
-                'synMech': 'AMPA'}
-
-            netParams.connParams[stim + '->BASK4'] = {
-                'preConds': {'popLabel': stim},
-                'postConds': {'popLabel': 'BASK4', 'x': x_bask},
-                'convergence': 1,
-                'weight': .2,#0.02,
-                'threshold': 10,
-                'synMech': 'AMPA'}
-
-    '''
     # Connectivity parameters
 
     # Layer 4 intra-laminar connections
