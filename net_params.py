@@ -110,6 +110,7 @@ def set_params(fig_name, NET_TYPE, TASK):
             pop_pulses.append(pulse)
 
         stim = 'Stim_'+pop
+        print (pop_pulses)
         netParams.popParams[stim] = {'cellModel': 'VecStim',
                        'numCells': 24, 'spkTimes': [0], 'pulses': pop_pulses}
 
@@ -235,9 +236,9 @@ def set_params(fig_name, NET_TYPE, TASK):
     # ,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
-    x_electrodes_locations = [[g[0]+1,0,netParams.sizeZ/2]
-                    for g in [input_populations[i]['x_values'][0]
-                    for i in input_populations]]
+    x_electrodes_locations = [[440,0,460],[120,0,460]]#[[g[0]+1,0,netParams.sizeZ/2]
+                    #for g in [input_populations[i]['x_values'][0]
+                    #for i in input_populations]]
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
 
     # Saving
