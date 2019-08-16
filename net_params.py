@@ -103,7 +103,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
 
     for pop in input_populations:
-        for pulse_i in input_populations[pop]['pulses']]:
+        for pulse_i in input_populations[pop]['pulses']:
 
             stim = 'Stim_{}_{}'.format(pop,pulse_i)
 
