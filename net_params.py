@@ -115,6 +115,7 @@ def set_params(fig_name, NET_TYPE, TASK):
                    'numCells': 24, 'spkTimes':[0], 'pulses':stimuli_pulses[t_pulse]}
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
+
         netParams.connParams[stim + '->PYR4'] = {
             'preConds': {'popLabel': stim},
             'postConds': {'popLabel': 'PYR4', 'x': x_pyr},

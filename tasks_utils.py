@@ -179,12 +179,15 @@ if __name__=="__main__":
     NET_TYPE='short'
     TASK='oddball'
     det=s.get_details_in_pulses()
-    print( [[{'start': t_pulse*1000+500.0,
+
+    deviant_pulses_indexes = np.random.choice(list(range(3)),
+                SIM_PARAMS['short']['n_dev'], replace=False)
+    print(deviant_pulses_indexes)
+    print(det.keys())
+
+    print ([[{'start': t_pulse*1000+500.0,
         'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
          for t_pulse in det.keys()])
-    for pulse in det.keys():
-        print(pulse)
-        print(det[pulse])
     '''
     sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
     deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
