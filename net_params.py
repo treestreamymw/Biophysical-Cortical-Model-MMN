@@ -106,7 +106,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
         stim = 'Stim_'+pop
         pulse = [{'start': 500.0, 'end': 700.0, 'rate': 200, 'noise': 1.0}]
-        spkTimes= [1000.0*pulse_i in input_populations[pop]['pulses']]
+        spkTimes= [1000.0*pulse_i for pulse_i in input_populations[pop]['pulses']]
 
         netParams.popParams[stim] = {'cellModel': 'VecStim',
                        'numCells': 24, 'spkTimes': [0], 'pulses':pulse,
