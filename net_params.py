@@ -91,6 +91,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
 
     sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
+
     deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
@@ -103,9 +104,11 @@ def set_params(fig_name, NET_TYPE, TASK):
 
 
     for pop in input_populations:
+        x_pyr, x_bask = input_populations[pop]['x_values']
+
         for pulse_i in input_populations[pop]['pulses']:
 
-            stim = 'Stim_{}_{}'.format(pop,pulse_i)
+            stim = '{}_{}'.format(pop,pulse_i)
 
             pulses = [{'start': pulse_i*1000+500.0,
                 'end': pulse_i*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
@@ -114,7 +117,7 @@ def set_params(fig_name, NET_TYPE, TASK):
             netParams.popParams[stim] = {'cellModel': 'VecStim',
                        'numCells': 24, 'spkTimes':[0], 'pulses':pulses}
 
-            x_pyr, x_bask = input_populations[pop]['x_values']
+
 
             netParams.connParams[stim + '->PYR4'] = {
                 'preConds': {'popLabel': stim},
