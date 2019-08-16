@@ -96,7 +96,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=sim_duration,
                                 spacing=40.0,
-                                dev_indexes=[2]#deviant_pulses_indexes,
+                                dev_indexes=[2],#deviant_pulses_indexes,
                                 task=TASK)
     s_handler.perform_task()
     input_populations = s_handler.population_values
