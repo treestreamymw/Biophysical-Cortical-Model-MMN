@@ -102,7 +102,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     input_populations = s_handler.population_values
     ##### modify number of stim populations !
     for pop in input_populations:
-        #pop_pulses=[]
+        pop_pulses=[]
 
         x_pyr, x_bask = input_populations[pop]['x_values']
         stim = 'Stim_'+pop
@@ -110,27 +110,27 @@ def set_params(fig_name, NET_TYPE, TASK):
         for pulse_i in input_populations[pop]['pulses']:
             pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
                 'rate': 200, 'noise': 1.0}
-            #pop_pulses.append(pulse)
+            pop_pulses.append(pulse)
 
             netParams.popParams[stim] = {'cellModel': 'VecStim',
-                           'numCells': 24, 'spkTimes': [0], 'pulses': [pulse]}#pop_pulses}
+                           'numCells': 24, 'spkTimes': [0], 'pulses': pop_pulses}
 
 
-            netParams.connParams[stim + '->PYR4'] = {
-                'preConds': {'popLabel': stim},
-                'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
-                'convergence': 1,
-                'weight': .5,#0.02,
-                'threshold': 10,
-                'synMech': 'AMPA'}
+        netParams.connParams[stim + '->PYR4'] = {
+            'preConds': {'popLabel': stim},
+            'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
+            'convergence': 1,
+            'weight': .5,#0.02,
+            'threshold': 10,
+            'synMech': 'AMPA'}
 
-            netParams.connParams[stim + '->BASK4'] = {
-                'preConds': {'popLabel': stim},
-                'postConds': {'popLabel': 'BASK4', 'x': x_bask},
-                'convergence': 1,
-                'weight': .5,#0.02,
-                'threshold': 10,
-                'synMech': 'AMPA'}
+        netParams.connParams[stim + '->BASK4'] = {
+            'preConds': {'popLabel': stim},
+            'postConds': {'popLabel': 'BASK4', 'x': x_bask},
+            'convergence': 1,
+            'weight': .5,#0.02,
+            'threshold': 10,
+            'synMech': 'AMPA'}
 
 
     # Connectivity parameters
@@ -232,8 +232,8 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     # Recording
     simConfig.recordCells = ['all']  # which cells to record from
-    # simConfig.recordTraces = {'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}}
-    # ,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
+    simConfig.recordTraces = {'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}
+     ,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
     x_electrodes_locations = [[g[0]+1,0,netParams.sizeZ/2]
