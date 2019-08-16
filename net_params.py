@@ -100,13 +100,23 @@ def set_params(fig_name, NET_TYPE, TASK):
                                 task=TASK)
     s_handler.perform_task()
     input_populations = s_handler.population_values
-    ##### modify number of stim populations !
+
+
     for pop in input_populations:
 
         stim = 'Stim_'+pop
+        pulse = [{'start': 500.0, 'end': 700.0, 'rate': 200, 'noise': 1.0}]
+        spkTimes= [1000.0*pulse_i in input_populations[pop]['pulses']]
 
         netParams.popParams[stim] = {'cellModel': 'VecStim',
-                       'numCells': 24, 'spkTimes': [0], 'pulses':[]}
+                       'numCells': 24, 'spkTimes': [0], 'pulses':pulse,
+                        'spkTimes': spkTimes}
+        '''
+        for pulse_i in input_populations[pop]['pulses']:
+            pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
+                'rate': 200, 'noise': 1.0}
+            netParams.popParams[stim]['pulses'].append(pulse)
+        '''
 
         x_pyr, x_bask = input_populations[pop]['x_values']
 
@@ -126,10 +136,6 @@ def set_params(fig_name, NET_TYPE, TASK):
                 'threshold': 10,
                 'synMech': 'AMPA'}
 
-        for pulse_i in input_populations[pop]['pulses']:
-            pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
-                'rate': 200, 'noise': 1.0}
-            netParams.popParams[stim]['pulses'].append(pulse)
 
 
 
@@ -171,7 +177,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.012,0.006],#[0.0012,0.0006],
+        'weight': [0.12,0.06],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
@@ -203,7 +209,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.3,#0.03,
+        'weight': 1#0.3,#0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
