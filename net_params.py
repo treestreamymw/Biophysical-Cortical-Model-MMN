@@ -114,7 +114,7 @@ def set_params(fig_name, NET_TYPE, TASK):
                 'preConds': {'popLabel': stim},
                 'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
                 'convergence': 1,
-                'weight': .5,#0.02,
+                'weight': .2,#0.02,
                 'threshold': 10,
                 'synMech': 'AMPA'}
 
@@ -122,14 +122,21 @@ def set_params(fig_name, NET_TYPE, TASK):
                 'preConds': {'popLabel': stim},
                 'postConds': {'popLabel': 'BASK4', 'x': x_bask},
                 'convergence': 1,
-                'weight': .5,#0.02,
+                'weight': .2,#0.02,
                 'threshold': 10,
                 'synMech': 'AMPA'}
-
+                '''
         for pulse_i in input_populations[pop]['pulses']:
             pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
                 'rate': 200, 'noise': 1.0}
             netParams.popParams[stim]['pulses'].append(pulse)
+            '''
+    netParams.popParams['Stim_dev']['pulses'].append({'start':500.0, 'end':700.0,
+        'rate': 200, 'noise': 1.0})
+    netParams.popParams['Stim_dev']['pulses'].append({'start':1500.0, 'end':1700.0,
+            'rate': 200, 'noise': 1.0})
+    netParams.popParams['Stim_dev']['pulses'].append({'start':2500.0, 'end':2700.0,
+                'rate': 200, 'noise': 1.0})
 
     # Connectivity parameters
 
