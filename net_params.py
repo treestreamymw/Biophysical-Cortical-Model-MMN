@@ -125,19 +125,13 @@ def set_params(fig_name, NET_TYPE, TASK):
                 'weight': .2,#0.02,
                 'threshold': 10,
                 'synMech': 'AMPA'}
-        '''
+
         for pulse_i in input_populations[pop]['pulses']:
             pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
                 'rate': 200, 'noise': 1.0}
             netParams.popParams[stim]['pulses'].append(pulse)
-        '''
 
-    netParams.popParams['Stim_dev']['pulses'].append({'start':500.0, 'end':700.0,
-        'rate': 200, 'noise': 1.0})
-    netParams.popParams['Stim_dev']['pulses'].append({'start':1500.0, 'end':1700.0,
-            'rate': 200, 'noise': 1.0})
-    netParams.popParams['Stim_dev']['pulses'].append({'start':2500.0, 'end':2700.0,
-                'rate': 200, 'noise': 1.0})
+
 
     # Connectivity parameters
 
@@ -177,7 +171,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.0012,0.0006],
+        'weight': [0.012,0.006],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
@@ -209,7 +203,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.03,
+        'weight': 0.3,#0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 

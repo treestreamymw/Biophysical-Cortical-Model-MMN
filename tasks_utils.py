@@ -160,7 +160,7 @@ class Simulation_Task_Handler(object):
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(560,6,40,[2],'oddball')
+    s=Simulation_Task_Handler(290,3,40,[2],'oddball')
     #s.oddball_paradigm(, True)
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
