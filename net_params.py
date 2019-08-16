@@ -113,7 +113,7 @@ def set_params(fig_name, NET_TYPE, TASK):
             #pop_pulses.append(pulse)
 
             netParams.popParams[stim] = {'cellModel': 'VecStim',
-                           'numCells': 24, 'spkTimes': [0], 'pulses': pulse}#pop_pulses}
+                           'numCells': 24, 'spkTimes': [0], 'pulses': [pulse]}#pop_pulses}
 
 
             netParams.connParams[stim + '->PYR4'] = {
