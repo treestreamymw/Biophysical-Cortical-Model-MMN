@@ -6,7 +6,6 @@ USER root
 
 # Set the working directory to /home
 WORKDIR /home
-ENV PYTHON3PATH='which python3'
 
 RUN apt-get -qq update
 
@@ -28,6 +27,7 @@ RUN apt-get install -y \
     ncurses-bin \
     ncurses-term
 
+ENV PYTHON3PATH='which python3'
 
 
 ### install MPIch ###
