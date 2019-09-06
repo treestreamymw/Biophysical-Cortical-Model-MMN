@@ -27,17 +27,18 @@ RUN apt-get install -y \
     ncurses-bin \
     ncurses-term
 
-ENV PYTHON3PATH='which python3'
+ENV PYTHON3PATH=/usr/local/bin/python3 #'which python3'
 
 
 ### install MPIch ###
 RUN wget http://www.mpich.org/static/downloads/3.3.1/mpich-3.3.1.tar.gz
 RUN tar zxf mpich-3.3.1.tar.gz
 RUN mv mpich-3.3.1 mpi
-RUN mkdir 
+RUN mkdir mpi_build
 
-WORKDIR ./mpi
-RUN ./configure --prefix='$HOME/mpi'
+
+WORKDIR ./mpi_build
+RUN ../mpi/configure --prefix='$HOME/mpi'
 RUN make
 RUN make install
 
