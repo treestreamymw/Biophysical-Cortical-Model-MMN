@@ -37,11 +37,13 @@ RUN mv mpich-3.3.1 mpi
 RUN mkdir mpi_build
 
 
-WORKDIR ./mpi_build
-RUN ../mpi/configure --prefix='$HOME/mpi'
+WORKDIR ./mpi
+RUN ../mpi/configure --prefix='$HOME/mpi_build'
 RUN make
 RUN make install
 
+ENV PATH=$HOME/mpi/bin:$PATH
+# test via mpiexec -n 2 echo 'hi'
 
 ### install interviews ###
 RUN wget https://neuron.yale.edu/ftp/neuron/versions/v7.6/iv-19.tar.gz
@@ -69,7 +71,7 @@ RUN make install
 ### add to path ###
 ENV PYTHONPATH=$PYTHON3PATH
 ENV PATH=$HOME/iv/x86_64/bin:$HOME/nrn/x86_64/bin:$PATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:/home/nrn/x86_64/lib:/home/iv/x86_64/lib
+ENV LD_LIBRARY_PATH=/usr/local/lib:$HOME/nrn/x86_64/lib:$HOME/iv/x86_64/lib/
 
 RUN pip install scipy numpy matplotlib cython mpi4py neuronpy netpyne
 
