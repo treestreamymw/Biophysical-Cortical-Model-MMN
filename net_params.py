@@ -114,7 +114,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
         stim='Stim_' + pulses_info[t_pulse]['pop_name']
 
-        if stim in netparams.keys():
+        if stim in netParams.popParams.keys():
             netParams.popParams[stim]['pulses'].append(stimuli_pulses[t_pulse])
         else:
             netParams.popParams[stim] = {'cellModel': 'VecStim',
