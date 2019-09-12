@@ -1,6 +1,7 @@
 .DS_Store
 .DS_Store?
 ._*
+<<<<<<< HEAD
 
 
 .pyc
@@ -8,3 +9,8 @@
 /output_files
 __pycache__/
 **/__pycache__/
+=======
+*.pyc
+__pycache__/
+**/__pychache__/
+>>>>>>> 25a994c12badaaf4aec5a5d819c4383a5bdcef83

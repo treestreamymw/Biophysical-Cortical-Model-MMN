@@ -22,34 +22,37 @@ def set_params(fig_name, NET_TYPE, TASK):
     ###############################################################################
 
     # Size and scale
-    netParams.sizeX, netParams.sizeY, netParams.sizeZ = SIM_PARAMS[NET_TYPE]['size']
+    netParams.sizeX, netParams.sizeY, netParams.sizeZ=SIM_PARAMS[NET_TYPE]['size']
     netParams.scaleConnWeight = SIM_PARAMS[NET_TYPE]['scale']
     netParams.scaleConnWeightNetStims = SIM_PARAMS[NET_TYPE]['scale']
-
 
     # Population parameters
     netParams.popParams['PYR23'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                     'gridSpacing': 40.0,
-                                    'yRange': [.8*netParams.sizeY, .8*netParams.sizeY],
+                                    'yRange': [.8*netParams.sizeY,
+                                                .8*netParams.sizeY],
                                     'color': 'blue'}
 
     netParams.popParams['PYR4'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                    'gridSpacing': 40.0,
-                                   'yRange': [netParams.sizeY, netParams.sizeY],
+                                   'yRange': [netParams.sizeY,
+                                                netParams.sizeY],
                                    'color': 'green'}
 
     netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
                                      'xRange': [20, netParams.sizeX-20],
                                      'zRange': [20, netParams.sizeZ-20],
-                                     'yRange': [.8*netParams.sizeY, .8*netParams.sizeY],
+                                     'yRange': [.8*netParams.sizeY,
+                                                .8*netParams.sizeY],
                                      'color': 'red'}
 
     netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
                                     'xRange': [20, netParams.sizeX-20],
                                     'zRange': [20, netParams.sizeZ-20],
-                                    'yRange': [netParams.sizeY, netParams.sizeY],
+                                    'yRange': [netParams.sizeY,
+                                                netParams.sizeY],
                                     'color': 'yellow'}
 
     # Cell parameters
@@ -59,6 +62,7 @@ def set_params(fig_name, NET_TYPE, TASK):
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
+
     cellRule['secs']['soma']['vinit'] = -80.0
     cellRule['secs']['dend']['vinit'] = -80.0
     cellRule['secs']['apic_0']['vinit'] = -80.0
@@ -93,7 +97,7 @@ def set_params(fig_name, NET_TYPE, TASK):
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
 
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
-                                n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
+                                n_pulses=3,#SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
                                 dev_indexes=[2],#deviant_pulses_indexes,
                                 task=TASK)
@@ -110,8 +114,11 @@ def set_params(fig_name, NET_TYPE, TASK):
 
         stim='Stim_' + pulses_info[t_pulse]['pop_name']
 
-        netParams.popParams[stim] = {'cellModel': 'VecStim',
-                   'numCells': 24, 'spkTimes':[0], 'pulses':stimuli_pulses[t_pulse]}
+        if stim in netparams.keys():
+            netparams[stim]['pulses'].append(stimuli_pulses[t_pulse])
+        else:
+            netparams[stim] = {'cellModel': 'VecStim',
+                   'numCells': 24, 'pulses':[stimuli_pulses[t_pulse]]}
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
 

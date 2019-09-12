@@ -12,7 +12,7 @@ class Simulation_Task_Handler(object):
     n_pulses (int) - the numebr of stimulus pulses
     task (str) - the task required
 
-    buffer (list) - edge 2 pyr rows and one bask row [pyr, bask], can not
+    buffer (list) - marks the edge 2 pyr rows and one bask row [pyr, bask], can not
         be used in stimulus
     task_dicts (dict) -gets user info and calls the relevant tasks
     x_values (list of tupples)- filled by the task function,
@@ -40,16 +40,16 @@ class Simulation_Task_Handler(object):
         #self.x_values =[]
         self.population_values=[]
 
-    def perform_task(self):
+    def set_task_stimuli(self):
         '''
         returns the correct function given the chosen task
         '''
         return self.tasks_dict.get(self.task, lambda: 'choose a valid task')()
 
-    def get_pulses_range(self):
-        '''
-        returns the correct list of pulses Ts given the chosen task
-        '''
+    '''def get_pulses_range(self):
+
+        #returns the correct list of pulses Ts given the chosen task
+
 
         pulses= list(range(self.n_pulses))
 
@@ -57,8 +57,7 @@ class Simulation_Task_Handler(object):
             for dev_ind in self.dev_indexes:
                 pulses.remove(dev_ind)
             return pulses
-        return pulses
-
+        return pulses'''
 
     def _get_std_dev_tones(self):
         '''
@@ -92,7 +91,6 @@ class Simulation_Task_Handler(object):
 
         return x_values
 
-
     def oddball_paradigm(self, flipflop=False):
         '''
         Oddball- repetitive (standard) tone which is replaced randomly by a different (deviant) tone
@@ -107,7 +105,7 @@ class Simulation_Task_Handler(object):
         pop_values['dev']= {'x_values':deviant_x_values,
                             'pulses':self.dev_indexes}
         pop_values['std']= {'x_values':standard_x_values,
-                            'pulses':list(set(range(self.n_pulses)).difference(self.dev_indexes))}
+                            'pulses':set(range(self.n_pulses)).difference(self.dev_indexes)}
 
         self.population_values = pop_values
 
@@ -142,7 +140,6 @@ class Simulation_Task_Handler(object):
 
         self.population_values = pop_values
 
-
     def many_standards_paradigm(self):
         '''
         Many-standards - presents a sequence of random tones of which one
@@ -169,44 +166,39 @@ class Simulation_Task_Handler(object):
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(290,3,40,[2],'oddball')
+    s=Simulation_Task_Handler(290 ,3,40,[2],'oddball')
     #s.oddball_paradigm(, True)
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
-    s.perform_task()
+    s.set_task_stimuli()
     #print(s.population_values)
     #print([[g[0]+1,0,8] for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
     NET_TYPE='short'
     TASK='oddball'
-    det=s.get_details_in_pulses()
+    pulses_info=s.get_details_in_pulses()
 
     deviant_pulses_indexes = np.random.choice(list(range(3)),
                 SIM_PARAMS['short']['n_dev'], replace=False)
     print(deviant_pulses_indexes)
-    print(det.keys())
+    print(pulses_info.keys())
 
-    print ([[{'start': t_pulse*1000+500.0,
-        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
-         for t_pulse in det.keys()])
-    '''
-    sim_duration=int(SIM_PARAMS[NET_TYPE]['duration']/1000)
-    deviant_pulses_indexes = np.random.choice(list(range(sim_duration)),
-            SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
 
-    s_handler = Simulation_Task_Handler(net_x_size=280,
-                                n_pulses=sim_duration,
-                                spacing=40.0,
-                                dev_indexes=deviant_pulses_indexes,
-                                task=TASK)
-    s_handler.perform_task()
-    input_populations = s_handler.population_values
-    print(input_populations)
-    for pop in input_populations:
-        pop_pulses=[]
+    stimuli_pulses = [{'start': t_pulse*1000+500.0,
+        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}
+         for t_pulse in pulses_info.keys()]
 
-        for pulse_i in input_populations[pop]['pulses']:
-            pulse = {'start': pulse_i*1000.0+500.0, 'end': pulse_i*1000.0+700.0,
-                'rate': 200, 'noise': 1.0}
-            pop_pulses.append(pulse)
-        print(pop_pulses)
-    '''
+    netparams={}
+
+    for t_pulse in pulses_info.keys():
+
+        stim='Stim_' + pulses_info[t_pulse]['pop_name']
+
+        if stim in netparams.keys():
+            netparams[stim]['pulses'].append(stimuli_pulses[t_pulse])
+        else:
+            netparams[stim] = {'cellModel': 'VecStim',
+                   'numCells': 24, 'pulses':[stimuli_pulses[t_pulse]]}
+
+        x_pyr, x_bask=pulses_info[t_pulse]['values']
+        print( x_pyr, x_bask)
+    print (netparams)
