@@ -3,7 +3,7 @@ Implements the auditory cortex network model from Beeman et al., BMC Neuroscienc
 Frontiers in Neural Circuits, 2018.
 
 """
-from mpi4py import MPI
+#from mpi4py import MPI
 from netpyne import sim
 from net_params import set_params
 import numpy as np

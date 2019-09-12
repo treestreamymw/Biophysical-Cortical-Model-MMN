@@ -7,7 +7,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 
 """
 import numpy as np
-from mpi4py import MPI
+#from mpi4py import MPI
 from netpyne import specs
 from config import SIM_PARAMS
 from tasks_utils import Simulation_Task_Handler
