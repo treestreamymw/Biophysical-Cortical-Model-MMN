@@ -1,8 +1,6 @@
 .DS_Store
 .DS_Store?
 ._*
-
-
-.pyc
-.png
-/output_files
+*.pyc
+__pycache__/
+**/__pychache__/
