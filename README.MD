@@ -57,6 +57,13 @@ We model five tasks:
 
 * config- NEED TO BE MODIFIED (includes some basic configurations)
 
+## How to run
+
+### set config for type of experiment and network
+TBD
+
+### Run the experiment
+'mpiexec -n {N} python3 net_sequence.py'
 
 
 ## License
