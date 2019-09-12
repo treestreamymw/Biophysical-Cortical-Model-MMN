@@ -101,7 +101,7 @@ def set_params(fig_name, NET_TYPE, TASK):
                                 spacing=40.0,
                                 dev_indexes=[2],#deviant_pulses_indexes,
                                 task=TASK)
-    s_handler.perform_task()
+    s_handler.set_task_stimuli()
     input_populations = s_handler.population_values
 
     pulses_info=s_handler.get_details_in_pulses()
