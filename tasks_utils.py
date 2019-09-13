@@ -189,7 +189,8 @@ if __name__=="__main__":
 
         netparams[stim] = {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
-                   'pulses':[stimuli_pulses[t_pulse]]}
+                   'pulses':[{'start': t_pulse*1000+500.0,
+                       'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]}
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
         print( x_pyr, x_bask)
