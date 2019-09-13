@@ -110,15 +110,15 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     for t_pulse in pulses_info.keys():
 
-        stim='Stim_' + pulses_info[t_pulse]['pop_name'] + str(t_pulse)
+        stim_pop_name='Stim_' + pulses_info[t_pulse]['pop_name'] + str(t_pulse)
         '''
         if stim in netParams.popParams.keys():
-            netParams.popParams[stim]['pulses'].append(stimuli_pulses[t_pulse])
+            netParams.popParams[stim_pop_name]['pulses'].append(stimuli_pulses[t_pulse])
         else:
-            netParams.popParams[stim] = {'cellModel': 'VecStim',
+            netParams.popParams[stim_pop_name] = {'cellModel': 'VecStim',
                    'numCells': 24, 'pulses':[stimuli_pulses[t_pulse]]}
         '''
-        netParams.popParams[stim] =  {'cellModel': 'VecStim',
+        netParams.popParams[stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
                    'pulses':[{'start': t_pulse*1000+500.0,
                        'end': t_pulse*1000.0+700.0, 'rate': 200,
@@ -127,16 +127,16 @@ def set_params(fig_name, NET_TYPE, TASK):
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
 
-        netParams.connParams[stim + '->PYR4'] = {
-            'preConds': {'popLabel': stim},
+        netParams.connParams[stim_pop_name + '->PYR4'] = {
+            'preConds': {'popLabel': stim_pop_name},
             'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
 
-        netParams.connParams[stim + '->BASK4'] = {
-            'preConds': {'popLabel': stim},
+        netParams.connParams[stim_pop_name + '->BASK4'] = {
+            'preConds': {'popLabel': stim_pop_name},
             'postConds': {'popLabel': 'BASK4', 'x': x_bask},
             'convergence': 1,
             'weight': 0.02,
