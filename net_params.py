@@ -97,7 +97,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=3,#SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
-                                dev_indexes=deviant_pulses_indexes,
+                                dev_indexes=[2],#deviant_pulses_indexes,
                                 task=TASK)
     s_handler.set_task_stimuli()
     input_populations = s_handler.population_values
@@ -111,13 +111,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     for t_pulse in pulses_info.keys():
 
         stim_pop_name='Stim_' + pulses_info[t_pulse]['pop_name'] + str(t_pulse)
-        '''
-        if stim in netParams.popParams.keys():
-            netParams.popParams[stim_pop_name]['pulses'].append(stimuli_pulses[t_pulse])
-        else:
-            netParams.popParams[stim_pop_name] = {'cellModel': 'VecStim',
-                   'numCells': 24, 'pulses':[stimuli_pulses[t_pulse]]}
-        '''
+
         netParams.popParams[stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
                    'pulses':[{'start': t_pulse*1000+500.0,
