@@ -29,28 +29,26 @@ def set_params(fig_name, NET_TYPE, TASK):
     # Population parameters
     netParams.popParams['PYR23'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                     'gridSpacing': 40.0,
+                                    'xRange': [20, netParams.sizeX],
                                     'yRange': [.8*netParams.sizeY,
                                                 .8*netParams.sizeY],
                                     'color': 'blue'}
 
     netParams.popParams['PYR4'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                    'gridSpacing': 40.0,
+                                   'xRange': [20, netParams.sizeX],
                                    'yRange': [netParams.sizeY,
                                                 netParams.sizeY],
                                    'color': 'green'}
 
     netParams.popParams['BASK23'] = {'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
-                                     'xRange': [20, netParams.sizeX-20],
-                                     'zRange': [20, netParams.sizeZ-20],
                                      'yRange': [.8*netParams.sizeY,
                                                 .8*netParams.sizeY],
                                      'color': 'red'}
 
     netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
-                                    'xRange': [20, netParams.sizeX-20],
-                                    'zRange': [20, netParams.sizeZ-20],
                                     'yRange': [netParams.sizeY,
                                                 netParams.sizeY],
                                     'color': 'yellow'}

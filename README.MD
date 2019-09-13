@@ -20,7 +20,7 @@ Install NERUON and set your env using the docker file.
 
 ## Goal and simulation descriptions
 
-This code simulates activation in the auditory cortex including layer 2/3 and layer 4. The full size network contains 14 rows with 24 neurons at each row (to simulate 10 frequencies) and the short version includes 8 rows with 24 neurons at each row (to simulate spaced 2 frequencies).
+This code simulates activation in the auditory cortex including layer 2/3 and layer 4. The full size network contains 18 (9) rows with 24 (12) neurons at each row (to simulate 8 frequencies) and the short version includes 8 (4) rows with 24 (12) neurons at each row (to simulate 2 frequencies).
 
 We aim to explore the differences between Repetition suppression (RS) and MisMatch Negativity (MMN)
 

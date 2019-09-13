@@ -12,7 +12,7 @@ class Simulation_Task_Handler(object):
     n_pulses (int) - the numebr of stimulus pulses
     task (str) - the task required
 
-    buffer (list) - marks the edge 2 pyr rows and one bask row [pyr, bask], can not
+    buffer (list) - marks the edge  pyr rows and one bask row [pyr, bask], can not
         be used in stimulus
     task_dicts (dict) -gets user info and calls the relevant tasks
     x_values (list of tupples)- filled by the task function,
@@ -29,7 +29,7 @@ class Simulation_Task_Handler(object):
         self.dev_indexes=dev_indexes
         self.task = task
 
-        self.buffer = [120, 140]
+        self.buffer = {'pyr':60,'bask':80}
         self.tasks_dict = {'oddball': partial(self.oddball_paradigm, False),
                             'flipflop': partial(self.oddball_paradigm, True),
                             'cascade': partial(self.cascade_paradigm, False),
@@ -59,37 +59,31 @@ class Simulation_Task_Handler(object):
             return pulses
         return pulses'''
 
-    def _get_std_dev_tones(self):
-        '''
-        returns std and dev tones
-        '''
-        standard_x_values = [[self.buffer[0]-1, self.buffer[0]+1],
-            [self.buffer[1]-1, self.buffer[1]+1]]
-
-        deviant_x_values = [[self.net_x_size-self.buffer[0]-1,
-            self.net_x_size-self.buffer[0]+1],
-            [self.net_x_size-self.buffer[1]-1,
-            self.net_x_size-self.buffer[1]+1]]
-
-        return [standard_x_values, deviant_x_values]
-
     def _get_all_tones(self):
         '''
         returns all range of tones
         '''
         x_values=[]
         for t in range(self.n_pulses):
-            bask_value = self.buffer[1]+ (int(t/2)*self.spacing*2)
-            pyr_value = self.buffer[0]+ (t*self.spacing)
+
+            bask_value = self.buffer['bask'] + (t*self.spacing*2)
+            pyr_value = self.buffer['pyr'] + (t*self.spacing*2)
 
             x_values.append([[pyr_value-1,pyr_value+1],
                 [bask_value-1,bask_value+1]])
 
-            if ((pyr_value == self.net_x_size-self.buffer[0]) or
-                    (bask_value == self.net_x_size-self.buffer[1])):
+            if ((pyr_value == self.net_x_size-self.buffer['pyr']) or
+                    (bask_value == self.net_x_size-self.buffer['bask'])):
                 break
 
         return x_values
+
+    def _get_std_dev_tones(self):
+            '''
+            returns std and dev tones
+            '''
+            all_tone=self._get_all_tones()
+            return [all_tone[0],all_tone[-1]]
 
     def oddball_paradigm(self, flipflop=False):
         '''
@@ -166,7 +160,7 @@ class Simulation_Task_Handler(object):
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(290 ,3,40,[2],'oddball')
+    s=Simulation_Task_Handler(300 ,3 ,40,[2],'oddball')
     #s.oddball_paradigm(, True)
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
