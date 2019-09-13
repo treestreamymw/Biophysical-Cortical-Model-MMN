@@ -24,7 +24,7 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='short'#'full'
+    SIM_TYPE='mini'#'full'
     grid_search_array = [['short_oddball', SIM_TYPE, 'oddball']]
 
 
