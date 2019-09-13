@@ -178,8 +178,8 @@ if __name__=="__main__":
 
 
     stimuli_pulses = [{'start': t_pulse*1000+500.0,
-        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0,
-        'spkTimes':[1]}
+        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0
+        }
          for t_pulse in pulses_info.keys()]
 
     netparams={}
@@ -192,7 +192,8 @@ if __name__=="__main__":
             netparams[stim]['pulses'].append(stimuli_pulses[t_pulse])
         else:
             netparams[stim] = {'cellModel': 'VecStim',
-                   'numCells': 24, 'pulses':[stimuli_pulses[t_pulse]]}
+                   'numCells': 24, 'spkTimes':[1],
+                   'pulses':[stimuli_pulses[t_pulse]]}
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
         print( x_pyr, x_bask)
