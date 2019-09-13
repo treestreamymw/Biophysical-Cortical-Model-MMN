@@ -110,7 +110,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     for t_pulse in pulses_info.keys():
 
-        stim_pop_name='Stim_' + pulses_info[t_pulse]['pop_name'] + str(t_pulse)
+        stim_pop_name='Stim_' + str(pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         netParams.popParams[stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],

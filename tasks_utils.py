@@ -111,7 +111,6 @@ class Simulation_Task_Handler(object):
         -oddball (bool) if True, presents a tone that breaks the pattern
 
         '''
-        assert self.n_pulses>=4, 'can not run cascade on short simulation'
         x_values = self._get_all_tones()
         pop_values = {i:{'x_values': x_values[i], 'pulses':[i]} for i in range(self.n_pulses)}
 
@@ -139,7 +138,6 @@ class Simulation_Task_Handler(object):
         Many-standards - presents a sequence of random tones of which one
             is uniquely equal to the used deviant above
         '''
-        assert self.n_pulses>=4, 'can not run cascade on short simulation'
 
         x_values = self._get_all_tones()
         shuffle(x_values)
@@ -160,7 +158,7 @@ class Simulation_Task_Handler(object):
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(300 ,3 ,40,[2],'oddball')
+    s=Simulation_Task_Handler(300 ,3 ,40,[2],'cascade')
     #s.oddball_paradigm(, True)
     #s.many_standards_paradigm()
     #s.cascade_paradigm(True)
@@ -168,7 +166,7 @@ if __name__=="__main__":
     #print(s.population_values)
     #print([[g[0]+1,0,8] for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
     NET_TYPE='short'
-    TASK='oddball'
+    TASK='cascade'
     pulses_info=s.get_details_in_pulses()
 
     deviant_pulses_indexes = np.random.choice(list(range(3)),
@@ -185,7 +183,7 @@ if __name__=="__main__":
 
     for t_pulse in pulses_info.keys():
 
-        stim='Stim_' + pulses_info[t_pulse]['pop_name'] +str(t_pulse)
+        stim='Stim_' + str(pulses_info[t_pulse]['pop_name']) + str(t_pulse)
 
         netparams[stim] = {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
