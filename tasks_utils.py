@@ -184,7 +184,8 @@ if __name__=="__main__":
 
 
     stimuli_pulses = [{'start': t_pulse*1000+500.0,
-        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}
+        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0,
+        'spkTimes':[1]}
          for t_pulse in pulses_info.keys()]
 
     netparams={}
