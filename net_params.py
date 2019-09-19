@@ -192,7 +192,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 0.002,
+        'weight': 0.02,
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -265,7 +265,6 @@ def set_params(fig_name, NET_TYPE, TASK):
             #'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
-         'figSize': (5, 9),
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
 
