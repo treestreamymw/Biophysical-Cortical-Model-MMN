@@ -1,10 +1,10 @@
 
 original_params={'duration':10000, 'n_pulses':10, 'n_dev':3, 'size':[1880, 2500, 1880], 'scale':1}
 
-mini_sim_params={'duration':1000, 'n_pulses':1, 'n_dev':0, 'size':[300, 2500, 940], 'scale':10}
-short_sim_params={'duration':3000, 'n_pulses':3, 'n_dev':1, 'size':[300, 2500, 940], 'scale':10}
-full_sim_params={'duration':8000, 'n_pulses':8, 'n_dev':3,'size':[740, 2500, 940], 'scale':7}
-short_large_sim_params={'duration':5000, 'n_pulses':5, 'n_dev':1,'size':[740, 2500, 940], 'scale':8}
+mini_sim_params={'duration':1000, 'n_pulses':1, 'n_dev':0, 'size':[300, 2500, 940], 'scale':12}
+short_sim_params={'duration':3000, 'n_pulses':3, 'n_dev':1, 'size':[300, 2500, 940], 'scale':12}
+full_sim_params={'duration':8000, 'n_pulses':8, 'n_dev':3,'size':[740, 2500, 940], 'scale':4.5}
+short_large_sim_params={'duration':5000, 'n_pulses':5, 'n_dev':1,'size':[740, 2500, 940], 'scale':4.5}
 
 SIM_PARAMS = {'full':full_sim_params,
                 'short':short_sim_params,

@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     ## grid_search_array - d1, d2, fig_name
     SIM_TYPE='short_large'
-    grid_search_array = [['short_large_oddball', SIM_TYPE, 'oddball']]
+    grid_search_array = [['short_large_oddball_s_8', SIM_TYPE, 'oddball']]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
