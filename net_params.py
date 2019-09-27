@@ -91,7 +91,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     ###############################################################################
 
 
-    deviant_pulses_indexes = np.random.choice(list(range(SIM_PARAMS[NET_TYPE]['n_pulses'])),
+    deviant_pulses_indexes = np.random.choice(range(SIM_PARAMS[NET_TYPE]['n_pulses']),
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
 
     s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
@@ -104,9 +104,6 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     pulses_info=s_handler.get_details_in_pulses()
 
-    #stimuli_pulses = [[{'start': t_pulse*1000+500.0,
-        #'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]
-         #for t_pulse in pulses_info.keys()]
 
     for t_pulse in pulses_info.keys():
 

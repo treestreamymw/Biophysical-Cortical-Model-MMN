@@ -29,7 +29,7 @@ class Simulation_Task_Handler(object):
         self.dev_indexes=dev_indexes
         self.task = task
 
-        self.buffer = {'pyr':60,'bask':80}
+        self.buffer = {'pyr':60,'bask':80} # first useable neuron (After an endge gap)
         self.tasks_dict = {'oddball': partial(self.oddball_paradigm, False),
                             'flipflop': partial(self.oddball_paradigm, True),
                             'cascade': partial(self.cascade_paradigm, False),
@@ -37,7 +37,6 @@ class Simulation_Task_Handler(object):
                             'many_standards': self.many_standards_paradigm,
                             'omission': self.omission_paradigm}
 
-        #self.x_values =[]
         self.population_values=[]
 
     def set_task_stimuli(self):
@@ -46,18 +45,6 @@ class Simulation_Task_Handler(object):
         '''
         return self.tasks_dict.get(self.task, lambda: 'choose a valid task')()
 
-    '''def get_pulses_range(self):
-
-        #returns the correct list of pulses Ts given the chosen task
-
-
-        pulses= list(range(self.n_pulses))
-
-        if self.task=='omission':
-            for dev_ind in self.dev_indexes:
-                pulses.remove(dev_ind)
-            return pulses
-        return pulses'''
 
     def _get_all_tones(self):
         '''
@@ -80,7 +67,7 @@ class Simulation_Task_Handler(object):
 
     def _get_std_dev_tones(self):
             '''
-            returns std and dev tones
+            returns std and dev tones as the first and last tones
             '''
             all_tone=self._get_all_tones()
             return [all_tone[0],all_tone[-1]]
@@ -99,7 +86,7 @@ class Simulation_Task_Handler(object):
         pop_values['dev']= {'x_values':deviant_x_values,
                             'pulses':self.dev_indexes}
         pop_values['std']= {'x_values':standard_x_values,
-                            'pulses':set(range(self.n_pulses)).difference(self.dev_indexes)}
+                            'pulses':list(set(range(self.n_pulses)).difference(self.dev_indexes))}
 
         self.population_values = pop_values
 
@@ -109,14 +96,16 @@ class Simulation_Task_Handler(object):
             frequencies over consecutive tones in an organized pattern.
 
         -oddball (bool) if True, presents a tone that breaks the pattern
+            (first returns as last)
 
         '''
         x_values = self._get_all_tones()
-        pop_values = {i:{'x_values': x_values[i], 'pulses':[i]} for i in range(self.n_pulses)}
+        pop_values = {i:{'x_values': x_values[i],
+        'pulses':[i]} for i in range(self.n_pulses)}
 
         if oddball:
-            pop_values[0]['pulses'].append(self.n_pulses-1)
-            del pop_values[self.n_pulses-1]
+            pop_values[self.n_pulses]['x_values']=pop_values[0]['x_values']
+
 
         self.population_values = pop_values
 
@@ -148,6 +137,7 @@ class Simulation_Task_Handler(object):
 
     def get_details_in_pulses(self):
         x_values = {i:{'pop_name':'stim', 'values':[]} for i in range(self.n_pulses)}
+
         for pop in self.population_values:
             for pulse in self.population_values[pop]['pulses']:
                 x_values[pulse]['pop_name']=pop
@@ -158,22 +148,18 @@ class Simulation_Task_Handler(object):
 
 
 if __name__=="__main__":
-    s=Simulation_Task_Handler(300 ,3 ,40,[2],'cascade')
-    #s.oddball_paradigm(, True)
-    #s.many_standards_paradigm()
-    #s.cascade_paradigm(True)
+    s=Simulation_Task_Handler(300 ,3 ,40,[2],'oddball')
+
     s.set_task_stimuli()
     #print(s.population_values)
-    #print([[g[0]+1,0,8] for g in [s.population_values[i]['x_values'][0] for i in s.population_values]])
     NET_TYPE='short'
-    TASK='cascade'
+    TASK='oddball'
     pulses_info=s.get_details_in_pulses()
 
-    deviant_pulses_indexes = np.random.choice(list(range(3)),
-                SIM_PARAMS['short']['n_dev'], replace=False)
+    deviant_pulses_indexes = [2]
     print(deviant_pulses_indexes)
     print(pulses_info.keys())
-
+    print (s.population_values)
 
     stimuli_pulses = [{'start': t_pulse*1000+500.0,
         'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}
@@ -191,5 +177,5 @@ if __name__=="__main__":
                        'end': t_pulse*1000.0+700.0, 'rate': 200, 'noise': 1.0}]}
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
-        print( x_pyr, x_bask)
+        print(x_pyr, x_bask)
     print (netparams)
