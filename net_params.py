@@ -179,7 +179,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.012,0.006],#[0.0012,0.0006],
+        'weight': [0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
@@ -212,7 +212,7 @@ def set_params(fig_name, NET_TYPE, TASK):
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.03,
+        'weight': 0.3,#0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
