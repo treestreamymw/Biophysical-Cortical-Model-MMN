@@ -56,15 +56,20 @@ def set_params(fig_name, NET_TYPE, TASK):
     # Cell parameters
 
     # PYR cell properties (EXC)
-    cellRule = netParams.importCellParams(label='PYR', conds={'cellType': 'PYR',
+    cellRule = netParams.importCellParams(label='PYR4', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
-                                          fileName='Cells/pyr_23_asym_stripped.hoc',
-                                  		cellName='pyr_23_asym_stripped')
+                                          fileName='Cells/fourcompartment.hoc',
+                                  		cellName='fourcompartment')
 
     cellRule['secs']['soma']['vinit'] = -80.0
     cellRule['secs']['dend']['vinit'] = -80.0
     cellRule['secs']['apic_0']['vinit'] = -80.0
     cellRule['secs']['apic_1']['vinit'] = -80.0
+
+    cellRule = netParams.importCellParams(label='PYR23', conds={'cellType': 'PYR',
+                                                       'cellModel': 'PYR_Hay'},
+                                          fileName='Cells/pyr_23_asym_stripped.hoc',
+                                  		cellName='pyr_23_asym_stripped')
 
     # BASK cell properties (INH)
     cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
