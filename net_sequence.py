@@ -24,8 +24,8 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='short'
-    grid_search_array = [['short_debug', SIM_TYPE, 'oddball']]
+    SIM_TYPE='full'
+    grid_search_array = [['full_debug', SIM_TYPE, 'oddball']]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

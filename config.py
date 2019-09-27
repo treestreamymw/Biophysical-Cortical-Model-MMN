@@ -14,7 +14,6 @@ SIM_PARAMS = {'full':full_sim_params,
 
 ## origin 24*24, 12*12 -> 5760 cells
 ## short 8 rows, 24 cols pyr // 4 12 bask -> 480 cells
-
 ## long 14 rows, 24 cols pyr // 7 12 bask -> 840 cells
 
 
