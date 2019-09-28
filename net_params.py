@@ -185,7 +185,7 @@ def set_params(fig_name, NET_TYPE, TASK):
 
     netParams.connParams['PYR23->BASK23'] = {
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.45*exp(-dist_3D/(4*40.0))',
+        'probability': '0.45*exp(-dist_3D/(2*40.0))',
         'weight': [0.0012,0.00013],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
@@ -211,7 +211,7 @@ def set_params(fig_name, NET_TYPE, TASK):
     netParams.connParams['PYR4->PYR23'] = {
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
-        'probability': '0.5*exp(-dist_2D/(1.5*40.0))',
+        'probability': '0.5*exp(-dist_2D/(2*40.0))',
         'weight': 0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
