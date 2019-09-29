@@ -11,8 +11,11 @@ from MP_class import PoolManager
 
 def run_sim (params):
     # get params
-    fig_name, net_type, task=params
-    NP, SC = set_params(fig_name=fig_name, NET_TYPE=net_type, TASK=task)
+    fig_name, net_type, task, debug_params=params
+    NP, SC = set_params(fig_name=fig_name,
+            NET_TYPE=net_type,
+            TASK=task,
+            DEBUG_PARAMS=debug_params)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
 
@@ -25,7 +28,7 @@ if __name__ == '__main__':
 
     ## grid_search_array - d1, d2, fig_name
     SIM_TYPE='full'
-    grid_search_array = [['full_debug_pyr4pyr23_G_2', SIM_TYPE, 'oddball']]
+    grid_search_array = [['full_debug', SIM_TYPE, 'oddball', ]]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

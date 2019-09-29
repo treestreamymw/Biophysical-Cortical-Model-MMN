@@ -12,8 +12,8 @@ from netpyne import specs
 from config import SIM_PARAMS
 from tasks_utils import Simulation_Task_Handler
 
-def set_params(fig_name, NET_TYPE, TASK):
-
+def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
+    p= DEBUG_PARAMS
     netParams = specs.NetParams()   # object of class NetParams to store the network parameters
     simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
 
