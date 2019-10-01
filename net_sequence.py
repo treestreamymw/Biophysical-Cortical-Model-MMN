@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     ## grid_search_array - d1, d2, fig_name
     SIM_TYPE='full'
-    grid_search_array = [['full_debug_PYR23_PYR23_orig_PYR4_PYR23_weight_3_G_01_BASK23_PYR23_G_80', SIM_TYPE, 'oddball', 1]]
+    grid_search_array = [['full_debug_PYR23_PYR23_x2_PYR4_PYR23_weight_3_G_01', SIM_TYPE, 'oddball', 1]]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
