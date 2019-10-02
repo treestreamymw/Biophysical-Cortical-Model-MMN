@@ -10,7 +10,7 @@ import numpy as np
 from mpi4py import MPI
 from netpyne import specs
 from config import SIM_PARAMS
-from tasks_utils import Simulation_Task_Handler
+from tasks_utils import Simulation_stimuli_Handler
 
 def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     p= DEBUG_PARAMS
@@ -99,16 +99,15 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     deviant_pulses_indexes = np.random.choice(range(SIM_PARAMS[NET_TYPE]['n_pulses']),
             SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
 
-    s_handler = Simulation_Task_Handler(net_x_size=netParams.sizeX,
+    s_handler = Simulation_stimuli_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
                                 dev_indexes=[SIM_PARAMS[NET_TYPE]['n_pulses']-1],#deviant_pulses_indexes,
                                 task=TASK)
     s_handler.set_task_stimuli()
-    input_populations = s_handler.population_values
 
-    pulses_info=s_handler.get_details_in_pulses()
-
+    pulses_info=s_handler.get_formatted_pulse(external=False)
+    pulses_time=s_handler.get_pulse_time(external=False)
 
     for t_pulse in pulses_info.keys():
 
@@ -116,8 +115,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
         netParams.popParams[stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
-                   'pulses':[{'start': t_pulse*1000+500.0,
-                       'end': t_pulse*1000.0+700.0, 'rate': 200,
+                   'pulses':[{'start': t_pulse*1000+pulses_time[0],
+                       'end': t_pulse*1000.0+pulses_time[1], 'rate': 200,
                        'noise': 1.0}]}
 
 
@@ -246,9 +245,12 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
      #,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
+
+    external_input_populations=s_handler.external_population_values
+
     x_electrodes_locations = [[g[0]+1,0,netParams.sizeZ/2]
-                    for g in [input_populations[i]['x_values'][0]
-                    for i in input_populations]]
+                    for g in [external_input_populations[i]['x_values'][0]
+                    for i in external_input_populations]]
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
 
     # Saving
