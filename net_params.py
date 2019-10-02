@@ -10,7 +10,7 @@ import numpy as np
 from mpi4py import MPI
 from netpyne import specs
 from config import SIM_PARAMS
-from tasks_utils import Simulation_stimuli_Handler
+from stimulus_utils import Simulation_stimuli_Handler
 
 def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     p= DEBUG_PARAMS
@@ -246,7 +246,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     simConfig.recordStim = True  # record spikes of cell stims
     simConfig.recordStep = 0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
 
-    external_input_populations=s_handler.external_population_values
+    external_input_populations=s_handler.stim_pop_values['external']
 
     x_electrodes_locations = [[g[0]+1,0,netParams.sizeZ/2]
                     for g in [external_input_populations[i]['x_values'][0]
