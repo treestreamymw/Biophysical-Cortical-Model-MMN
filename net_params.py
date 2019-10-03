@@ -143,7 +143,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'synMech': 'AMPA'}
 
         # Internal stim - memory trace
-        '''
+
         int_stim_pop_name='internal_' + str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         netParams.popParams[int_stim_pop_name] =  {'cellModel': 'VecStim',
@@ -167,7 +167,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}'''
+            'synMech': 'AMPA'}
 
     ###############################################################################
     # CONNECTIVITY PARAMETERS
@@ -255,6 +255,34 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'synMech': 'AMPASTD'}
 
     ## feedforward connection TBD
+
+    netParams.connParams['BASK4->BASK23'] = {
+        'preConds': {'popLabel': 'BASK4'}, 'postConds': {'popLabel': 'BASK23'},
+        'probability': '0.6*exp(-dist_3D/(4*40.0))',
+        'weight': 0.001,
+        'threshold': 10,
+        'synMech': 'GABA'}
+
+    netParams.connParams['BASK4->PYR23'] = {
+        'preConds': {'popLabel': 'BASK4'}, 'postConds': {'popLabel': 'PYR23'},
+        'probability': '0.6*exp(-dist_3D/(4*40.0))',
+        'weight': 0.01,
+        'threshold': 10,
+        'synMech': 'GABA'}
+
+    netParams.connParams['PYR23->BASK4'] = {
+        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'BASK4'},
+        'probability': '0.8*exp(-dist_2D/(2*40.0))',
+        'weight': 0.000105,
+        'threshold': 10,
+        'synMech': 'AMPASTD'}
+
+    netParams.connParams['PYR23->PYR4'] = {
+        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR4'},
+        'probability': '0.8*exp(-dist_2D/(0.1*40.0))',
+        'weight': 1,
+        'threshold': 10,
+        'synMech': 'AMPASTD'}
 
     ########################################################################
     # SIMULATION PARAMETERS
