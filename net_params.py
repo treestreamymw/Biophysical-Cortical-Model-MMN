@@ -106,37 +106,68 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                 task=TASK)
     s_handler.set_task_stimuli()
 
-    pulses_info=s_handler.get_formatted_pulse(external=False)
-    pulses_time=s_handler.get_pulse_time(external=False)
+    external_pulses_info=s_handler.get_formatted_pulse(external=True)
+    external_pulses_time=s_handler.get_pulse_time(external=True)
 
-    for t_pulse in pulses_info.keys():
+    #internal_pulses_info=s_handler.get_formatted_pulse(external=False)
+    #internal_pulses_time=s_handler.get_pulse_time(external=False)
 
-        stim_pop_name='Stim_' + str(pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
+    for t_pulse in external_pulses_info.keys():
 
-        netParams.popParams[stim_pop_name] =  {'cellModel': 'VecStim',
+        # External sensory stimuli
+        ext_stim_pop_name='Stim_' + str(external_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
+
+        netParams.popParams[ext_stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
-                   'pulses':[{'start': t_pulse*1000+pulses_time[0],
-                       'end': t_pulse*1000.0+pulses_time[1], 'rate': 200,
+                   'pulses':[{'start': t_pulse*1000+external_pulses_time[0],
+                       'end': t_pulse*1000.0+external_pulses_time[1], 'rate': 200,
                        'noise': 1.0}]}
 
 
-        x_pyr, x_bask=pulses_info[t_pulse]['values']
+        ext_x_pyr,ext_x_bask=external_pulses_info[t_pulse]['values']
 
-        netParams.connParams[stim_pop_name + '->PYR4'] = {
-            'preConds': {'popLabel': stim_pop_name},
-            'postConds': {'popLabel': 'PYR4', 'x': x_pyr},
+        netParams.connParams[ext_stim_pop_name + '->PYR4'] = {
+            'preConds': {'popLabel': ext_stim_pop_name},
+            'postConds': {'popLabel': 'PYR4', 'x': ext_x_pyr},
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
 
-        netParams.connParams[stim_pop_name + '->BASK4'] = {
-            'preConds': {'popLabel': stim_pop_name},
-            'postConds': {'popLabel': 'BASK4', 'x': x_bask},
+        netParams.connParams[ext_stim_pop_name + '->BASK4'] = {
+            'preConds': {'popLabel': ext_stim_pop_name},
+            'postConds': {'popLabel': 'BASK4', 'x': ext_x_bask},
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
+
+        # Internal stim - memory trace
+        '''
+        int_stim_pop_name='internal_' + str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
+
+        netParams.popParams[int_stim_pop_name] =  {'cellModel': 'VecStim',
+                       'numCells': 24, 'spkTimes':[0],
+                       'pulses':[{'start': t_pulse*1000+internal_pulses_time[0],
+                           'end': t_pulse*1000.0+internal_pulses_time[1], 'rate': 200,
+                           'noise': 1.0}]}
+        int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']
+
+        netParams.connParams[ext_stim_pop_name + '->PYR23'] = {
+            'preConds': {'popLabel': int_stim_pop_name},
+            'postConds': {'popLabel': 'PYR23', 'x': int_x_pyr},
+            'convergence': 1,
+            'weight': 0.02,
+            'threshold': 10,
+            'synMech': 'AMPA'}
+
+        netParams.connParams[ext_stim_pop_name + '->BASK23'] = {
+            'preConds': {'popLabel': int_stim_pop_name},
+            'postConds': {'popLabel': 'BASK23', 'x': int_x_bask},
+            'convergence': 1,
+            'weight': 0.02,
+            'threshold': 10,
+            'synMech': 'AMPA'}'''
 
     ###############################################################################
     # CONNECTIVITY PARAMETERS
@@ -206,11 +237,11 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'synMech': 'GABA'}
     '''
     # Inter-laminar connections
-
+    ## feedback
     netParams.connParams['PYR4->PYR23'] = {
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
-        'probability': '0.5*exp(-dist_2D/(0.1*40.0))',
+        'probability': '0.5*exp(-dist_2D/(1*40.0))',
         'weight': 3,#0.3,#0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
@@ -222,6 +253,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'weight': 0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
+
+    ## feedforward connection TBD
 
     ########################################################################
     # SIMULATION PARAMETERS
