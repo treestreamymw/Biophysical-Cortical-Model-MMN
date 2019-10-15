@@ -170,9 +170,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
         netParams.connParams[ext_stim_pop_name + '->PYR23_2nd'] = {
             'preConds': {'popLabel': int_stim_pop_name},
-            'postConds': {'popLabel': 'PYR23', 'x': int_x_pyr},
+            'postConds': {'popLabel': 'PYR23_2nd', 'x': int_x_pyr},
             'convergence': 1,
-            'weight': 0.01,#0.02,
+            'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
 
