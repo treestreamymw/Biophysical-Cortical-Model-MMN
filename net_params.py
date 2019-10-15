@@ -214,6 +214,14 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     # Layer 2/3 intra-laminar connections
     netParams.connParams['PYR23_2nd->PYR23_2nd'] = {
+        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'PYR23_2nd'},
+        'sec':'oblique2b',
+        'probability': '0.15*exp(-dist_3D/(4*40.0))',
+        'weight': [0.0024,0.00012],#[0.0012,0.0006],
+        'threshold': 10,
+        'synMech': ['AMPA','NMDA']}
+
+    netParams.connParams['PYR23->PYR23'] = {
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
@@ -229,7 +237,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'synMech': ['AMPA','NMDA']}
 
     netParams.connParams['PYR23_2nd->BASK23'] = {
-        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'BASK23'},
+        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'BASK23'},
         'probability': '0.45*exp(-dist_3D/(4*40.0))',
         'weight': [0.0012,0.00013],
         'threshold': 10,
