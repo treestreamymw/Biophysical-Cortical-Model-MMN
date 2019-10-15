@@ -172,7 +172,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'preConds': {'popLabel': int_stim_pop_name},
             'postConds': {'popLabel': 'PYR23_2nd', 'x': int_x_pyr},
             'convergence': 1,
-            'weight': 0.02,
+            'weight': 0.002,#0.02
             'threshold': 10,
             'synMech': 'AMPA'}
 
