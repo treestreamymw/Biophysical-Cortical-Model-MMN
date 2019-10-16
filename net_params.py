@@ -246,7 +246,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     netParams.connParams['BASK23->PYR23'] = {
         'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
-        'probability': '0.6*exp(-dist_3D/(20*40.0))',
+        'probability': '0.6*exp(-dist_3D/(2*40.0))',
         'weight': 0.001,
         'threshold': 10,
         'synMech': 'GABA'}
@@ -289,7 +289,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     external_input_populations=s_handler.stim_pop_values['external']
 
-    x_electrodes_locations = [ [x_value[0]+1,0, netParams.sizeZ/2]
+    x_electrodes_locations = [ [x_value[0]+1, 0, netParams.sizeZ/2]
                     for x_value in [external_input_populations[ext_pop]['x_values'][0]
                     for ext_pop in external_input_populations]]
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
