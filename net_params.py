@@ -213,16 +213,16 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     '''
 
     # Layer 2/3 intra-laminar connections
-    netParams.connParams['PYR23_2nd->PYR23_2nd'] = {
-        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'PYR23_2nd'},
+    netParams.connParams['PYR23_2nd->PYR23'] = {
+        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
-    netParams.connParams['PYR23->PYR23'] = {
-        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
+    netParams.connParams['PYR23->PYR23_2nd'] = {
+        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23_2nd'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],#[0.0012,0.0006],
@@ -247,7 +247,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(20*40.0))',
-        'weight': 0.002,
+        'weight': 0.001,
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -289,9 +289,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     external_input_populations=s_handler.stim_pop_values['external']
 
-    x_electrodes_locations = [ [g[0]+1, netParams.sizeZ*.8, netParams.sizeZ/2]
-                    for g in [external_input_populations[i]['x_values'][0]
-                    for i in external_input_populations]]
+    x_electrodes_locations = [ [x_value[0]+1,0, netParams.sizeZ/2]
+                    for x_value in [external_input_populations[ext_pop]['x_values'][0]
+                    for ext_pop in external_input_populations]]
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
 
     # Saving
