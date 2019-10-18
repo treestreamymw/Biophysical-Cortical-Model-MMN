@@ -81,10 +81,10 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
-    cellRule = netParams.importCellParams(label='PYR23_2nd', conds={'cellType': 'PYR',
+    '''cellRule = netParams.importCellParams(label='PYR23_2nd', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
-                                  		cellName='pyr_23_asym_stripped')
+                                  		cellName='pyr_23_asym_stripped')'''
 
     # BASK cell properties (INH)
     cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
@@ -158,7 +158,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'synMech': 'AMPA'}
 
         # Internal stim - memory trace
-
+        '''
         int_stim_pop_name='internal_' + str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         netParams.popParams[int_stim_pop_name] =  {'cellModel': 'VecStim',
@@ -176,7 +176,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'threshold': 10,
             'synMech': 'AMPA'}
 
-
+        '''
     ###############################################################################
     # CONNECTIVITY PARAMETERS
     ###############################################################################
@@ -213,21 +213,29 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     '''
 
     # Layer 2/3 intra-laminar connections
-    netParams.connParams['PYR23_2nd->PYR23'] = {
-        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'PYR23'},
+    netParams.connParams['PYR23->PYR23'] = {
+        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
-    netParams.connParams['PYR23->PYR23_2nd'] = {
+    '''netParams.connParams['PYR23_2nd->PYR23'] = {
+        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'PYR23'},
+        'sec':'oblique2b',
+        'probability': '0.15*exp(-dist_3D/(4*40.0))',
+        'weight': [0.0024,0.00012],#[0.0012,0.0006],
+        'threshold': 10,
+        'synMech': ['AMPA','NMDA']}'''
+
+    '''netParams.connParams['PYR23->PYR23_2nd'] = {
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23_2nd'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
-        'synMech': ['AMPA','NMDA']}
+        'synMech': ['AMPA','NMDA']}'''
 
     netParams.connParams['PYR23->BASK23'] = {
         'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'BASK23'},
@@ -236,12 +244,12 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
-    netParams.connParams['PYR23_2nd->BASK23'] = {
+    '''netParams.connParams['PYR23_2nd->BASK23'] = {
         'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'BASK23'},
         'probability': '0.45*exp(-dist_3D/(4*40.0))',
         'weight': [0.0012,0.00013],
         'threshold': 10,
-        'synMech': ['AMPA','NMDA']}
+        'synMech': ['AMPA','NMDA']}'''
 
     netParams.connParams['BASK23->PYR23'] = {
         'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'PYR23'},
