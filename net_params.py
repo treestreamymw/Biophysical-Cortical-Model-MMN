@@ -251,14 +251,14 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'threshold': 10,
         'synMech': 'GABA'}
 
-    '''
+
     netParams.connParams['BASK23->BASK23'] = {
         'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'BASK23'},
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 0.0,
+        'weight': 0.001,
         'threshold': 10,
         'synMech': 'GABA'}
-    '''
+
 
     ### inter-laminar connections
     netParams.connParams['PYR4->PYR23'] = {

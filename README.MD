@@ -27,13 +27,22 @@ We aim to explore the differences between Stimulus Specific Adaptation (SSA) and
 ### An overview of the model
 
 
-The model consists of two main layers; layer 2/3 and layer 4. Each layer illustrates a population of excitatory (pyramidal) cells and inhibitory (basket) cells. Each excitatory population has X neurons organized in X rows, and each inhibitory population had X/2 neurons organized in X rows (following biological ratio and topology). Layer 2/3 contains a secondary excitatory population. (See grid)
+The model consists of two main layers; layer 2/3 and layer 4. Each layer illustrates a population of excitatory (pyramidal) cells and inhibitory (basket) cells. Each excitatory population has 336 neurons organized in 14 rows (24 neurons per row), and each inhibitory population had 84 neurons organized in 7 rows (12 neurons per row). Such ratio and organization follows the biological structure of the cortex (CITE). Fig <> visualizes  the topology of each layer.
 
-The excitatory cells of layer 4 incorporate a simple four compartment cell (CITE) (FIG) and the excitatory of layer 2/3 present a more complex model (Beeman) 
+Layer 2/3 contains a secondary excitatory population supporting the feedforward stream (information stream from deeper regions). More details about it below.
+
+FIG
+
+The excitatory cells generally follow a Hay pyramidal cell model (CITE), where the cells of layer 4 incorporate a simple four compartment cell (CITE) (FIG) and the excitatory of layer 2/3 present a more complex model (Beeman) (FIG). (WHY). The inhibitory cells of both layers are basket cells (Vierling).(WHY)
+
+The network connectivity follows the topology seen in fig (FIG). This connectivity follows the canonical microcircuit for predictive coding outlined in Bastos et al. (2012).
+
+In layer connectivity is implemented by GABA for inhibitory connections and an AMPA/NMDA combination for the excitatory ones. (WHY). The intra-layer connectivity is solely excitatory and employs a modified AMPA model suitable for short-term facilitation (Varela et al., 1997)
 
 
 
-pyramidal cells of layer 4, basket cells of layer 4, first pyramidal cells of layer 2/3, secondary pyramidal cells of layer 2/3 basket cells of layer 2/3.
+
+
 
 ### An overview of the experimental design
 
@@ -52,21 +61,25 @@ pyramidal cells of layer 4, basket cells of layer 4, first pyramidal cells of la
 ### Simulation files
 
 * net_params.py includes NEURON network parameters and the simulation configuration.
-* net_oddball_sequence.py the file running the simulation based on the
+* net_sequence.py the file running the simulation based on the
 
 ### Directories
 
-* mod_files includes .mod files with neuron configurations
-* synapses includes .mod file configuring synaptic connections
+* Cells/ .hoc files configuring the different cells
+* Synapses/ .mod file configuring the kinetic function of the synapses
+* mod_files/  .mod files with ion channels configurations
+* x86_64/ compiles .mod files (mostly to C)
+
 
 ### utils
 
 * figure_utils.py has plotting tools
 * MP_class.py has multi processing tools
 * variation_utils.py includes tools to introduce genetic modifications to the model
+* stimulus_utils.py includes the class that handles the stimulus (converting sensory input from a frequency to an action potential in the correct area of the cortex)
 
 
-* config- NEED TO BE MODIFIED (includes some basic configurations)
+* config- includes some basic model configurations, i.e size of the network, length, etc.
 
 ## How to run
 
