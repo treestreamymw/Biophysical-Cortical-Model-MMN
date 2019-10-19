@@ -280,7 +280,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     netParams.connParams['PYR4->BASK23'] = {
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.8*exp(-dist_2D/(2.5*40.0))',
+        'probability': '0.8*exp(-dist_2D/(3*40.0))',
         'weight': 0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
