@@ -98,7 +98,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     netParams.synMechParams['AMPASTD'] = {'mod': 'FDSExp2Syn', 'tau1': 1.0,
                                           'tau2': 3.0, 'e': 0.0, 'f': 0.0,
                                           'tau_F': 94.0, 'd1': 0.46,
-                                          'tau_D1': 380, 'd2': 0.96,
+                                          'tau_D1': 380, 'd2': 0.76,
                                           'tau_D2': 9200}  # only depression
     netParams.synMechParams['GABA'] = {'mod': 'Exp2Syn',
                                        'tau1': 5.0, 'tau2': 12.0, 'e': -75.0}
@@ -281,7 +281,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     netParams.connParams['PYR4->BASK23'] = {
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_2D/(4*40.0))',
-        'weight': 0.00015,
+        'weight': 0.0015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
