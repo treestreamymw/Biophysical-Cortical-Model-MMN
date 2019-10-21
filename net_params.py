@@ -118,7 +118,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     s_handler = Simulation_stimuli_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
-                                dev_indexes=[SIM_PARAMS[NET_TYPE]['n_pulses']-1],
+                                dev_indexes=[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
                                 task=TASK)
     s_handler.set_task_stimuli()
 
@@ -321,6 +321,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     simConfig.filename = fig_name  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
     simConfig.savePickle = False  # True  # Whether or not to write spikes etc. to a .pkl file
+    simConfig.saveJson = True
 
     # Analysis and plotting
     simConfig.analysis['plotRaster'] = {'saveFig':
