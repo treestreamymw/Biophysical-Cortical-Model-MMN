@@ -35,6 +35,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                     'yRange': [.8*netParams.sizeY,
                                                 .8*netParams.sizeY],
                                     'color': 'blue'}
+
     ## secondary excitatory cells layer 2/3
     netParams.popParams['PYR23_2nd'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                     'gridSpacing': 40.0,
@@ -65,7 +66,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     # Cell parameters
 
-    # PYR cell properties (EXC)
+    # PYR cell properties ()
     cellRule = netParams.importCellParams(label='PYR4', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/fourcompartment.hoc',
@@ -81,10 +82,10 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
-    '''cellRule = netParams.importCellParams(label='PYR23_2nd', conds={'cellType': 'PYR',
+    cellRule = netParams.importCellParams(label='PYR23_2nd', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
-                                  		cellName='pyr_23_asym_stripped')'''
+                                  		cellName='pyr_23_asym_stripped')
 
     # BASK cell properties (INH)
     cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
@@ -272,8 +273,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     netParams.connParams['PYR4->PYR23'] = {
         'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
-        'probability': '0.5*exp(-dist_2D/(1*40.0))',
-        'weight': 0.3,#0.03,
+        'probability': '0.5*exp(-dist_2D/(2*40.0))',
+        'weight': 0.03,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
@@ -311,7 +312,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     external_input_populations=s_handler.stim_pop_values['external']
 
-    x_electrodes_locations = [ [x_value[0]+1, netParams.sizeY, netParams.sizeZ/2]
+    x_electrodes_locations = [ [x_value[0]+1, 0, netParams.sizeZ/2]
                     for x_value in [external_input_populations[ext_pop]['x_values'][0]
                     for ext_pop in external_input_populations]]
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
