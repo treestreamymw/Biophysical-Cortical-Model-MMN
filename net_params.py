@@ -318,6 +318,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
 
     # Saving
+    simConfig.saveFolder = 'output_files'
     simConfig.filename = fig_name  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
     simConfig.savePickle = False  # True  # Whether or not to write spikes etc. to a .pkl file
@@ -325,7 +326,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     # Analysis and plotting
     simConfig.analysis['plotRaster'] = {'saveFig':
-        'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
+        '{}_raster.png'.format(fig_name), 'saveData':True}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
     #simConfig.analysis['plot2Dnet'] = {'view': 'xz',
@@ -334,7 +335,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             #'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
-         'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
+         'saveFig': '{}_LFP.png'.format(fig_name)}
 
 
     return (netParams, simConfig)
