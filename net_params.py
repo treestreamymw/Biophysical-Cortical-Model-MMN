@@ -160,7 +160,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
         # Internal stim - memory trace
 
-        int_stim_pop_name='internal_' +
+        int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         netParams.popParams[int_stim_pop_name] =  {'cellModel': 'VecStim',
