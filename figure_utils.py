@@ -132,7 +132,7 @@ def get_spk_data(file_name):
 
     return {'spktime':spktime, 'spkid':spkid, 'infreq_index':infreq_indexes}
 
-def plot_num_of_spks_over_time(path, trim_ms, N_peaks):
+def plot_num_of_neurons(path, trim_ms, N_peaks):
     data = get_spk_data(path)
 
     spktime = data['spktime']
@@ -185,7 +185,7 @@ path='/Users/gilikarni/Google Drive/work/TU-berlin/Capstone/Code/output_files/si
 # for more than one json , list the paths
 #plot_freq_vs_infreq_LFP([path], 8)
 #plot_full_LFP([path],8)
-#plot_num_of_spks_over_time(path,50,8)
+plot_num_of_neurons(path,50,8)
 
 D= open_file_as_json(path)
 print (D.keys())

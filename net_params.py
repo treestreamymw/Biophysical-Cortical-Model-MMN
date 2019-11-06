@@ -335,16 +335,38 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     # Analysis and plotting
     simConfig.analysis['plotRaster'] = {'saveFig':
-        '{}_raster.png'.format(fig_name), 'saveData':True}  # Plot raster
+        '{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-    #simConfig.analysis['plot2Dnet'] = {'view': 'xz',
-            #'include': ['PYR23','BASK23','PYR4','BASK4'],
-            #'showConns': True ,
-            #'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
+
+    simConfig.analysis['plotSpikeHist'] = {
+            'include': ['PYR23','PYR_prediction'],
+            'timeRange':[[t_pulse*1000.0+500:(1+t_pulse)*1000.0] \
+                for t_pulse in range(SIM_PARAMS[NET_TYPE]['n_pulses'])],
+            'yaxis':'count',
+            'graphType':'line',
+            'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}  # Plot 2D net cells and connections
+
+    simConfig.analysis['plotSpikeStats'] = {
+            'include': ['PYR23','PYR_prediction'],
+            'timeRange':[[t_pulse*1000.0+500:(1+t_pulse)*1000.0] \
+                for t_pulse in range(SIM_PARAMS[NET_TYPE]['n_pulses'])],
+            'yaxis':'count',
+            'graphType':'line',
+            'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}  # Plot 2D net cells and connections
+
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
          'saveFig': '{}_LFP.png'.format(fig_name)}
 
+    simConfig.analysis['plotShape'] = {'includePre':'allCells',
+            'includePre':'None',
+            'showSyns':False,
+            'saveFig': 'output_files/{}_Shape.png'.format(fig_name)}
+                }
+    simConfig.analysis['plot2Dnet'] = {'view': 'xz',
+            'include': ['PYR23','BASK23','PYR4','BASK4', 'PYR_prediction'],
+            'showConns': True ,
+            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
 
     return (netParams, simConfig)
