@@ -353,7 +353,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'includePre':'None',
             'showSyns':False,
             'saveFig': 'output_files/{}_Shape.png'.format(fig_name)}
-                }
+
     simConfig.analysis['plot2Dnet'] = {'view': 'xz',
             'include': ['PYR23','BASK23','PYR4','BASK4', 'PYR_prediction'],
             'showConns': True ,
