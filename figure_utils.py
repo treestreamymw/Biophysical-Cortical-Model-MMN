@@ -181,18 +181,23 @@ def plot_num_of_neurons(path, trim_ms, N_peaks):
     plt.show()
 ###################
 
-path='/Users/gilikarni/Google Drive/work/TU-berlin/Capstone/Code/output_files/simple_model_pyr4_bask23_G_3_W_000015_pyr23_g_2_w_3_dev_loc.json'
+path='/Users/gilikarni/Google Drive/work/TU-berlin/Capstone/Code/output_files/prediction_layer.json'
 # for more than one json , list the paths
 #plot_freq_vs_infreq_LFP([path], 8)
 #plot_full_LFP([path],8)
-plot_num_of_neurons(path,50,8)
+# plot_num_of_neurons(path,50,8)
 
 D= open_file_as_json(path)
 print (D.keys())
 print (D['simData'].keys())
 print (D['net']['params'].keys())
 
-print (D['net']['cells'][:2])
+print (D['net']['cells'][0]['gid'])
+print (D['net']['cells'][0]['tags']['pop'])
+
+print(D['simData'].keys())
+print(D['simData']['dipole'].keys())
+#print ([i['gid'] for i in D['net']['cells'][:2]])
 print (len(D['simData']['LFP'])) #80000 as the length of the sim in 10*ms
 print (len(D['simData']['spkid'])) ### 15570
 print (len(set(D['simData']['spkid']))) #810
