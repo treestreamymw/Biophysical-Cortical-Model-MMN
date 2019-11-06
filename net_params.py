@@ -37,7 +37,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                     'color': 'blue'}
 
     ## secondary excitatory cells layer 2/3
-    netParams.popParams['PYR23_2nd'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
+    netParams.popParams['PYR_prediction'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
                                     'yRange': [.6*netParams.sizeY,
@@ -82,7 +82,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
-    cellRule = netParams.importCellParams(label='PYR23_2nd', conds={'cellType': 'PYR',
+    cellRule = netParams.importCellParams(label='PYR_prediction', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
@@ -135,7 +135,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
         netParams.popParams[ext_stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
-                   'pulses':[{'start': t_pulse*1000+external_pulses_time[0],
+                   'pulses':[{'start': t_pulse*1000.0+external_pulses_time[0],
                        'end': t_pulse*1000.0+external_pulses_time[1], 'rate': 200,
                        'noise': 1.0}]}
 
@@ -159,32 +159,35 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
             'synMech': 'AMPA'}
 
         # Internal stim - memory trace
-        '''
-        int_stim_pop_name='internal_' + str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
+
+        int_stim_pop_name='internal_' +
+            str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         netParams.popParams[int_stim_pop_name] =  {'cellModel': 'VecStim',
                        'numCells': 24, 'spkTimes':[0],
-                       'pulses':[{'start': t_pulse*1000+internal_pulses_time[0],
-                           'end': t_pulse*1000.0+internal_pulses_time[1], 'rate': 200,
+                       'pulses':[{'start': t_pulse*1000.0+internal_pulses_time[0],
+                           'end': t_pulse*1000.0+internal_pulses_time[1],
+                           'rate': 200,
                            'noise': 1.0}]}
         int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']
 
-        netParams.connParams[ext_stim_pop_name + '->PYR23_2nd'] = {
+        netParams.connParams[ext_stim_pop_name + '->PYR_prediction'] = {
             'preConds': {'popLabel': int_stim_pop_name},
-            'postConds': {'popLabel': 'PYR23_2nd', 'x': int_x_pyr},
+            'postConds': {'popLabel': 'PYR_prediction', 'x': int_x_pyr},
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
             'synMech': 'AMPA'}
 
-        '''
+
     ###############################################################################
     # CONNECTIVITY PARAMETERS
     ###############################################################################
 
     # Layer 4 intra-laminar connections
     netParams.connParams['PYR4->PYR4'] = {
-        'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR4'},
+        'preConds': {'popLabel': 'PYR4'},
+        'postConds': {'popLabel': 'PYR4'},
         'sec': 'apic_1',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0012,0.0006],
@@ -192,21 +195,24 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'synMech': ['AMPA','NMDA']}
 
     netParams.connParams['PYR4->BASK4'] = {
-        'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'BASK4'},
+        'preConds': {'popLabel': 'PYR4'},
+        'postConds': {'popLabel': 'BASK4'},
         'probability': '0.45*exp(-dist_3D/(4*40.0))',
         'weight': [0.0012,0.00013],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
     netParams.connParams['BASK4->PYR4'] = {
-        'preConds': {'popLabel': 'BASK4'}, 'postConds': {'popLabel': 'PYR4'},
+        'preConds': {'popLabel': 'BASK4'},
+        'postConds': {'popLabel': 'PYR4'},
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
         'weight': 0.003,
         'threshold': 10,
         'synMech': 'GABA'}
     '''
     netParams.connParams['BASK4->BASK4'] = {
-        'preConds': {'popLabel': 'BASK4'}, 'postConds': {'popLabel': 'BASK4'},
+        'preConds': {'popLabel': 'BASK4'},
+        'postConds': {'popLabel': 'BASK4'},
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
         'weight': 0.0,
         'threshold': 10,
@@ -215,45 +221,26 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     # Layer 2/3 intra-laminar connections
     netParams.connParams['PYR23->PYR23'] = {
-        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23'},
+        'preConds': {'popLabel': 'PYR23'},
+        'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
-
-    '''netParams.connParams['PYR23_2nd->PYR23'] = {
-        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'PYR23'},
-        'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.0024,0.00012],#[0.0012,0.0006],
-        'threshold': 10,
-        'synMech': ['AMPA','NMDA']}'''
-
-    '''netParams.connParams['PYR23->PYR23_2nd'] = {
-        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'PYR23_2nd'},
-        'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.0024,0.00012],#[0.0012,0.0006],
-        'threshold': 10,
-        'synMech': ['AMPA','NMDA']}'''
 
     netParams.connParams['PYR23->BASK23'] = {
-        'preConds': {'popLabel': 'PYR23'}, 'postConds': {'popLabel': 'BASK23'},
+        'preConds': {'popLabel': 'PYR23'},
+        'postConds': {'popLabel': 'BASK23'},
         'probability': '0.45*exp(-dist_3D/(4*40.0))',
         'weight': [0.0012,0.00013],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
-    '''netParams.connParams['PYR23_2nd->BASK23'] = {
-        'preConds': {'popLabel': 'PYR23_2nd'}, 'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.45*exp(-dist_3D/(4*40.0))',
-        'weight': [0.0012,0.00013],
-        'threshold': 10,
-        'synMech': ['AMPA','NMDA']}'''
 
     netParams.connParams['BASK23->PYR23'] = {
-        'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'PYR23'},
+        'preConds': {'popLabel': 'BASK23'},
+        'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
         'weight': 0.002,
@@ -262,16 +249,27 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
 
     '''netParams.connParams['BASK23->BASK23'] = {
-        'preConds': {'popLabel': 'BASK23'}, 'postConds': {'popLabel': 'BASK23'},
+        'preConds': {'popLabel': 'BASK23'},
+        'postConds': {'popLabel': 'BASK23'},
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
         'weight': 0.0,
         'threshold': 10,
         'synMech': 'GABA'}'''
 
+    ## prediction layer
+    netParams.connParams['PYR_prediction->PYR_prediction'] = {
+        'preConds': {'popLabel': 'PYR_prediction'},
+        'postConds': {'popLabel': 'PYR_prediction'},
+        'sec':'oblique2b',
+        'probability': '0.15*exp(-dist_3D/(4*40.0))',
+        'weight': [0.0024,0.00012],
+        'threshold': 10,
+        'synMech': ['AMPA','NMDA']}
 
     ### inter-laminar connections
     netParams.connParams['PYR4->PYR23'] = {
-        'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'PYR23'},
+        'preConds': {'popLabel': 'PYR4'},
+        'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
         'weight': 0.3,
@@ -280,8 +278,19 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
 
     netParams.connParams['PYR4->BASK23'] = {
-        'preConds': {'popLabel': 'PYR4'}, 'postConds': {'popLabel': 'BASK23'},
+        'preConds': {'popLabel': 'PYR4'},
+        'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_2D/(3*40.0))',
+        'weight': 0.00015,
+        'threshold': 10,
+        'synMech': 'AMPASTD'}
+
+
+
+    netParams.connParams['PYR_prediction->BASK23'] = {
+        'preConds': {'popLabel': 'PYR_prediction'},
+        'postConds': {'popLabel': 'BASK23'},
+        'probability': '0.8*exp(-dist_3D/(3*40.0))',
         'weight': 0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}

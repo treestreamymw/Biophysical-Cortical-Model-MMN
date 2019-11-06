@@ -8,10 +8,6 @@ This includes a NEURON model of the auditory cortex. Inspired by the work of
 
 ‘Bastos, A.M., Usrey, W.M., Adams, R.A., Mangun, G.R., Fries, P., Friston, K.J. (2012). Canonical microcircuits for predictive coding. Neuron, 76, 695-711.’
 
-The model architecture is based on the canonical microcircuit for predictive coding outlined in Bastos et al. (2012) which presents a simplified scheme. The model includes of a granular (Layer 4) and supergranular (Layer 2/3). we do not include an infragranular (Layer 5/6) layer, for reasons explained below. Each includes excitatory and inhibitory population.
-
-We model forward and backward connectivity, carrying prediction and prediction error messages respectively.
-
 
 
 ## Getting Started
@@ -26,21 +22,37 @@ We aim to explore the differences between Stimulus Specific Adaptation (SSA) and
 
 ### An overview of the model
 
+The model designed to reflect a primary auditory cortex to study the MMN phenomenon. The model architecture is based on the canonical microcircuit for predictive coding outlined in Bastos et al (2012) which presents a simplified scheme. The model includes of a granular (Layer 4) and super-granular (Layer 2/3). we do not include an infra-granular (Layer 5/6) layer, for reasons explained below. Each includes excitatory and inhibitory population.
 
-The model consists of two main layers; layer 2/3 and layer 4. Each layer illustrates a population of excitatory (pyramidal) cells and inhibitory (basket) cells. Each excitatory population has 336 neurons organized in 14 rows (24 neurons per row), and each inhibitory population had 84 neurons organized in 7 rows (12 neurons per row). Such ratio and organization follows the biological structure of the cortex (CITE). Fig <> visualizes  the topology of each layer.
+#### The network level
 
-Layer 2/3 contains a secondary excitatory population supporting the feedforward stream (information stream from deeper regions). More details about it below.
+The network's architecture synthesizes Kudela ET AL. (2018) work on SSA in the auditory cortex and Bastos et al (2012) work on predictive coding.
 
-FIG
+The network consists of two cortical layers; layer 2/3 and layer 4. We discount layer 5/6 since it does not significantly support MMN (Bastos, 2012) and would increase the computational load. An additional auxiliary layer demonstrates the auditory afferent inputs from thalamus to layer 4.
 
-The excitatory cells generally follow a Hay pyramidal cell model (CITE), where the cells of layer 4 incorporate a simple four compartment cell (CITE) (FIG) and the excitatory of layer 2/3 present a more complex model (Beeman) (FIG). (WHY). The inhibitory cells of both layers are basket cells (Vierling).(WHY)
+The model represents the frequency-specific (tonotopic) organization of auditory cortex, such that each row of neurons corresponds to a different frequency.   
 
-The network connectivity follows the topology seen in fig (FIG). This connectivity follows the canonical microcircuit for predictive coding outlined in Bastos et al. (2012).
+Each cortical layer illustrates a population of excitatory (pyramidal) cells and inhibitory (basket) cells. Each excitatory population has 336 neurons organized in 14 rows (24 neurons per row), and each inhibitory population had 84 neurons organized in 7 rows (12 neurons per row). Such ratio and organization follows the biological structure of the cortex (CITE). The auxiliary layer consists of eight populations of 24 cells, corresponding with the number of stimuli presented to the model.
 
-In layer connectivity is implemented by GABA for inhibitory connections and an AMPA/NMDA combination for the excitatory ones. (WHY). The intra-layer connectivity is solely excitatory and employs a modified AMPA model suitable for short-term facilitation (Varela et al., 1997)
+Following Bastos et al (2012), layer 2/3 contains a secondary excitatory population supporting the prediction error stream (information stream from deeper regions). More details about it below.
+
+The general network connectivity follows the canonical microcircuit for predictive coding outlined in Bastos et al (2012).  Inter-layer connectivity features excitatory (NMDA, AMPA) and inhibitory (GABA) synapses. Inter-laminar connectivity features short term plasticity via modified AMPA synapses. All but the addition of NMDA receptor is a replication of Kudela et al, (2018). The choice to ass NMDA receptors stemmed from their importance in SZ and MMN (CITE).
+
+#### The cellular level
+Simulated neurons were bio-physically realistic
+multi compartmental cell models.
+
+Cortical excitatory cells simulated here via a Hay pyramidal cell model (CITE). The cells of layer 4 incorporate a simple four compartments cell (CITE) (FIG) and the excitatory of layer 2/3 present a more complex model (Beeman) (FIG). (WHY).
+
+- Layer 4 Pyramidal cell (fourcompartment).
+- Layer23 Pyramidal cell (pyr_23_asym_stripped)
 
 
+The inhibitory cells of both layers are a simple two compartments basket cells (Vierling).(WHY)
 
+- Basket cell (FS)
+
+#### The biophysical level
 
 
 
