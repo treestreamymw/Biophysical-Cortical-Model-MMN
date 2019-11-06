@@ -341,8 +341,6 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     simConfig.analysis['plotSpikeHist'] = {
             'include': ['PYR23','PYR_prediction'],
-            'timeRange':[[t_pulse*1000.0+500:(1+t_pulse)*1000.0] \
-                for t_pulse in range(SIM_PARAMS[NET_TYPE]['n_pulses'])],
             'yaxis':'count',
             'graphType':'line',
             'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}  # Plot 2D net cells and connections
