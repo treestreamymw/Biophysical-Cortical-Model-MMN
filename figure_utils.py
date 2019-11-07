@@ -10,7 +10,11 @@ from glob import glob
 import os
 import re
 import collections
+import argparse
+
 plt.style.use('ggplot')
+
+
 
 def get_gid_from_pop(data, pop):
     '''get cell ids from population '''
@@ -134,7 +138,9 @@ def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim):
     plt.plot(-1*data['infreq'], label='infrequent', c='coral', alpha=.7)
     plt.title('Frequent vs Infrequent mean potentials')
     plt.legend()
+    plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs'))
     plt.show()
+    print ('LFP plot saved')
 
 def plot_full_LFP(file_names_list, N_stim):
     N_msrmnt = 10000
@@ -169,7 +175,7 @@ def plot_full_LFP(file_names_list, N_stim):
         plt.plot(range(infreq_stim[0]*N_per_stim,(infreq_stim[0]+1)*N_per_stim),
                             flat_peaks[infreq_stim[0]*N_per_stim:(infreq_stim[0]+1)*N_per_stim],
                             c='coral')
-        plt.title('Layer 2/3 LFP  (trimmed first {} ms)'.format(ms_to_trim))
+        plt.title(' LFP  (trimmed first {} ms)'.format(ms_to_trim))
         plt.show()
 
 def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
@@ -241,36 +247,25 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
 
     plt.title('{}, Populations :{}'.format(plot_title[plot_type],pop))
     plt.legend()
+    plt.savefig('output_files/{}/{}_{}.png'.format(FIG_DIR_NAME,plot_title[plot_type],pop))
     plt.show()
-
-
+    print ('{} plot saved'.format(plot_title[plot_type]))
 
 
 
 ###################
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("DIR", help="enter the directory name", type=str)
+    parser.add_argument("JSON", help="enter the json file name", type=str)
+    args = parser.parse_args()
 
-path='output_files/prediction_layer_decrease_w_pyr4_pyr23.json'
-#path='output_files/prediction_layer.json'
-
-#path='output_files/simple_model.json'
-# for more than one json , list the paths
-#plot_freq_vs_infreq_LFP([path], 8)
-#plot_full_LFP([path],8)
-
-
-#plot_spiking_stats(path, 8, trim_ms=0, pop=['PYR23'], k=100)
-D=open_file_as_json(path)
+    FIG_DIR_NAME=args.DIR#'pyr4_23_div10'
+    JSON_FILE_NAME=args.JSON#'prediction_layer_decrease_w_pyr4_pyr23.json'
+    path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
 
 
-plot_spiking_stats_df(path, 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
-plot_spiking_stats_df(path, 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
 
-
-#print ([i['gid'] for i in D['net']['cells'][:2]])
-#print (len(D['simData']['LFP'])) #80000 as the length of the sim in 10*ms
-#print (len(D['simData']['spkid'])) ### 15570
-#print (len(set(D['simData']['spkid']))) ### 1026
-
-#print (len(set(D['simData']['spkid']))) #810
-#print (len(D['simData']['spkt'])) ### 15570
-#print (len(set(D['simData']['spkt']))) #12153
+    plot_spiking_stats_df(path, 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
+    plot_spiking_stats_df(path, 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
+    plot_freq_vs_infreq_LFP([path],8)
