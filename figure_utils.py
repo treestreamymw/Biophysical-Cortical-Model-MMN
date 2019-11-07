@@ -1,11 +1,65 @@
 import json
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+try: # Pandas 0.24 and later
+    from pandas import _lib as pandaslib
+except: # Pandas 0.23 and earlier
+    from pandas import lib as pandaslib
 from glob import glob
 import os
 import re
 import collections
 plt.style.use('ggplot')
+
+def get_gid_from_pop(data, pop):
+    '''get cell ids from population '''
+    cellGids=[]
+    if pop is None:
+        return data['simData']['spkid']
+    for cell in data['net']['cells']:
+        if cell['tags']['pop'] in pop:
+            cellGids.append(cell['gid'])
+    return cellGids
+
+def get_spk_data_for_pop(data, pop):
+
+    cellGids=get_gid_from_pop(data,pop)
+    df = pd.DataFrame(pandaslib.to_object_array([data['simData']['spkt'],\
+            data['simData']['spkid']]).transpose(), \
+            columns=['spkt', 'cellid'])
+    sel = df.query('cellid in @cellGids')
+    sel['spkind']=sel.index.copy()
+
+    return sel
+
+def trim_and_round_time_for_spikes(df, N_stim, trim_ms=50, round_k=100):
+    '''
+    trims the first N ms from each spike (ignore the initial respose) and rounds
+    the data to bins of size K
+
+    df - the data
+    N_stim= number of stimuli
+    trim_ms- how many ms to trim
+    round_k- the bin size
+
+    '''
+
+    df['spkt_mod']=df['spkt']
+    df['spkt_mod']=df['spkt_mod'].astype(int)
+
+    trim_list=[i for j in [range(j*1000, j*1000+trim_ms) for j in range(N_stim)] for i in j]
+
+    trim_first_n_ms_index = df.index[df['spkt_mod'].isin(trim_list)].tolist()
+    df=df.drop(trim_first_n_ms_index)
+    df['spkt_mod']=df['spkt_mod'].floordiv(round_k)
+
+    data_per_spike=df.groupby('spkt_mod').nunique()[['cellid','spkind']]
+    spks=data_per_spike['spkind'].tolist()
+    cells=data_per_spike['cellid'].tolist()
+    t_index=data_per_spike.index.tolist()
+
+    return {'spikes':spks, 'n_recruited_neurons':cells,'t_index':t_index}
 
 def find_infreq_index(j_data):
     infreq_indexes =[]
@@ -24,15 +78,15 @@ def open_file_as_json(name):
     return json.loads(data)
 
 ### ploting the frequnt vs infrequent LFPs
-def prepare_data_LFP(LFP_dict, N_peaks, infreq_index, ms_to_trim=5, mean=True):
+def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
 
     # avg 0,1 electrodes
     avg_LFP = [np.mean(i) for i in LFP_dict]
 
     #create a matrix and populate with the LFP data by peak
-    LFP_peak_matrix = np.zeros(shape=(N_peaks,10000))
+    LFP_peak_matrix = np.zeros(shape=(N_stim,10000))
 
-    for i in range(N_peaks):
+    for i in range(N_stim):
         LFP_peak_matrix[i]=avg_LFP[i*10000:(i+1)*10000]
         #remove initial peak
         LFP_peak_matrix[i][:500]=LFP_peak_matrix[i][501]
@@ -50,7 +104,7 @@ def prepare_data_LFP(LFP_dict, N_peaks, infreq_index, ms_to_trim=5, mean=True):
 
     return {'infreq':peak_infreq, 'freq':peak_freq_mean}
 
-def exctract_data_LFP(file_names_list, N_peaks):
+def exctract_data_LFP(file_names_list, N_stim):
     all_infreq_LFPs = []
     all_freq_LFP = []
 
@@ -58,17 +112,12 @@ def exctract_data_LFP(file_names_list, N_peaks):
     for file_name in file_names_list:
 
         j_data = open_file_as_json(file_name)
-
         LFP = j_data['simData']['LFP']
-
-        freq_stim = j_data['net']['params']['connParams']['Stim_std_0->PYR4']['postConds']['x']
-
-        names = j_data['net']['params']['connParams']
 
         infreq_stim = find_infreq_index(j_data)
 
 
-        prepared_data = prepare_data_LFP(LFP, N_peaks, infreq_stim[0], 5, True)
+        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim[0], 5, True)
 
         all_infreq_LFPs.append(prepared_data['infreq'])
         all_freq_LFP.append(prepared_data['freq'])
@@ -78,8 +127,8 @@ def exctract_data_LFP(file_names_list, N_peaks):
 
     return {'infreq':mean_infreq_LFPs, 'freq':mean_freq_LFP}
 
-def plot_freq_vs_infreq_LFP (PATH_LIST, n_stim):
-    data = exctract_data_LFP(PATH_LIST, n_stim)
+def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim):
+    data = exctract_data_LFP(PATH_LIST, N_stim)
 
     plt.plot(-1*data['freq'], label='frequent', c='grey')
     plt.plot(-1*data['infreq'], label='infrequent', c='coral', alpha=.7)
@@ -87,7 +136,7 @@ def plot_freq_vs_infreq_LFP (PATH_LIST, n_stim):
     plt.legend()
     plt.show()
 
-def plot_full_LFP(file_names_list, N_peaks):
+def plot_full_LFP(file_names_list, N_stim):
     N_msrmnt = 10000
 
     for file_name in file_names_list:
@@ -95,14 +144,14 @@ def plot_full_LFP(file_names_list, N_peaks):
         infreq_stim = find_infreq_index(j_data)
         LFP = j_data['simData']['LFP']
         ms_to_trim=5
-        prepared_data = prepare_data_LFP(LFP, N_peaks, infreq_stim[0], ms_to_trim ,False)
+        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim[0], ms_to_trim ,False)
 
         all_infreq_LFPs=prepared_data['infreq']
         all_freq_LFP=prepared_data['freq']
 
         #avg_LFP = [np.mean(i) for i in LFP]
         all_peaks=[]
-        for peak in range(N_peaks-1):
+        for peak in range(N_stim-1):
             if peak==infreq_stim[0]:
                 all_peaks.append(all_infreq_LFPs)
                 all_peaks.append(1000*[all_infreq_LFPs[-1]])
@@ -123,46 +172,56 @@ def plot_full_LFP(file_names_list, N_peaks):
         plt.title('Layer 2/3 LFP  (trimmed first {} ms)'.format(ms_to_trim))
         plt.show()
 
-def get_spk_data(file_name):
-    j_data = open_file_as_json(file_name)
+def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
+    '''
+    path - to json files
+    plot type - AP or NEURONS
+    N peask - the expected number of stimuli
+    trim_ms - the number of ms to ignore at the start of the stim
+    pop - the populations to include
+    k- the numebr of ms to bin
+    '''
 
-    spktime = j_data['simData']['spkt']
-    spkid = j_data['simData']['spkid']
-    infreq_indexes = find_infreq_index(j_data)
+    assert plot_type == 'AP' or plot_type == 'NEURONS', \
+        'choose between AP and NEURONS'
 
-    return {'spktime':spktime, 'spkid':spkid, 'infreq_index':infreq_indexes}
+    plot_title= {'AP':'# of AP', 'NEURONS':'# of recruited neurons'}
+    # get data and prepare it
+    data=open_file_as_json(path)
+    df=get_spk_data_for_pop(data, pop)
+    infreq_id = find_infreq_index(data)[0]
 
-def plot_num_of_neurons(path, trim_ms, N_peaks):
-    data = get_spk_data(path)
+    trimmed_data=trim_and_round_time_for_spikes(df, N_stim, \
+            trim_ms=trim_ms, round_k=100)
 
-    spktime = data['spktime']
-    spkid = data['spkid']
-    infreq_id = data['infreq_index'][0]
-    # count spike ids per spike times
-    all_spk_times={t:[] for t in list(set(spktime))}
-    for spk_t, spk_id in zip(spktime, spkid):
-        all_spk_times[spk_t].append(spk_id)
+    t_index=trimmed_data['t_index']
+    spks=trimmed_data['spikes']
+    cells=trimmed_data['n_recruited_neurons']
 
-    #sort and remove first 5ms
-    spks_per_t = collections.OrderedDict(sorted({t:
-        np.sum(all_spk_times[t]) for t in all_spk_times}.items()))
+    # prepare dicts to collect data for plot
 
-    X={i:[] for i in range(N_peaks)}
-    Y={i:[] for i in range(N_peaks)}
-    for t, n_spikes in spks_per_t.items():
-        stim_i = t//1000
+    spike_ids_per_t={i:[] for i in range(N_stim)}
+    n_rec_neuron_per_t={i:[] for i in range(N_stim)}
+    X={i:[] for i in range(N_stim)}
 
-        # delete imitial 5 ms
-        if (((t>stim_i*1000+500) and (t<stim_i*1000+500+trim_ms)) or  (t<500)):
-            pass
-        else:
-            X[stim_i].append(t)
-            Y[stim_i].append(n_spikes)
+    prev_t=0
+    i=0
+
+    for time_ind, t in enumerate(t_index):
+        curr_t=t
+
+        if int(curr_t)//10!=int(prev_t)//10:
+            i+=1
+
+        prev_t=curr_t
+
+        X[i].append(t)
+        spike_ids_per_t[i].append(spks[time_ind])
+        n_rec_neuron_per_t[i].append(cells[time_ind])
+
     label_ploted=False
-    for stim in range(N_peaks):
-
-
-        if stim==infreq_id:
+    for stim_i in range(N_stim):
+        if stim_i==infreq_id:
             c='coral'
             label='infrequent'
         else:
@@ -173,33 +232,43 @@ def plot_num_of_neurons(path, trim_ms, N_peaks):
                 label='frequent'
                 label_ploted=True
 
+        if plot_type=='AP':
+            plt.plot([X[stim_i][0]]+X[stim_i]+[X[stim_i][-1]],\
+                [0]+spike_ids_per_t[stim_i]+[0], c=c, label=label)
+        elif plot_type=='NEURONS':
+            plt.bar(X[stim_i],n_rec_neuron_per_t[stim_i], color=c)
 
-        plt.plot(X[stim][100:],Y[stim][100:], c=c, label=label)
 
-    plt.title('Layer 2/3+4 # of recruited neurons')
+    plt.title('{}, Populations :{}'.format(plot_title[plot_type],pop))
     plt.legend()
     plt.show()
+
+
+
+
+
 ###################
 
 path='/Users/gilikarni/Google Drive/work/TU-berlin/Capstone/Code/output_files/prediction_layer.json'
+#path='output_files/simple_model.json'
 # for more than one json , list the paths
 #plot_freq_vs_infreq_LFP([path], 8)
 #plot_full_LFP([path],8)
-# plot_num_of_neurons(path,50,8)
 
-D= open_file_as_json(path)
-print (D.keys())
-print (D['simData'].keys())
-print (D['net']['params'].keys())
 
-print (D['net']['cells'][0]['gid'])
-print (D['net']['cells'][0]['tags']['pop'])
+#plot_spiking_stats(path, 8, trim_ms=0, pop=['PYR23'], k=100)
+D=open_file_as_json(path)
 
-print(D['simData'].keys())
-print(D['simData']['dipole'].keys())
+
+plot_spiking_stats_df(path, 'AP', 8, 0, ['PYR23'])#,'PYR_prediction'])
+plot_spiking_stats_df(path, 'NEURONS', 8, 0, ['PYR23'])#,'PYR_prediction'])
+
+
 #print ([i['gid'] for i in D['net']['cells'][:2]])
-print (len(D['simData']['LFP'])) #80000 as the length of the sim in 10*ms
-print (len(D['simData']['spkid'])) ### 15570
-print (len(set(D['simData']['spkid']))) #810
-print (len(D['simData']['spkt'])) ### 15570
-print (len(set(D['simData']['spkt']))) #12153
+#print (len(D['simData']['LFP'])) #80000 as the length of the sim in 10*ms
+#print (len(D['simData']['spkid'])) ### 15570
+#print (len(set(D['simData']['spkid']))) ### 1026
+
+#print (len(set(D['simData']['spkid']))) #810
+#print (len(D['simData']['spkt'])) ### 15570
+#print (len(set(D['simData']['spkt']))) #12153
