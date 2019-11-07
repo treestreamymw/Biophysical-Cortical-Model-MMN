@@ -225,7 +225,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.0048,0.00024],#[0.0024,0.00012],#[0.0012,0.0006],
+        'weight': [0.024,0.0012],#[0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
