@@ -249,7 +249,9 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
 
 ###################
 
-path='/Users/gilikarni/Google Drive/work/TU-berlin/Capstone/Code/output_files/prediction_layer.json'
+path='output_files/prediction_layer_decrease_w_pyr4_pyr23.json'
+#path='output_files/prediction_layer.json'
+
 #path='output_files/simple_model.json'
 # for more than one json , list the paths
 #plot_freq_vs_infreq_LFP([path], 8)
@@ -260,8 +262,8 @@ path='/Users/gilikarni/Google Drive/work/TU-berlin/Capstone/Code/output_files/pr
 D=open_file_as_json(path)
 
 
-plot_spiking_stats_df(path, 'AP', 8, 0, ['PYR23'])#,'PYR_prediction'])
-plot_spiking_stats_df(path, 'NEURONS', 8, 0, ['PYR23'])#,'PYR_prediction'])
+plot_spiking_stats_df(path, 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
+plot_spiking_stats_df(path, 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
 
 
 #print ([i['gid'] for i in D['net']['cells'][:2]])

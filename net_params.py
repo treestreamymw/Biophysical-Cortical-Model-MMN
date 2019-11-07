@@ -272,7 +272,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.03,
+        'weight': 0.15,#0.3
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
@@ -327,7 +327,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
 
     # Saving
-    simConfig.saveFolder = 'output_files'
+    simConfig.saveFolder = 'output_files/'
     simConfig.filename = fig_name  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
     simConfig.savePickle = False  # True  # Whether or not to write spikes etc. to a .pkl file
@@ -335,7 +335,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     # Analysis and plotting
     simConfig.analysis['plotRaster'] = {'saveFig':
-        '{}_raster.png'.format(fig_name)}  # Plot raster
+        'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
     #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
     # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
 
@@ -347,7 +347,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
-         'saveFig': '{}_LFP.png'.format(fig_name)}
+         'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
     simConfig.analysis['plotShape'] = {'includePre':'allCells',
             'includePre':'None',
