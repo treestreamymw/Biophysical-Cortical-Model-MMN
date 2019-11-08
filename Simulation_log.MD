@@ -72,8 +72,14 @@
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
 
 
-### (12) FULL- Lower intra-laminar EE and IE  & short depression increase  (pyr4_23 w = 0.03 d1=1.0  )
+### (12) FULL- Lower intra-laminar EE and IE  & short depression increase  (pyr4_23 w = 0.03 d1=1.0  pyr4 bask23  0.000015)
 - Files are [here](../output_file/pyr4_23_div3)
 - __Observation__: The short term depression increased but not enough so I will try to remove the IE
 - __Chosen action__:Same but a bit less IE
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
+
+### (13) FULL- Lower intra-laminar EE and IE  & short depression increase 2nd (pyr4_23 w = 0.03 d1=1.0  pyr4 bask23  0.0000015)
+- Files are [here](../output_file/pyr4_23_div3)
+- __Observation__: It looks good! I will try to decrease inhibition even more.
+- __Chosen action__: EI lower by another 10x
+- __Justification__: Keep working on the intra layer connectivity to modify the adaptation, maybe add some more temporal

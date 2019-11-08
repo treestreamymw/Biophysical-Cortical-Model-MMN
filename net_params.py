@@ -330,7 +330,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'preConds': {'popLabel': 'PYR4'},
         'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_2D/(3*40.0))',
-        'weight': 0.000015,#0.00015,
+        'weight': 0.0000015#0.000015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
