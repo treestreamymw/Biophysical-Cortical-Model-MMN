@@ -52,7 +52,21 @@
 
 ### (8) Lower intra-laminar EE - 4th  (pyr4_23 w = 0.06)
 - Files are [here](../output_file/pyr4_23_div3)
-- __Observation__:
-- __Chosen action__:
+- __Observation__: it seem that there is not sharpening at all. the conclusions is that the long term depression is too low and the short term depression is too strong
+- __Chosen action__: go back to div10 (where we did see sharpening but a very short excitation) and increase the short term depression to 100% (i.e no short term depression)
+- __Justification__: based on the conclusion, we try to maintain the existing long term depression (i.e sharpening) but not to loose the temporal scope
 
-- __Justification__:
+
+
+### (10) Lower intra-laminar EE & short depression increase  (pyr4_23 w = 0.03 d1=1.0)
+- Files are [here](../output_file/pyr4_23_div3)
+- __Observation__: there is less short term depression but not fully (we believe that it has to do with the inhibition)
+- __Chosen action__: Run the full simulation (8 spikes) and decrease EI between 4 to 23 to maintain excitation
+- __Justification__: Keep working on the intra layer connectivity to modify the adaptation
+
+
+### (11) FULL- Lower intra-laminar EE  & short depression increase  (pyr4_23 w = 0.03 d1=1.0  )
+- Files are [here](../output_file/pyr4_23_div3)
+- __Observation__: there is less short term depression but not fully (we believe that it has to do with the inhibition)
+- __Chosen action__: Run the full simulation (8 spikes) # and decrease EI between 4 to 23 to maintain excitation
+- __Justification__: Keep working on the intra layer connectivity to modify the adaptation
