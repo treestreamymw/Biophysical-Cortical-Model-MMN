@@ -131,7 +131,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                           'tau2': 3.0,
                                           'e': 0.0, 'f': 0.0,
                                           'tau_F': 94.0,
-                                          'd1': 0.46,
+                                          'd1': 1,#0.46,
                                           'tau_D1': 380,
                                           'd2': 0.76,
                                           'tau_D2': 9200}  # only depression
@@ -321,7 +321,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.06,#0.15 #0.03 #0.3
+        'weight': 0.03,#0.15 #0.03 #0.3
         'threshold': 10,
         'synMech': 'AMPASTD'}
 

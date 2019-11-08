@@ -103,8 +103,10 @@ def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
         peak_freq_mean = np.mean(peak_freq, axis=0)
     if not mean:
         peak_freq_mean=peak_freq
-
-    peak_infreq = LFP_peak_matrix[infreq_index]
+    if infreq_index is None:
+        peak_infreq=None
+    else:
+        peak_infreq = LFP_peak_matrix[infreq_index]
 
     return {'infreq':peak_infreq, 'freq':peak_freq_mean}
 
@@ -119,9 +121,13 @@ def exctract_data_LFP(file_names_list, N_stim):
         LFP = j_data['simData']['LFP']
 
         infreq_stim = find_infreq_index(j_data)
+        if infreq_stim==[]:
+            infreq_stim=None
+        else:
+            infreq_stim=infreq_stim[0]
 
 
-        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim[0], 5, True)
+        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim, 5, True)
 
         all_infreq_LFPs.append(prepared_data['infreq'])
         all_freq_LFP.append(prepared_data['freq'])
@@ -195,7 +201,12 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
     # get data and prepare it
     data=open_file_as_json(path)
     df=get_spk_data_for_pop(data, pop)
-    infreq_id = find_infreq_index(data)[0]
+    infreq_id = find_infreq_index(data)
+    if infreq_id==[]:
+        infreq_id=None
+    else:
+        infreq_id=infreq_id[0]
+
 
     trimmed_data=trim_and_round_time_for_spikes(df, N_stim, \
             trim_ms=trim_ms, round_k=100)
