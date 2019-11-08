@@ -165,7 +165,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     s_handler = Simulation_stimuli_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
-                                dev_indexes=[],#[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
+                                dev_indexes=[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
                                 task=TASK)
     s_handler.set_task_stimuli()
 
@@ -330,7 +330,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'preConds': {'popLabel': 'PYR4'},
         'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_2D/(3*40.0))',
-        'weight': 0.00015,
+        'weight': 0.000015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 

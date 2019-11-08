@@ -70,3 +70,10 @@
 - __Observation__: there is less short term depression but not fully (we believe that it has to do with the inhibition)
 - __Chosen action__: Run the full simulation (8 spikes) # and decrease EI between 4 to 23 to maintain excitation
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
+
+
+### (12) FULL- Lower intra-laminar EE and IE  & short depression increase  (pyr4_23 w = 0.03 d1=1.0  )
+- Files are [here](../output_file/pyr4_23_div3)
+- __Observation__: The short term depression increased but not enough so I will try to remove the IE
+- __Chosen action__:Same but a bit less IE
+- __Justification__: Keep working on the intra layer connectivity to modify the adaptation
