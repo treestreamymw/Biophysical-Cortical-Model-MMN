@@ -27,8 +27,8 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='full'
-    grid_search_array = [['prediction_layer_w_pyr4_23_div10_pyr23_23_mult_10_bask_pyr23_0', SIM_TYPE, 'oddball', 1]]
+    SIM_TYPE='short'
+    grid_search_array = [['prediction_layer_w_pyr4_23_div5', SIM_TYPE, 'oddball', 1]]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

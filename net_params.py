@@ -225,7 +225,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.024,0.0012],#[0.0024,0.00012],#[0.0012,0.0006],
+        'weight': [0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
@@ -243,7 +243,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 0,#0.002,
+        'weight': 0.002,
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -272,7 +272,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
         'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.03,#0.15 #0.03 #0.3
+        'weight': 0.06,#0.15 #0.03 #0.3
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
