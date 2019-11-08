@@ -266,6 +266,6 @@ if __name__ == "__main__":
 
 
 
-    plot_spiking_stats_df(path, 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    plot_spiking_stats_df(path, 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    plot_freq_vs_infreq_LFP([path],8)
+    plot_spiking_stats_df(path, 'AP', 3, 50, ['PYR23'])#,'PYR_prediction'])
+    plot_spiking_stats_df(path, 'NEURONS', 3, 50, ['PYR23'])#,'PYR_prediction'])
+    plot_freq_vs_infreq_LFP([path],3)

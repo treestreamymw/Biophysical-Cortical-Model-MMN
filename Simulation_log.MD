@@ -38,6 +38,21 @@
 
 ### (6) Lower intra-laminar EE & Higher inter-laminar EE 2nd ( pyr4_23 w = 0.03, pyr23_23  [0.024,0.0012])
 - Files are [here](../output_file/pyr4_23_div10_pyr23_23_mult10)
+- __Observation__: excitation increased only spatially (no adaptation at all) but did not lead to more excitation temporally
+- __Chosen action__: reduce inhibition to 0
+- __Justification__: we want to check whether the excitation is insufficient to increase the temporal dimension or if the inhibition counter it.
+
+### (7) Lower intra-laminar EE & Higher inter-laminar EE & no inter-laminar IE ( pyr4_23 w = 0.03, pyr23_23  [0.024,0.0012], bask23_pyr23 = 0)
+- Files are [here](../output_file/pyr4_23_div10_pyr23_23_mult10)
+- __Observation__: Same as sim (6)
+- __Chosen action__: go back and try another Lower intra-laminar EE (div 5)
+- __Hypothesis__: Neural sharpening is the result of the interaction between pyr4 and pyr23, BUT we see that the EE in layer 23 affects the number of recruited neurons and not their temporal repeated spiking (within the range of weight modifications we tested)- also, the IE in layer 23 has no affect on either aspect of the adaptation. Thus, we go back to explore the intra laminar relations.
+- __Justification__: it seems that we can not get longer activation from within the layer, thus we need to find a balanced intra-layer weight that reduce the excitation without dropping the termporal dimension completely.
+
+
+### (8) Lower intra-laminar EE - 4th  (pyr4_23 w = 0.06)
+- Files are [here](../output_file/pyr4_23_div3)
 - __Observation__:
 - __Chosen action__:
-- __Justification__:  
+
+- __Justification__:

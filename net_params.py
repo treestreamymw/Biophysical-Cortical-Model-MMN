@@ -94,17 +94,64 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
                                           cellName='Layer2_basket')
 
     # Synaptic mechanism parameters
-    netParams.synMechParams['AMPA'] = {'mod': 'Exp2Syn', 'tau1': 1.0,
-                                       'tau2': 3.0, 'e': 0.0}
-    netParams.synMechParams['AMPASTD'] = {'mod': 'FDSExp2Syn', 'tau1': 1.0,
-                                          'tau2': 3.0, 'e': 0.0, 'f': 0.0,
-                                          'tau_F': 94.0, 'd1': 0.46,
-                                          'tau_D1': 380, 'd2': 0.76,
-                                          'tau_D2': 9200}  # only depression
+
+    # AMPA // GABA
+    # Exp2Syn Two state kinetic scheme synapse described by :
+    # rise time - tau1,
+    # decay time- tau2
+    # reversal potential - e
+    # synaptic current- I (dynamic in the simulation)
+
+    netParams.synMechParams['AMPA'] = {'mod': 'Exp2Syn',
+                                       'tau1': 1.0,
+                                       'tau2': 3.0,
+                                       'e': 0.0}
+
     netParams.synMechParams['GABA'] = {'mod': 'Exp2Syn',
-                                       'tau1': 5.0, 'tau2': 12.0, 'e': -75.0}
-    netParams.synMechParams['NMDA'] = {'mod': 'NMDA', 'Alpha':10.0,
-                                      'Beta':0.015, 'e':45.0,'g':1,'gmax':1}
+                                       'tau1': 5.0,
+                                       'tau2': 12.0,
+                                       'e': -75.0}
+
+    # AMPASTD
+    # Exp2Syn Two state kinetic scheme synapse described by
+    # rise time - tau1,
+    # decay time- tau2
+    # facilitation constant - f
+    # facilitation time - tauF
+    # reversal potential - e
+    # fast depression - firing will lower the d1% of the initial
+    # spike within tau_d1 ms
+    # slow depression - firing will lower the d1% of the initial
+    # spike within tau_d1 ms
+    # synaptic current- I (dynamic in the simulation)
+
+
+    netParams.synMechParams['AMPASTD'] = {'mod': 'FDSExp2Syn',
+                                          'tau1': 1.0,
+                                          'tau2': 3.0,
+                                          'e': 0.0, 'f': 0.0,
+                                          'tau_F': 94.0,
+                                          'd1': 0.46,
+                                          'tau_D1': 380,
+                                          'd2': 0.76,
+                                          'tau_D2': 9200}  # only depression
+
+
+    # NMDA
+    # Simple synaptic mechanism, first order kinetics of
+    # binding of transmitter to postsynaptic receptors. described by :
+    # forward (binding) rate - alpha
+    # backward (unbinding) rate - beta
+    # reversal potential - e
+    # (max)conductance - (max)g
+    # synaptic current- I (dynamic in the simulation)
+
+    netParams.synMechParams['NMDA'] = {'mod': 'NMDA',
+                                       'Alpha':10.0,
+                                       'Beta':0.015,
+                                       'e':45.0,
+                                       'g':1,
+                                       'gmax':1}
 
 
     ###############################################################################
@@ -118,7 +165,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     s_handler = Simulation_stimuli_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
-                                dev_indexes=[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
+                                dev_indexes=[],#[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
                                 task=TASK)
     s_handler.set_task_stimuli()
 
@@ -131,7 +178,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     for t_pulse in external_pulses_info.keys():
 
         # External sensory stimuli
-        ext_stim_pop_name='Stim_' + str(external_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
+        ext_stim_pop_name='Stim_' + \
+                str(external_pulses_info[t_pulse]['pop_name']) +"_"+\
+                str(t_pulse)
 
         netParams.popParams[ext_stim_pop_name] =  {'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
@@ -321,29 +370,29 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     external_input_populations=s_handler.stim_pop_values['external']
 
-    x_electrodes_locations = [ [x_value[0]+1, -0.2*netParams.sizeY, netParams.sizeZ/2]
-                    for x_value in [external_input_populations[ext_pop]['x_values'][0]
+    x_electrodes_locations = [ [x_value[0]+1, -0.2*netParams.sizeY, \
+                        netParams.sizeZ/2] for x_value in \
+                    [external_input_populations[ext_pop]['x_values'][0]
                     for ext_pop in external_input_populations]]
-    simConfig.recordLFP = x_electrodes_locations  # electrodes at the stim frequency
+
+     # electrodes at the stim frequency
+    simConfig.recordLFP = x_electrodes_locations
 
     # Saving
     simConfig.saveFolder = 'output_files/'
     simConfig.filename = fig_name  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
-    simConfig.savePickle = False  # True  # Whether or not to write spikes etc. to a .pkl file
+    simConfig.savePickle = False
     simConfig.saveJson = True
 
     # Analysis and plotting
     simConfig.analysis['plotRaster'] = {'saveFig':
-        'output_files/{}_raster.png'.format(fig_name)}  # Plot raster
-    #simConfig.analysis['plotTraces'] = {'include': [5567, 5568, 5569], 'saveFig': True}  # Plot raster
-    # simConfig.analysis['plot2Dnet'] = {'view': 'xz','showConns': False}  # Plot 2D net cells and connections
-
+        'output_files/{}_raster.png'.format(fig_name)}
     simConfig.analysis['plotSpikeHist'] = {
             'include': ['PYR23','PYR_prediction'],
             'yaxis':'count',
             'graphType':'line',
-            'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}  # Plot 2D net cells and connections
+            'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
     simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
@@ -351,12 +400,12 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
 
     simConfig.analysis['plotShape'] = {'includePre':'allCells',
             'includePre':'None',
-            'showSyns':False,
+            'showSyns': False,
             'saveFig': 'output_files/{}_Shape.png'.format(fig_name)}
-
+    # Plot 2D net cells and connections
     simConfig.analysis['plot2Dnet'] = {'view': 'xz',
             'include': ['PYR23','BASK23','PYR4','BASK4', 'PYR_prediction'],
-            'showConns': True ,
-            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}  # Plot 2D net cells and connections
+            'showConns': False ,
+            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 
     return (netParams, simConfig)
