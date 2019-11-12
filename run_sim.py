@@ -28,8 +28,10 @@ if __name__ == '__main__':
 
     ## grid_search_array - d1, d2, fig_name
     SIM_TYPE='full' #short
-    grid_search_array = [['prediction_layer_w_pyr4_23_div10_pyr4_bask3_div10_pyr23_23_double_d1_1', SIM_TYPE, 'flipflop', 1]]
+    grid_search_array = [
+        ['beta_network_{}'.format(i),
+                SIM_TYPE, 'flipflop', 1, [i]] for i in range (8)]
 
 
-    sim_pool_manager = PoolManager(num_workers=1)
+    sim_pool_manager = PoolManager(num_workers=8)
     sim_pool_manager.worker(run_sim, grid_search_array, 999999999)

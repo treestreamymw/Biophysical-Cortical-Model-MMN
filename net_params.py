@@ -12,7 +12,7 @@ from netpyne import specs
 from config import SIM_PARAMS
 from stimulus_utils import Simulation_stimuli_Handler
 
-def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
+def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     p= DEBUG_PARAMS
     netParams = specs.NetParams()   # object of class NetParams to store the network parameters
     simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
@@ -165,7 +165,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS):
     s_handler = Simulation_stimuli_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
-                                dev_indexes=[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
+                                dev_indexes=DEV_LIST,#[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
                                 task=TASK)
     s_handler.set_task_stimuli()
 
