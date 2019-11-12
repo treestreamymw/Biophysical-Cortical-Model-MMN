@@ -11,11 +11,12 @@ from MP_class import PoolManager
 
 def run_sim (params):
     # get params
-    fig_name, net_type, task, debug_params=params
+    fig_name, net_type, task, debug_params, dev_list=params
     NP, SC = set_params(fig_name=fig_name,
             NET_TYPE=net_type,
             TASK=task,
-            DEBUG_PARAMS=debug_params)
+            DEBUG_PARAMS=debug_params,
+            DEV_LIST=dev_list)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
 
