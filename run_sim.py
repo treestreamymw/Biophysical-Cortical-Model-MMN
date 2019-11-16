@@ -31,8 +31,8 @@ if __name__ == '__main__':
     SIM_TYPE='full' #short
     grid_search_array = [
         ['beta_network_{}'.format(i),
-                SIM_TYPE, 'flipflop', 1, [i]] for i in range (8)]
+                SIM_TYPE, 'flipflop', 1, [i]] for i in range (2)]
 
 
-    sim_pool_manager = PoolManager(num_workers=8)
+    sim_pool_manager = PoolManager(num_workers=1)
     sim_pool_manager.worker(run_sim, grid_search_array, 999999999)
