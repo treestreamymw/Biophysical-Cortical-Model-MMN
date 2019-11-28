@@ -43,7 +43,7 @@
 - __Justification__: we want to check whether the excitation is insufficient to increase the temporal dimension or if the inhibition counter it.
 
 ### (7) Lower intra-laminar EE & Higher inter-laminar EE & no inter-laminar IE ( pyr4_23 w = 0.03, pyr23_23  [0.024,0.0012], bask23_pyr23 = 0)
-- Files are [here](../output_file/pyr4_23_div10_pyr23_23_mult10)
+- Files are [here](../output_file/pyr4_23_div10_pyr23_23_mul10_bask23_pyr23_0)
 - __Observation__: Same as sim (6)
 - __Chosen action__: go back and try another Lower intra-laminar EE (div 5)
 - __Hypothesis__: Neural sharpening is the result of the interaction between pyr4 and pyr23, BUT we see that the EE in layer 23 affects the number of recruited neurons and not their temporal repeated spiking (within the range of weight modifications we tested)- also, the IE in layer 23 has no affect on either aspect of the adaptation. Thus, we go back to explore the intra laminar relations.
@@ -59,27 +59,21 @@
 
 
 ### (10) Lower intra-laminar EE & short depression increase  (pyr4_23 w = 0.03 d1=1.0)
-- Files are [here](../output_file/pyr4_23_div3)
+- Files are [here](../output_file/pyr4_23_div10_D1_1)
 - __Observation__: there is less short term depression but not fully (we believe that it has to do with the inhibition)
 - __Chosen action__: Run the full simulation (8 spikes) and decrease EI between 4 to 23 to maintain excitation
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
 
 
 ### (11) FULL- Lower intra-laminar EE  & short depression increase  (pyr4_23 w = 0.03 d1=1.0  )
-- Files are [here](../output_file/pyr4_23_div3)
+- Files are [here](../output_file/pyr4_23_div10_D1_1_full)
 - __Observation__: there is less short term depression but not fully (we believe that it has to do with the inhibition)
 - __Chosen action__: Run the full simulation (8 spikes) # and decrease EI between 4 to 23 to maintain excitation
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
 
 
 ### (12) FULL- Lower intra-laminar EE and IE  & short depression increase  (pyr4_23 w = 0.03 d1=1.0  pyr4 bask23  0.000015)
-- Files are [here](../output_file/pyr4_23_div3)
+- Files are [here](../output_file/pyr4_23_div10_pyr4_bask23_div_10_d1_1)
 - __Observation__: The short term depression increased but not enough so I will try to remove the IE
 - __Chosen action__:Same but a bit less IE
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
-
-### (13) FULL- Lower intra-laminar EE and IE  & short depression increase 2nd (pyr4_23 w = 0.03 d1=1.0  pyr4 bask23  0.0000015)
-- Files are [here](../output_file/pyr4_23_div3)
-- __Observation__: It looks good! I will try to decrease inhibition even more.
-- __Chosen action__: EI lower by another 10x
-- __Justification__: Keep working on the intra layer connectivity to modify the adaptation, maybe add some more temporal

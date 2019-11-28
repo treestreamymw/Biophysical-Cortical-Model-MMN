@@ -37,7 +37,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                     'color': 'blue'}
 
     ## secondary excitatory cells layer 2/3
-    netParams.popParams['PYR_prediction'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
+    netParams.popParams['PYR_memory'] = {'cellModel': 'PYR_Hay', 'cellType': 'PYR',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
                                     'yRange': [.6*netParams.sizeY,
@@ -82,7 +82,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
-    cellRule = netParams.importCellParams(label='PYR_prediction', conds={'cellType': 'PYR',
+    cellRule = netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
@@ -220,9 +220,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                            'noise': 1.0}]}
         int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']
 
-        netParams.connParams[ext_stim_pop_name + '->PYR_prediction'] = {
+        netParams.connParams[ext_stim_pop_name + '->PYR_memory'] = {
             'preConds': {'popLabel': int_stim_pop_name},
-            'postConds': {'popLabel': 'PYR_prediction', 'x': int_x_pyr},
+            'postConds': {'popLabel': 'PYR_memory', 'x': int_x_pyr},
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
@@ -306,9 +306,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'synMech': 'GABA'}'''
 
     ## prediction layer
-    netParams.connParams['PYR_prediction->PYR_prediction'] = {
-        'preConds': {'popLabel': 'PYR_prediction'},
-        'postConds': {'popLabel': 'PYR_prediction'},
+    netParams.connParams['PYR_memory->'] = {
+        'preConds': {'popLabel': 'PYR_memory'},
+        'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],
@@ -336,8 +336,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
 
 
-    netParams.connParams['PYR_prediction->BASK23'] = {
-        'preConds': {'popLabel': 'PYR_prediction'},
+    netParams.connParams['PYR_memory->BASK23'] = {
+        'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_3D/(3*40.0))',
         'weight': 0.00015,
@@ -389,7 +389,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.analysis['plotRaster'] = {'saveFig':
         'output_files/{}_raster.png'.format(fig_name)}
     simConfig.analysis['plotSpikeHist'] = {
-            'include': ['PYR23','PYR_prediction'],
+            'include': ['PYR23','PYR_memory'],
             'yaxis':'count',
             'graphType':'line',
             'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
@@ -398,13 +398,11 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
          'plots': ['timeSeries'],
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
-    simConfig.analysis['plotShape'] = {'includePre':'allCells',
-            'includePre':'None',
-            'showSyns': False,
-            'saveFig': 'output_files/{}_Shape.png'.format(fig_name)}
+    simConfig.analysis['plotShape'] = {'saveFig':
+            'output_files/{}_Shape.png'.format(fig_name)}
     # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet'] = {'view': 'xz',
-            'include': ['PYR23','BASK23','PYR4','BASK4', 'PYR_prediction'],
+    simConfig.analysis['plot2Dnet'] = {'view': 'yz',
+            'include': ['PYR23','BASK23','PYR4','BASK4', 'PYR_memory'],
             'showConns': False ,
             'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 

@@ -266,6 +266,7 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
 
 ###################
 if __name__ == "__main__":
+    '''
     parser = argparse.ArgumentParser()
     parser.add_argument("DIR", help="enter the directory name", type=str)
     parser.add_argument("JSON", help="enter the json file name", type=str)
@@ -274,9 +275,11 @@ if __name__ == "__main__":
     FIG_DIR_NAME=args.DIR#'pyr4_23_div10'
     JSON_FILE_NAME=args.JSON#'prediction_layer_decrease_w_pyr4_pyr23.json'
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
+    '''
 
-
-
-    plot_spiking_stats_df(path, 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    plot_spiking_stats_df(path, 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    plot_freq_vs_infreq_LFP([path],8)
+    path='output_files/random_run_beta_model/'
+    path_list=glob('output_files/random_run_beta_model/*.json')
+    FIG_DIR_NAME='random_run_beta_model'
+    #plot_spiking_stats_df(path, 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
+    #plot_spiking_stats_df(path, 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
+    plot_freq_vs_infreq_LFP(path_list,8)
