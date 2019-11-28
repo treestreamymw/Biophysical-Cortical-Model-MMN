@@ -89,6 +89,6 @@ def set_params(input_rs_threshold):
 	simConfig.saveJson = True # Whether or not to write spikes etc. to a .json file
 
 	simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3, 'saveFig':
-	            'home/data/{}_Shape.png'.format(fig_name)}
+	            'home/data/asym_Shape.png'}
 
 	return (netParams, simConfig)
