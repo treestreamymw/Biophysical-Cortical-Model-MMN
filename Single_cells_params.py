@@ -34,9 +34,20 @@ def set_params(input_rs_threshold):
 		fileName='Cells/pyr_23_asym_stripped.hoc',
 		cellName='pyr_23_asym_stripped')
 
+	'''
+	cellRule = netParams.importCellParams(label='PYR4', conds={'cellType': 'PYR',
+	                                                       'cellModel': 'PYR_Hay'},
+	                                          fileName='Cells/fourcompartment.hoc',
+	                                  		cellName='fourcompartment')
 
-	# ToDo: Change!
-	currents_rs = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
+	netParams.popParams['BASK4'] = {'cellModel': 'BASK_Vierling',
+                                    'cellType': 'BASK', 'gridSpacing': 80.0,
+                                    'yRange': [netParams.sizeY,
+                                                netParams.sizeY],
+                                    'color': 'yellow'}
+	'''
+
+	currents_rs = [0.0] #[0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
 	threshold_rs = input_rs_threshold
 
 
@@ -72,13 +83,12 @@ def set_params(input_rs_threshold):
 	simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}
 
 
-
 	# Saving
 	simConfig.filename = 'output_files/orig_ion_channels/Data_{}'.format(input_rs_threshold)  # Set file output name
 	simConfig.saveFileStep = 1000 # step size in ms to save data to disk
 	simConfig.saveJson = True # Whether or not to write spikes etc. to a .json file
 
-	simConfig.analysis['plotTraces'] = {'include': [0], 'saveFig': 'output_files/orig_ion_channels/{}_Traces.png'.format(input_rs_threshold)}
-	#simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3}
+	simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3, 'saveFig':
+	            'home/data/{}_Shape.png'.format(fig_name)}
 
 	return (netParams, simConfig)
