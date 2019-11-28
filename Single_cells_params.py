@@ -47,7 +47,7 @@ def set_params(input_rs_threshold):
                                     'color': 'yellow'}
 	'''
 
-	currents_rs = [0.0] #[0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
+	currents_rs = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
 	threshold_rs = input_rs_threshold
 
 
@@ -87,6 +87,10 @@ def set_params(input_rs_threshold):
 	#simConfig.filename = 'output_files/orig_ion_channels/Data_{}'.format(input_rs_threshold)  # Set file output name
 	simConfig.saveFileStep = 1000 # step size in ms to save data to disk
 	simConfig.saveJson = True # Whether or not to write spikes etc. to a .json file
+
+	simConfig.analysis['plotLFP'] = {'includeAxon': False,
+         'plots': ['timeSeries'],
+         'saveFig': 'output_files/asym_LFP.png'
 
 	simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3, 'saveFig':
 	            'output_files/asym_Shape.png'}
