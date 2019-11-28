@@ -90,7 +90,7 @@ def set_params(input_rs_threshold):
 
 	simConfig.analysis['plotLFP'] = {'includeAxon': False,
          'plots': ['timeSeries'],
-         'saveFig': 'output_files/asym_LFP.png'
+         'saveFig': 'output_files/asym_LFP.png'}
 
 	simConfig.analysis['plotShape']= {'includePost':[0], 'showSyns':1, 'synStyle':'.', 'synSiz':3, 'saveFig':
 	            'output_files/asym_Shape.png'}
