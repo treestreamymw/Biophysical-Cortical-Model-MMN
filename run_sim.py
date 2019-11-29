@@ -33,7 +33,7 @@ if __name__ == '__main__':
     i=6
     grid_search_array = [
         ['beta_network_single_run_{}'.format(i),
-                SIM_TYPE, TASK, 1, [i]]]
+                SIM_TYPE, TASK, 1, [i]] for i in [3,4,5] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
