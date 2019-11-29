@@ -381,7 +381,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     # Saving
     simConfig.saveFolder = 'output_files/'
-    simConfig.filename = 'output_files/''+fig_name  # Set file output name
+    simConfig.filename = 'output_files/{}'.format(fig_name)  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
     simConfig.savePickle = False
     simConfig.saveJson = True
