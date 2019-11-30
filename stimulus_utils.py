@@ -39,7 +39,7 @@ class Simulation_stimuli_Handler(object):
 
         self.stim_pop_values={'external':[], 'internal':[]}
 
-        self.stimulus_time={'external':[500,700], 'internal':[500,700]}
+        self.stimulus_time={'external':[500,550], 'internal':[500,550]}
 
     def set_task_stimuli(self):
         '''

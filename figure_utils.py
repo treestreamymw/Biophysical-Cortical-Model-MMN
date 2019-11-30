@@ -92,9 +92,13 @@ def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
 
     for i in range(N_stim):
         LFP_peak_matrix[i]=avg_LFP[i*10000:(i+1)*10000]
+
         #remove initial peak
-        LFP_peak_matrix[i][:500]=LFP_peak_matrix[i][501]
-        trimmed= int(5000+ (ms_to_trim*100))
+        #flat before the stimuli
+        LFP_peak_matrix[i][:1000]=LFP_peak_matrix[i][1000]
+
+        #remvove first response
+        trimmed= int(5000 + (ms_to_trim*100))
         LFP_peak_matrix[i][5000:trimmed]=LFP_peak_matrix[i][5000]
 
     # seperate freq vs infreq peaks
@@ -127,7 +131,7 @@ def exctract_data_LFP(file_names_list, N_stim):
             infreq_stim=infreq_stim[0]
 
 
-        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim, 5, True)
+        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim, 1.5, True)
 
         all_infreq_LFPs.append(prepared_data['infreq'])
         all_freq_LFP.append(prepared_data['freq'])
@@ -140,8 +144,19 @@ def exctract_data_LFP(file_names_list, N_stim):
 def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim):
     data = exctract_data_LFP(PATH_LIST, N_stim)
 
-    plt.plot(-1*data['freq'], label='frequent', c='grey')
-    plt.plot(-1*data['infreq'], label='infrequent', c='coral', alpha=.7)
+    T=np.linspace(-0.05,0.4,350)
+
+    plt.plot(T, 1000*data['freq'][4500:8000:10] ,label='frequent', c='grey')
+    plt.plot(T, 1000*data['infreq'][4500:8000:10] ,label='infrequent', c='coral')
+
+    plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
+
+    plt.xlabel(' T (s)')
+    plt.ylabel('Amplitude (mv)')
+
+    ax = plt.gca()
+    ax.invert_yaxis()
+
     plt.title('Frequent vs Infrequent mean potentials')
     plt.legend()
     plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs'))
