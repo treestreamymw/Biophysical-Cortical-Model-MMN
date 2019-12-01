@@ -77,3 +77,17 @@
 - __Observation__: The short term depression increased but not enough so I will try to remove the IE
 - __Chosen action__:Same but a bit less IE
 - __Justification__: Keep working on the intra layer connectivity to modify the adaptation
+
+
+### (13) BETA - running many indexes for dev
+- Files are [here](../output_file/output_files/random_run_beta_model)
+- __Observation__: (1) weird undershoot at the end (2) timeline is off
+- __Chosen action__: decrease stimulus to 50 ms
+- __Justification__: might help resolving the undershoot
+
+
+### (14) BETA SHORT - signle beta with
+- Files are [here](../output_file/output_files/random_run_beta_model)
+- __Observation__: undershoot seems better, timeline is still off, number of neurons seems to not adapt in the raster but the #neurons plots seems good. Is it only SSA?
+- __Chosen action__:
+- __Justification__:

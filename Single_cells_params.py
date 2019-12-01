@@ -82,7 +82,7 @@ def set_params(input_rs_threshold):
 	simConfig.recordStep = 0.1 # Step size in ms to save data (eg. V traces, LFP, etc)
 	simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}
 
-
+	simConfig.hParams['cai0_ca_ion'] = 0.0001
 	# Saving
 	#simConfig.filename = 'output_files/orig_ion_channels/Data_{}'.format(input_rs_threshold)  # Set file output name
 	simConfig.saveFileStep = 1000 # step size in ms to save data to disk

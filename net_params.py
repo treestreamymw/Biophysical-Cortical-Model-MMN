@@ -84,8 +84,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     cellRule = netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
-                                          fileName='Cells/pyr_23_asym_stripped.hoc',
-                                  		cellName='pyr_23_asym_stripped')
+                                          fileName='Cells/fourcompartment.hoc',
+                                  		cellName='fourcompartment')
 
     # BASK cell properties (INH)
     cellRule = netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
