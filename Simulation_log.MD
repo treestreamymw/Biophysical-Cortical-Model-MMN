@@ -87,7 +87,15 @@
 
 
 ### (14) BETA SHORT - signle beta with
-- Files are [here](../output_file/output_files/random_run_beta_model)
+- Files are [here](../output_file/output_files/random_run_beta_model_short_stim)
 - __Observation__: undershoot seems better, timeline is still off, number of neurons seems to not adapt in the raster but the #neurons plots seems good. Is it only SSA?
+- __Chosen action__: delay memory trace by 50 ms
+- __Justification__: processing time
+
+
+
+### (15) BETA SHORT - signle beta with
+- Files are [here](../output_file/output_files/random_run_beta_model_short_stim_delay)
+- __Observation__: two spikes. revert
 - __Chosen action__:
 - __Justification__:

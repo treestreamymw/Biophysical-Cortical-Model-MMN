@@ -401,11 +401,17 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
     simConfig.analysis['plotShape'] = {'saveFig':
-            'output_files/{}_Shape.png'.format(fig_name)}
+            'output_files/{}_Shape_pyr4.png'.format(fig_name),
+            'includePost':900}
+
+    simConfig.analysis['plotShape'] = {'saveFig':
+            'output_files/{}_Shape_bask.png'.format(fig_name),
+            'includePost':1400}
+
     # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet'] = {'view': 'yz',
-            'include': ['PYR23','BASK23','PYR4','BASK4', 'PYR_memory'],
-            'showConns': False ,
+    simConfig.analysis['plot2Dnet'] = {'view': 'xz',
+            'include': ['allCells'],
+            'showConns': True ,
             'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 
     return (netParams, simConfig)

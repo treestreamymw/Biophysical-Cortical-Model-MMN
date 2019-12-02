@@ -293,8 +293,8 @@ if __name__ == "__main__":
     '''
 
     path='output_files/random_run_beta_model_short_stim/'
-    path_list=glob('output_files/random_run_beta_model_short_stim/*.json')
+    path_list=glob('output_files/random_run_beta_model_short_stim_delay/*.json')
     FIG_DIR_NAME='random_run_beta_model_short_stim'
     plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
     plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    #plot_freq_vs_infreq_LFP(path_list,8)
+    plot_freq_vs_infreq_LFP(path_list,8)
