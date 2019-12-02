@@ -28,7 +28,7 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='short_large_sim_params' #short
+    SIM_TYPE='short_large' #short
     TASK='flipflop'
     grid_search_array = [
         ['beta_network_short_stim_plot_{}'.format(i),
