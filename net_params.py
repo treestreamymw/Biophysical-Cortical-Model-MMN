@@ -384,11 +384,11 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.filename = 'output_files/{}'.format(fig_name)  # Set file output name
     simConfig.saveFileStep = 1000  # step size in ms to save data to disk
     simConfig.savePickle = False
-    simConfig.saveJson = True
+    simConfig.saveJson = False
 
     # Analysis and plotting
-    simConfig.analysis['plotRaster'] = {'saveFig':
-        'output_files/{}_raster.png'.format(fig_name)}
+    #simConfig.analysis['plotRaster'] = {'saveFig':
+    #    'output_files/{}_raster.png'.format(fig_name)}
 
     #simConfig.analysis['plotSpikeHist'] = {
     #        'include': ['PYR23','PYR_memory'],
@@ -396,9 +396,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #        'graphType':'line',
     #        'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
-    simConfig.analysis['plotLFP'] = {'includeAxon': False,
-         'plots': ['timeSeries'],
-         'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
+    #simConfig.analysis['plotLFP'] = {'includeAxon': False,
+    #     'plots': ['timeSeries'],
+    #     'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
     simConfig.analysis['plotShape'] = {'saveFig':
             'output_files/{}_Shape_pyr4.png'.format(fig_name),
@@ -410,7 +410,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     # Plot 2D net cells and connections
     simConfig.analysis['plot2Dnet'] = {'view': 'xz',
-            'include': ['allCells'],
+            'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
             'showConns': True ,
             'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 
