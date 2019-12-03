@@ -401,6 +401,11 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #     'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
     simConfig.analysis['plotShape'] = {'saveFig':
+            'output_files/{}_Shape_pyr23.png'.format(fig_name),
+            'includePost':[1],'showSyns':1,
+            'synStyle':'.', 'synSiz':3}
+
+    simConfig.analysis['plotShape'] = {'saveFig':
             'output_files/{}_Shape_pyr4.png'.format(fig_name),
             'includePost':[900],'showSyns':1,
             'synStyle':'.', 'synSiz':3}
