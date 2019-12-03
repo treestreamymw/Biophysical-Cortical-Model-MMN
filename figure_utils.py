@@ -143,11 +143,11 @@ def exctract_data_LFP(file_names_list, N_stim):
 
 def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim):
     data = exctract_data_LFP(PATH_LIST, N_stim)
+    stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
+    T=np.linspace(-0.05,0.3,350)
 
-    T=np.linspace(-0.05,0.4,350)
-
-    plt.plot(T, 1000*data['freq'][4500:8000:10] ,label='frequent', c='grey')
-    plt.plot(T, 1000*data['infreq'][4500:8000:10] ,label='infrequent', c='coral')
+    plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
+    plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
 
     plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
 
@@ -293,8 +293,8 @@ if __name__ == "__main__":
     '''
 
     path='output_files/random_run_beta_model_short_stim/'
-    path_list=glob('output_files/random_run_beta_model_short_stim_delay/*.json')
+    path_list=glob('output_files/random_run_beta_model_short_stim/*.json')
     FIG_DIR_NAME='random_run_beta_model_short_stim'
-    plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
+    #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
+    #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
     plot_freq_vs_infreq_LFP(path_list,8)
