@@ -402,16 +402,18 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     simConfig.analysis['plotShape'] = {'saveFig':
             'output_files/{}_Shape_pyr4.png'.format(fig_name),
-            'includePost':[900]}
+            'includePost':[900],'showSyns':1,
+            'synStyle':'.', 'synSiz':3}
 
     simConfig.analysis['plotShape'] = {'saveFig':
             'output_files/{}_Shape_bask.png'.format(fig_name),
-            'includePost':[1400]}
+            'includePost':[1400],'showSyns':1,
+            'synStyle':'.', 'synSiz':3}
 
     # Plot 2D net cells and connections
     simConfig.analysis['plot2Dnet'] = {'view': 'xy',
             'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
-            'showConns': False ,
+            'showConns': True ,
             'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 
     return (netParams, simConfig)
