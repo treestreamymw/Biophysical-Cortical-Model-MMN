@@ -406,14 +406,26 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     #recod membrane potential
     simConfig.recordTraces={}
-    simConfig.recordTraces['PYR23'] = {'sec':'soma','loc':0.5,'var':'v',
-            'conds':{'pop':'PYR23', 'cellType':'PYR'}}
-    simConfig.recordTraces['PYR4'] = {'sec':'soma','loc':0.5,'var':'v',
-            'conds':{'pop':'PYR23', 'cellType':'PYR'}}
+
     simConfig.recordTraces['BASK23'] = {'sec':'soma','loc':0.5,'var':'v',
             'conds':{'pop':'BASK23', 'cellType':'BASK'}}
-    simConfig.recordTraces['BASK4'] = {'sec':'soma','loc':0.5,'var':'v',
-            'conds':{'pop':'BASK4', 'cellType':'BASK'}}
+
+    simConfig.recordTraces['PYR4_PYR23'] =
+            {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
+            'PYR4-PYR23':{'sec':'basal2b','loc':0.5,'
+                var':'AMPASTD','conds':{'cellType':'PYR23'}}}
+                
+    simConfig.recordTraces['PYR23_PYR23_AMPA'] =
+            {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
+            'PYR23-PYR23':{'sec':'oblique2b','loc':0.5,'
+                var':'AMPA','conds':{'cellType':'PYR23'}}}
+
+    simConfig.recordTraces['PYR23_PYR23_NMDA'] =
+            {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
+            'PYR23-PYR23':{'sec':'oblique2b','loc':0.5,'
+                var':'NMDA','conds':{'cellType':'PYR23'}}}
+
+
 
     simConfig.recordStim=True  # record spikes of cell stims
     simConfig.recordStep=0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
