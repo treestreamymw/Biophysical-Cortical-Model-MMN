@@ -258,7 +258,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'threshold': 10,
             'synMech': 'AMPA'}
 
-    '''
+        '''
     ###############################################################################
     # CONNECTIVITY PARAMETERS
     ###############################################################################
@@ -425,7 +425,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #        'graphType':'line',
     #        'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
-    #simConfig.analysis['plotLFP']={'includeAxon': False,
+    simConfig.analysis['plotLFP']={'includeAxon': False,
          'plots': ['timeSeries'],
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
