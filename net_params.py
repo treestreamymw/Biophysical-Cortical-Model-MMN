@@ -87,24 +87,34 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     cellRule['secs']['dend']['vinit']=-80.0
     cellRule['secs']['apic_0']['vinit']=-80.0
     cellRule['secs']['apic_1']['vinit']=-80.0
+    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA', 'AMPASTD']
 
     ## PYR cell 2/3 properties - defined by the asymetrical stripped model
     cellRule=netParams.importCellParams(label='PYR23', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
+    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']
 
     ## PYR cell of memory layer - defined by the four compartment model
     cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
-                                          fileName='Cells/fourcompartment.hoc',
-                                  		cellName='fourcompartment')
+                                          fileName='Cells/pyr_23_asym_stripped.hoc',
+                                  		cellName='pyr_23_asym_stripped')
+
+
+    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']
+
+
 
     # BASK cell properties (all layers) - defined by the fast spiking model
     cellRule=netParams.importCellParams(label='BASK', conds={'cellType': 'BASK',
                                                   'cellModel': 'BASK_Vierling'},
                                           fileName='Cells/FS.hoc',
                                           cellName='Layer2_basket')
+
+    cellRule['secs']['soma']['synList'] = ['GABA']
+
 
     #### BIOPHYSICAL PARAMETERS ####
 
@@ -234,7 +244,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'synMech': 'AMPA'}
 
         # Internal stimuli - memory trace
-        '''
+
         # set stimulus name
         int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
@@ -258,7 +268,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'threshold': 10,
             'synMech': 'AMPA'}
 
-        '''
+
     ###############################################################################
     # CONNECTIVITY PARAMETERS
     ###############################################################################
@@ -393,8 +403,18 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     # Recording
     simConfig.recordCells=['all']  # which cells to record from
-    #simConfig.recordTraces={'Vsoma': {'sec': 'soma', 'loc': 0.5, 'var': 'v'}
-     #,'AMPA':{'sec':'dend','loc':0.5,'var':'AMPA','conds':{'cellType':'PYR'}}}
+
+    #recod membrane potential
+    simConfig.recordTraces={}
+    simConfig.recordTraces['PYR23'] = {'sec':'soma','loc':0.5,'var':'v',
+            'conds':{'pop':'PYR23', 'cellType':'PYR'}}
+    simConfig.recordTraces['PYR4'] = {'sec':'soma','loc':0.5,'var':'v',
+            'conds':{'pop':'PYR23', 'cellType':'PYR'}}
+    simConfig.recordTraces['BASK23'] = {'sec':'soma','loc':0.5,'var':'v',
+            'conds':{'pop':'BASK23', 'cellType':'BASK'}}
+    simConfig.recordTraces['BASK4'] = {'sec':'soma','loc':0.5,'var':'v',
+            'conds':{'pop':'BASK4', 'cellType':'BASK'}}
+
     simConfig.recordStim=True  # record spikes of cell stims
     simConfig.recordStep=0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
 
@@ -425,6 +445,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #        'graphType':'line',
     #        'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
+    simConfig.analysis['plotTraces']={'saveFig': 'output_files/{}_TRACES.png'.format(fig_name)}}
     simConfig.analysis['plotLFP']={'includeAxon': False,
          'plots': ['timeSeries'],
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
