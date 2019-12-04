@@ -445,7 +445,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #        'graphType':'line',
     #        'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
-    simConfig.analysis['plotTraces']={'saveFig': 'output_files/{}_TRACES.png'.format(fig_name)}}
+    simConfig.analysis['plotTraces']={'saveFig': 'output_files/{}_TRACES.png'.format(fig_name)}
     simConfig.analysis['plotLFP']={'includeAxon': False,
          'plots': ['timeSeries'],
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
