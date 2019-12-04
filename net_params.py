@@ -112,7 +112,6 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                                   'cellModel': 'BASK_Vierling'},
                                           fileName='Cells/FS.hoc',
                                           cellName='Layer2_basket')
-
     cellRule['secs']['soma']['synList'] = ['GABA']
 
 
@@ -410,17 +409,17 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.recordTraces['BASK23'] = {'sec':'soma','loc':0.5,'var':'v',
             'conds':{'pop':'BASK23', 'cellType':'BASK'}}
 
-    simConfig.recordTraces['PYR4_PYR23'] =
+    simConfig.recordTraces['PYR4_PYR23'] =\
             {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
             'PYR4-PYR23':{'sec':'basal2b','loc':0.5,'
                 var':'AMPASTD','conds':{'cellType':'PYR23'}}}
-                
-    simConfig.recordTraces['PYR23_PYR23_AMPA'] =
+
+    simConfig.recordTraces['PYR23_PYR23_AMPA'] =\
             {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
             'PYR23-PYR23':{'sec':'oblique2b','loc':0.5,'
                 var':'AMPA','conds':{'cellType':'PYR23'}}}
 
-    simConfig.recordTraces['PYR23_PYR23_NMDA'] =
+    simConfig.recordTraces['PYR23_PYR23_NMDA'] =\
             {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
             'PYR23-PYR23':{'sec':'oblique2b','loc':0.5,'
                 var':'NMDA','conds':{'cellType':'PYR23'}}}
