@@ -114,7 +114,7 @@ def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
 
     return {'infreq':peak_infreq, 'freq':peak_freq_mean}
 
-def exctract_data_LFP(file_names_list, N_stim):
+def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
     all_infreq_LFPs = []
     all_freq_LFP = []
 
@@ -131,7 +131,7 @@ def exctract_data_LFP(file_names_list, N_stim):
             infreq_stim=infreq_stim[0]
 
 
-        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim, 1.5, True)
+        prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim, trim, True)
 
         all_infreq_LFPs.append(prepared_data['infreq'])
         all_freq_LFP.append(prepared_data['freq'])
@@ -141,25 +141,45 @@ def exctract_data_LFP(file_names_list, N_stim):
 
     return {'infreq':mean_infreq_LFPs, 'freq':mean_freq_LFP}
 
-def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim):
-    data = exctract_data_LFP(PATH_LIST, N_stim)
-    stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
-    T=np.linspace(-0.05,0.3,350)
+def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim, Raw=False):
+    if Raw:
+        trim=0
+    else:
+        trim=2
+    data = exctract_data_LFP(PATH_LIST, N_stim, trim)
+    if not Raw:
+        plt.plot(1000*data['freq'] ,label='frequent', c='grey')
+        plt.plot(1000*data['infreq'] ,label='infrequent', c='coral')
+        plt.title('Frequent vs Infrequent mean potentials')
+        plt.xlabel(' T (s)')
+        plt.ylabel('Amplitude (mv)')
 
-    plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
-    plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
+        ax = plt.gca()
+        ax.invert_yaxis()
+        plt.legend()
+        plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs'))
 
-    plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
+    else:
+        stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
+        T=np.linspace(-0.05,0.3,350)
 
-    plt.xlabel(' T (s)')
-    plt.ylabel('Amplitude (mv)')
+        plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
+        plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
 
-    ax = plt.gca()
-    ax.invert_yaxis()
+        plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
+        plt.title('Frequent vs Infrequent mean potentials <Raw>')
 
-    plt.title('Frequent vs Infrequent mean potentials')
-    plt.legend()
-    plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs'))
+        plt.xlabel(' T (s)')
+        plt.ylabel('Amplitude (mv)')
+
+        ax = plt.gca()
+        ax.invert_yaxis()
+        plt.legend()
+        plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs_RAW'))
+
+
+
+
     plt.show()
     print ('LFP plot saved')
 
@@ -293,8 +313,8 @@ if __name__ == "__main__":
     '''
 
     path='output_files/random_run_beta_model_short_stim/'
-    path_list=glob('output_files/random_run_beta_model_short_stim/*.json')
+    path_list=glob('output_files/random_run_beta_model/*.json')
     FIG_DIR_NAME='random_run_beta_model_short_stim'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23'])#,'PYR_prediction'])
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23'])#,'PYR_prediction'])
-    plot_freq_vs_infreq_LFP(path_list,8)
+    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)

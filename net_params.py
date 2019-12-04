@@ -234,7 +234,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'synMech': 'AMPA'}
 
         # Internal stimuli - memory trace
-
+        '''
         # set stimulus name
         int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
@@ -258,7 +258,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'threshold': 10,
             'synMech': 'AMPA'}
 
-
+    '''
     ###############################################################################
     # CONNECTIVITY PARAMETERS
     ###############################################################################
@@ -413,11 +413,11 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.filename='output_files/{}'.format(fig_name)  # Set file output name
     simConfig.saveFileStep=1000  # step size in ms to save data to disk
     simConfig.savePickle=False
-    simConfig.saveJson=False
+    simConfig.saveJson=True
 
     # Analysis and plotting
-    #simConfig.analysis['plotRaster']={'saveFig':
-    #    'output_files/{}_raster.png'.format(fig_name)}
+    simConfig.analysis['plotRaster']={'saveFig':
+        'output_files/{}_raster.png'.format(fig_name)}
 
     #simConfig.analysis['plotSpikeHist']={
     #        'include': ['PYR23','PYR_memory'],
@@ -426,14 +426,14 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #        'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
     #simConfig.analysis['plotLFP']={'includeAxon': False,
-    #     'plots': ['timeSeries'],
-    #     'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
+         'plots': ['timeSeries'],
+         'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
 
 
     # Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet']={'view': 'xy',
-            'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
-            'showConns': True ,
-            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
+    #simConfig.analysis['plot2Dnet']={'view': 'xy',
+    #        'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
+    #        'showConns': True ,
+    #        'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 
     return (netParams, simConfig)

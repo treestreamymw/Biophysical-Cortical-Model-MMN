@@ -18,8 +18,8 @@ SIM_PARAMS = {'full':full_sim_params,
 
 
 
-D1 = 0.46
-D2 = 0.76
+D1=0.46
+D2=0.76
 
 LOW_GABA=0.002
 HIGH_GABA=0.003
