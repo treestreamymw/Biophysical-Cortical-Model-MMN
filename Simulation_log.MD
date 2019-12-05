@@ -94,8 +94,16 @@
 
 
 
-### (15) BETA SHORT - signle beta with
+### (15) BETA SHORT == BETA 2 +DEALY
+- Files are [here](../output_file/output_files/random_run_beta_model_short_stim_SSA_vs_MMN)
+- __Observation__: didn't work. two spikes.
+- __Chosen action__:  Try to run with and without the memory layer.
+- __Justification__: distinguish MMN from SSA
+
+
+
+### (16) BETA 2 -  
 - Files are [here](../output_file/output_files/random_run_beta_model_short_stim_delay)
-- __Observation__: two spikes. revert
-- __Chosen action__:
+- __Observation__: Two problems (1) no adaptation in only SSA and (2) big negative first spike
+- __Chosen action__: First, solve for problem 1- . Second, we see no first dip in the SSA only simulation, thus- the dip is a result of the inhibition from the memory lane. Reduce memory layer activation.
 - __Justification__:

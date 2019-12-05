@@ -52,13 +52,14 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                    'color': 'green'}
 
     ## excitatory cells - memory layer
-    netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
+    '''netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
                                     'cellType': 'PYR',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
                                     'yRange': [.6*netParams.sizeY,
                                                 .6*netParams.sizeY],
-                                    'color': 'purple'}
+                                    'color': 'purple'}'''
+
     ## inhibitory cells layer 2/3- prediction layer
     netParams.popParams['BASK23']={'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
@@ -97,13 +98,13 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']
 
     ## PYR cell of memory layer - defined by the four compartment model
-    cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
+    '''cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
 
-    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']
+    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']'''
 
 
 
@@ -245,7 +246,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         # Internal stimuli - memory trace
 
         # set stimulus name
-        int_stim_pop_name='internal_' + \
+        '''int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         # parametarize stimulus
@@ -265,7 +266,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}
+            'synMech': 'AMPA'}'''
 
 
     ###############################################################################
@@ -345,14 +346,14 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'synMech': 'GABA'}'''
 
     ## prediction layer
-    netParams.connParams['PYR_memory->']={
+    '''netParams.connParams['PYR_memory->']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(4*40.0))',
         'weight': [0.0024,0.00012],
         'threshold': 10,
-        'synMech': ['AMPA','NMDA']}
+        'synMech': ['AMPA','NMDA']}'''
 
     ### inter-laminar connections
     netParams.connParams['PYR4->PYR23']={
@@ -375,13 +376,13 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
 
 
-    netParams.connParams['PYR_memory->BASK23']={
+    '''netParams.connParams['PYR_memory->BASK23']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_3D/(3*40.0))',
         'weight': 0.00015,
         'threshold': 10,
-        'synMech': 'AMPASTD'}
+        'synMech': 'AMPASTD'}'''
 
 
     ########################################################################
@@ -404,6 +405,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.recordCells=['all']  # which cells to record from
 
     #recod membrane potential
+    '''
     simConfig.recordTraces={}
 
     simConfig.recordTraces['BASK23'] = {'sec':'soma','loc':0.5,'var':'v',
@@ -425,7 +427,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                 'var':'NMDA','conds':{'cellType':'PYR23'}}}
 
 
-
+    '''
     simConfig.recordStim=True  # record spikes of cell stims
     simConfig.recordStep=0.1  # Step size in ms to save data (eg. V traces, LFP, etc)
 
@@ -456,7 +458,6 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     #        'graphType':'line',
     #        'saveFig': 'output_files/{}_plotSpikeHist.png'.format(fig_name)}
 
-    simConfig.analysis['plotTraces']={'saveFig': 'output_files/{}_TRACES.png'.format(fig_name)}
     simConfig.analysis['plotLFP']={'includeAxon': False,
          'plots': ['timeSeries'],
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
