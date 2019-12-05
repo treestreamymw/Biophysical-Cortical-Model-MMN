@@ -325,11 +325,13 @@ if __name__ == "__main__":
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
     '''
 
-    path='output_files/random_run_beta_model_short_stim_SYN/'
-    path_list=glob('output_files/random_run_beta_model/*.json')
-    FIG_DIR_NAME='random_run_beta_model_short_stim_SYN'
-    #plot_spiking_stats_df(path+'beta_network_short_stim_SSA_only5.json', 'AP', 8, 50, ['PYR23','PYR_4'])
-    #plot_spiking_stats_df(path+'beta_network_short_stim_SSA_only5.json', 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    path='output_files/simple_model.json'
+    path_list=glob('output_files/*.json')
+    FIG_DIR_NAME=''
+
+    #plot_spiking_stats_df(path_list[2], 'AP', 8, 50, ['PYR23','PYR_4'])
+    #plot_spiking_stats_df(path_list[2], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
+    plot_freq_vs_infreq_LFP([path], 8, Raw=True)
+
     #plot_SSA_vs_MMN(path+'beta_network_short_stim_SSA_only5.json',
     #        path+'beta_network_short_stim_5.json', 8)

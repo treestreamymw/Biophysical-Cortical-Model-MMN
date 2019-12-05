@@ -52,13 +52,13 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                    'color': 'green'}
 
     ## excitatory cells - memory layer
-    '''netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
+    netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
                                     'cellType': 'PYR',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
                                     'yRange': [.6*netParams.sizeY,
                                                 .6*netParams.sizeY],
-                                    'color': 'purple'}'''
+                                    'color': 'purple'}
 
     ## inhibitory cells layer 2/3- prediction layer
     netParams.popParams['BASK23']={'cellModel': 'BASK_Vierling',
@@ -88,23 +88,20 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     cellRule['secs']['dend']['vinit']=-80.0
     cellRule['secs']['apic_0']['vinit']=-80.0
     cellRule['secs']['apic_1']['vinit']=-80.0
-    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA', 'AMPASTD']
 
     ## PYR cell 2/3 properties - defined by the asymetrical stripped model
     cellRule=netParams.importCellParams(label='PYR23', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
-    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']
 
     ## PYR cell of memory layer - defined by the four compartment model
-    '''cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
+    cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
 
-    cellRule['secs']['soma']['synList'] = ['AMPA', 'NMDA']'''
 
 
 
@@ -113,8 +110,6 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                                   'cellModel': 'BASK_Vierling'},
                                           fileName='Cells/FS.hoc',
                                           cellName='Layer2_basket')
-    cellRule['secs']['soma']['synList'] = ['GABA']
-
 
     #### BIOPHYSICAL PARAMETERS ####
 
@@ -187,15 +182,12 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     #### STIMULI GENERATION ####
 
-    # choose random indexes for the deviant stimulus
-    deviant_pulses_indexes=np.random.choice(range(SIM_PARAMS[NET_TYPE]['n_pulses']),
-            SIM_PARAMS[NET_TYPE]['n_dev'], replace=False)
 
     # stimuli handler given the network's params
     s_handler=Simulation_stimuli_Handler(net_x_size=netParams.sizeX,
                                 n_pulses=SIM_PARAMS[NET_TYPE]['n_pulses'],
                                 spacing=40.0,
-                                dev_indexes=DEV_LIST,#[SIM_PARAMS[NET_TYPE]['n_pulses']-3],
+                                dev_indexes=DEV_LIST,
                                 task=TASK)
     s_handler.set_task_stimuli()
 
@@ -220,7 +212,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         netParams.popParams[ext_stim_pop_name]={'cellModel': 'VecStim',
                    'numCells': 24, 'spkTimes':[0],
                    'pulses':[{'start': t_pulse*1000.0+external_pulses_time[0],
-                       'end': t_pulse*1000.0+external_pulses_time[1], 'rate': 200,
+                       'end': t_pulse*1000.0+external_pulses_time[1],
+                       'rate': 200,
                        'noise': 1.0}]}
         # set stimulus column
         ext_x_pyr, ext_x_bask=external_pulses_info[t_pulse]['values']
@@ -246,7 +239,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         # Internal stimuli - memory trace
 
         # set stimulus name
-        '''int_stim_pop_name='internal_' + \
+        int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         # parametarize stimulus
@@ -266,7 +259,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}'''
+            'synMech': 'AMPA'}
 
 
     ###############################################################################
@@ -332,7 +325,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 0.002,
+        'weight': 0.001,#0.002,#0.001
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -346,7 +339,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'synMech': 'GABA'}'''
 
     ## prediction layer
-    '''netParams.connParams['PYR_memory->']={
+    '''netParams.connParams['PYR_memory->PYR_memory']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
@@ -361,7 +354,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 0.03,#0.15 #0.03 #0.3
+        'weight': 3,#0.03, #3 #0.15 #0.03 #0.3
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
@@ -369,8 +362,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     netParams.connParams['PYR4->BASK23']={
         'preConds': {'popLabel': 'PYR4'},
         'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.8*exp(-dist_2D/(3*40.0))',
-        'weight': 0.000015,#0.000015,#0.00015,
+        'probability': '0.8*exp(-dist_2D/(2*40.0))',
+        'weight': 0.00015,#0.000015,#0.000015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
