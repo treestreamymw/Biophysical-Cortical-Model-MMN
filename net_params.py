@@ -52,13 +52,13 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                    'color': 'green'}
 
     ## excitatory cells - memory layer
-    netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
+    '''netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
                                     'cellType': 'PYR',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
                                     'yRange': [.6*netParams.sizeY,
                                                 .6*netParams.sizeY],
-                                    'color': 'purple'}
+                                    'color': 'purple'}'''
 
     ## inhibitory cells layer 2/3- prediction layer
     netParams.popParams['BASK23']={'cellModel': 'BASK_Vierling',
@@ -96,10 +96,10 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                   		cellName='pyr_23_asym_stripped')
 
     ## PYR cell of memory layer - defined by the four compartment model
-    cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
+    '''cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
                                                        'cellModel': 'PYR_Hay'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
-                                  		cellName='pyr_23_asym_stripped')
+                                  		cellName='pyr_23_asym_stripped')'''
 
 
 
@@ -196,8 +196,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     external_pulses_info=s_handler.get_formatted_pulse(external=True)
     external_pulses_time=s_handler.get_pulse_time(external=True)
 
-    internal_pulses_info=s_handler.get_formatted_pulse(external=False)
-    internal_pulses_time=s_handler.get_pulse_time(external=False)
+    '''internal_pulses_info=s_handler.get_formatted_pulse(external=False)
+    internal_pulses_time=s_handler.get_pulse_time(external=False)'''
 
     # generate pulses
     for t_pulse in external_pulses_info.keys():
@@ -239,7 +239,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         # Internal stimuli - memory trace
 
         # set stimulus name
-        int_stim_pop_name='internal_' + \
+        '''int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         # parametarize stimulus
@@ -259,7 +259,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}
+            'synMech': 'AMPA'}'''
 
 
     ###############################################################################
@@ -454,6 +454,10 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.analysis['plotLFP']={'includeAxon': False,
          'plots': ['timeSeries'],
          'saveFig': 'output_files/{}_LFP.png'.format(fig_name)}
+
+    simConfig.analysis['plotConn']={'include':['all'], 'feature':'strength',
+        'orderBy':'gid', 'figSize':(10,10), 'groupBy':'pop',
+         'saveFig': 'output_files/{}_conn.png'.format(fig_name)}
 
 
     # Plot 2D net cells and connections

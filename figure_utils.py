@@ -146,12 +146,13 @@ def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim, Raw=False):
         trim=0
     else:
         trim=2
+
     data = exctract_data_LFP(PATH_LIST, N_stim, trim)
     stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
     T=np.linspace(-0.05,0.3,350)
 
-    plt.plot(T, -1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
-    plt.plot(T, -1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
+    plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
+    plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
 
     plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
     plt.xlabel(' T (s)')
@@ -326,12 +327,12 @@ if __name__ == "__main__":
     '''
 
     path='output_files/simple_model.json'
-    path_list=glob('output_files/*.json')
-    FIG_DIR_NAME=''
+    path_list=glob('output_files/revert_network/*.json')
+    FIG_DIR_NAME='revert_network'
 
     #plot_spiking_stats_df(path_list[2], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[2], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP([path], 8, Raw=True)
+    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
     #plot_SSA_vs_MMN(path+'beta_network_short_stim_SSA_only5.json',
     #        path+'beta_network_short_stim_5.json', 8)
