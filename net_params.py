@@ -325,7 +325,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 0.001,#0.002,#0.001
+        'weight': 0.002,#0.001
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -354,7 +354,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
         'probability': '0.5*exp(-dist_2D/(2*40.0))',
-        'weight': 3,#0.03, #3 #0.15 #0.03 #0.3
+        'weight': 0.03, #3 #0.15 #0.03 #0.3
         'threshold': 10,
         'synMech': 'AMPASTD'}
 

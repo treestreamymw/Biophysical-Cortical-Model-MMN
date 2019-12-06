@@ -92,18 +92,32 @@
 - __Chosen action__: delay memory trace by 50 ms
 - __Justification__: processing time
 
-
-
-### (15) BETA SHORT == BETA 2 +DEALY
-- Files are [here](../output_file/output_files/random_run_beta_model_short_stim_SSA_vs_MMN)
+### (15) BETA SHORT == BETA 2 + DEALY
+- Files are [here](../output_file/output_files/random_run_beta_model_short_stim_delay)
 - __Observation__: didn't work. two spikes.
 - __Chosen action__:  Try to run with and without the memory layer.
-- __Justification__: distinguish MMN from SSA
+- __Justification__: distinguish MMN from SSA. We still see the dip, thus go back.
 
 
 
-### (16) BETA 2 -  
-- Files are [here](../output_file/output_files/random_run_beta_model_short_stim_delay)
-- __Observation__: Two problems (1) no adaptation in only SSA and (2) big negative first spike
-- __Chosen action__: First, solve for problem 1- . Second, we see no first dip in the SSA only simulation, thus- the dip is a result of the inhibition from the memory lane. Reduce memory layer activation.
+### (16) BETA SHORT == BETA 2
+- Files are [here](../output_file/output_files/random_run_beta_model_short_stim_SSA_vs_MMN)
+- __Observation__: didn't work. two spikes.  still dip.
+- __Chosen action__:  revert back
 - __Justification__:
+
+
+REVERT BACK TO 9ed66b8 on Oct 17
+
+### (17) BETA SHORT == revert even further
+- Files are [here](../output_file/output_files/revert_network)
+- __Observation__:  move electrode around.
+- __Chosen action__:  
+- __Justification__: now it is organized such that Electrode (0), l23 (.2), l4 (0.4), memory (1).
+
+
+### (18) BETA 2 electrode around
+- Files are [here](../output_file/output_files/revert_network_2)
+- __Observation__: looks better! positive, negative, positive, negative. but raster is BAD.
+- __Chosen action__:  move params around
+- __Justification__: well.. we worked hard to find the right params

@@ -326,13 +326,13 @@ if __name__ == "__main__":
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
     '''
 
-    path='output_files/simple_model.json'
-    path_list=glob('output_files/old_jsons/*.json')
-    FIG_DIR_NAME='old_jsons'
+    path='output_files/revert_network_2/beta_network_2_conn_4.json'
+    path_list=glob('output_files/SYM_current/*.json')
+    FIG_DIR_NAME='revert_network_2'
 
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP([path_list[2]], 4, Raw=True)
+    plot_freq_vs_infreq_LFP([path], 8, Raw=True)
 
     #plot_SSA_vs_MMN(path+'beta_network_short_stim_SSA_only5.json',
     #        path+'beta_network_short_stim_5.json', 8)
