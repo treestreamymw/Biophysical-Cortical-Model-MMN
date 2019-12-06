@@ -5,7 +5,9 @@ Frontiers in Neural Circuits, 2018.
 """
 from mpi4py import MPI
 from netpyne import sim
-from net_params import set_params
+#from net_params import set_params
+from net_params_SSA import set_params
+
 import numpy as np
 from MP_class import PoolManager
 
