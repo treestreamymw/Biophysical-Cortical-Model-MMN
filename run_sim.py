@@ -5,8 +5,8 @@ Frontiers in Neural Circuits, 2018.
 """
 from mpi4py import MPI
 from netpyne import sim
-#from net_params import set_params
-from net_params_SSA import set_params
+from net_params import set_params
+#from net_params_SSA import set_params
 
 import numpy as np
 from MP_class import PoolManager
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     TASK='flipflop'
     grid_search_array = [
         ['beta_network_2_conn_{}'.format(i),
-                SIM_TYPE, TASK, 1, [i]] for i in [7] ]
+                SIM_TYPE, TASK, 1, [i]] for i in [4] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

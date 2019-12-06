@@ -34,44 +34,44 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     # Population parameters
 
     ## excitatory cells layer 2/3 - prediction layer
-    netParams.popParams['PYR23']={'cellModel': 'PYR_Hay',
-                                    'cellType': 'PYR',
+    netParams.popParams['PYR23']={'cellModel': 'PYR_Hay_asym',
+                                    'cellType': 'PYR_asym',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
-                                    'yRange': [.8*netParams.sizeY,
-                                                .8*netParams.sizeY],
+                                    'yRange': [.2*netParams.sizeY,
+                                                .2*netParams.sizeY],
                                     'color': 'blue'}
 
     ## excitatory cells layer  4 - prediction error layer
-    netParams.popParams['PYR4']={'cellModel': 'PYR_Hay',
-                                   'cellType': 'PYR',
+    netParams.popParams['PYR4']={'cellModel': 'PYR_Hay_four',
+                                   'cellType': 'PYR_four',
                                    'gridSpacing': 40.0,
                                    'xRange': [20, netParams.sizeX],
-                                   'yRange': [netParams.sizeY,
-                                                netParams.sizeY],
+                                   'yRange': [.4*netParams.sizeY,
+                                                .4*netParams.sizeY],
                                    'color': 'green'}
 
     ## excitatory cells - memory layer
-    '''netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay',
-                                    'cellType': 'PYR',
+    '''netParams.popParams['PYR_memory']={'cellModel': 'PYR_Hay_asym',
+                                    'cellType': 'PYR_asym',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
-                                    'yRange': [.6*netParams.sizeY,
-                                                .6*netParams.sizeY],
+                                    'yRange': [1*netParams.sizeY,
+                                                1*netParams.sizeY],
                                     'color': 'purple'}'''
 
     ## inhibitory cells layer 2/3- prediction layer
     netParams.popParams['BASK23']={'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
-                                     'yRange': [.8*netParams.sizeY,
-                                                .8*netParams.sizeY],
+                                     'yRange': [.2*netParams.sizeY,
+                                                .2*netParams.sizeY],
                                      'color': 'red'}
 
     ## inhibitory cells layer 4 - prediction error layer
     netParams.popParams['BASK4']={'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
-                                    'yRange': [netParams.sizeY,
-                                                netParams.sizeY],
+                                    'yRange': [.4*netParams.sizeY,
+                                                .4*netParams.sizeY],
                                     'color': 'yellow'}
 
 
@@ -79,8 +79,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
 
     ## PYR cell of layer 4 properties - defined by the four compartment model
-    cellRule=netParams.importCellParams(label='PYR4', conds={'cellType': 'PYR',
-                                                     'cellModel': 'PYR_Hay'},
+    cellRule=netParams.importCellParams(label='PYR4', conds={'cellType': 'PYR_four',
+                                                     'cellModel': 'PYR_Hay_four'},
                                           fileName='Cells/fourcompartment.hoc',
                                   		cellName='fourcompartment')
 
@@ -90,14 +90,14 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     cellRule['secs']['apic_1']['vinit']=-80.0
 
     ## PYR cell 2/3 properties - defined by the asymetrical stripped model
-    cellRule=netParams.importCellParams(label='PYR23', conds={'cellType': 'PYR',
-                                                       'cellModel': 'PYR_Hay'},
+    cellRule=netParams.importCellParams(label='PYR23', conds={'cellType': 'PYR_asym',
+                                                       'cellModel': 'PYR_Hay_asym'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')
 
     ## PYR cell of memory layer - defined by the four compartment model
-    '''cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR',
-                                                       'cellModel': 'PYR_Hay'},
+    '''cellRule=netParams.importCellParams(label='PYR_memory', conds={'cellType': 'PYR_asym',
+                                                       'cellModel': 'PYR_Hay_asym'},
                                           fileName='Cells/pyr_23_asym_stripped.hoc',
                                   		cellName='pyr_23_asym_stripped')'''
 
@@ -426,10 +426,10 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
     external_input_populations=s_handler.stim_pop_values['external']
 
-    x_electrodes_locations=[ [x_value[0]+1, -0.2*netParams.sizeY, \
+    x_electrodes_locations=[ [x_value[0]+1, 0, \
                         netParams.sizeZ/2] for x_value in \
                     [external_input_populations[ext_pop]['x_values'][0]
-                    for ext_pop in external_input_populations]]
+                    for ext_pop in external_input_populations] ]
 
      # electrodes at the stim frequency
     simConfig.recordLFP=x_electrodes_locations
