@@ -119,5 +119,12 @@ REVERT BACK TO 9ed66b8 on Oct 17
 ### (18) BETA 2 electrode around
 - Files are [here](../output_file/output_files/revert_network_2)
 - __Observation__: looks better! positive, negative, positive, negative. but raster is BAD.
-- __Chosen action__:  move params around
+- __Chosen action__:  move params around <PYR4->PYR23 to 0.03 , BASK23->PYR23 to 0.002>
 - __Justification__: well.. we worked hard to find the right params
+
+
+### (19) BETA 2 electrode around new params
+- Files are [here](../output_file/output_files/revert_network_2_new_params)
+- __Observation__:looks better! positive, negative, positive, negative. but raster is still BAD.
+- __Chosen action__:
+- __Justification__:

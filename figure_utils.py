@@ -326,9 +326,9 @@ if __name__ == "__main__":
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
     '''
 
-    path='output_files/revert_network_2/beta_network_2_conn_4.json'
-    path_list=glob('output_files/revert_network_2_new_params/*.json')
-    FIG_DIR_NAME='revert_network_2_new_params'
+    #path='output_files/revert_network_2/revert_network_2_new_params_more_inh.json'
+    path_list=glob('output_files/revert_network_2_new_params_more_inh/*.json')
+    FIG_DIR_NAME='revert_network_2_new_params_more_inh'
 
     plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])

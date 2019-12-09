@@ -33,7 +33,7 @@ if __name__ == '__main__':
     SIM_TYPE='full' #short
     TASK='flipflop'
     grid_search_array = [
-        ['beta_network_2_conn_larger_inh_23{}'.format(i),
+        ['beta_network_2_conn_larger_inh_23_long_stim{}'.format(i),
                 SIM_TYPE, TASK, 1, [i]] for i in [4] ]
 
 
