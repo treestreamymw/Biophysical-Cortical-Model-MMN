@@ -460,10 +460,15 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
          'saveFig': 'output_files/{}_conn.png'.format(fig_name)}
 
 
-    # Plot 2D net cells and connections
-    #simConfig.analysis['plot2Dnet']={'view': 'xy',
-    #        'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
-    #        'showConns': True ,
-    #        'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
+    #Plot 2D net cells and connections
+    simConfig.analysis['plot2Dnet']={'view': 'xy',
+            'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
+            'showConns': True ,
+            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
+
+    simConfig.analysis['plot2Dnet']={'view': 'xy',
+            'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
+            'showConns': False ,
+            'saveFig': 'output_files/{}_2Dnet_nocon.png'.format(fig_name)}
 
     return (netParams, simConfig)

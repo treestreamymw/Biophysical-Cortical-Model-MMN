@@ -126,5 +126,19 @@ REVERT BACK TO 9ed66b8 on Oct 17
 ### (19) BETA 2 electrode around new params
 - Files are [here](../output_file/output_files/revert_network_2_new_params)
 - __Observation__:looks better! positive, negative, positive, negative. but raster is still BAD.
-- __Chosen action__:
+- __Chosen action__: increase layer 23 inhibition to reduce the span of excitation
+- __Justification__:
+
+
+
+### (20) BETA 2 electrode around new params
+- Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh)
+- __Observation__:looks better! we see adaptation.
+- __Chosen action__: increase stim to 200 ms
+- __Justification__:
+
+### (21) BETA 2 electrode around new params
+- Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh_long_stim)
+- __Observation__:  
+- __Chosen action__: i
 - __Justification__:
