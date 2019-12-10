@@ -139,6 +139,12 @@ REVERT BACK TO 9ed66b8 on Oct 17
 
 ### (21) BETA 2 electrode around new params
 - Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh_long_stim)
-- __Observation__:  
-- __Chosen action__: i
-- __Justification__:
+- __Observation__:  looks better
+- __Chosen action__: increase pyr4 pyr 23 0.5*exp(-dist_2D/(2*40.0))
+- __Justification__: more exc
+
+### (22) BETA 2
+- Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh_long_stim_more_exc)
+- __Observation__:  looks better
+- __Chosen action__: increase pyr4 pyr 23 0.5*exp(-dist_2D/(2*40.0))
+- __Justification__: more exc
