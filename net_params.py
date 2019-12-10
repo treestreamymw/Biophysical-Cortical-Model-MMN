@@ -199,8 +199,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     external_pulses_info=s_handler.get_formatted_pulse(external=True)
     external_pulses_time=s_handler.get_pulse_time(external=True)
 
-    '''internal_pulses_info=s_handler.get_formatted_pulse(external=False)
-    internal_pulses_time=s_handler.get_pulse_time(external=False)'''
+    internal_pulses_info=s_handler.get_formatted_pulse(external=False)
+    internal_pulses_time=s_handler.get_pulse_time(external=False)
 
     # generate pulses
     for t_pulse in external_pulses_info.keys():
