@@ -30,11 +30,11 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='short'#'full' #short
+    SIM_TYPE='full'#'full' #short
     TASK='flipflop'
     grid_search_array = [
-        ['beta_network_conns{}'.format(i),
-                SIM_TYPE, TASK, 1, [i]] for i in [2] ]
+        ['beta_network_intralaminar_pyr_increase{}'.format(i),
+                SIM_TYPE, TASK, 1, [i]] for i in [4] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

@@ -353,7 +353,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'preConds': {'popLabel': 'PYR4'},
         'postConds': {'popLabel': 'PYR23'},
         'sec': 'basal2b',
-        'probability': '0.5*exp(-dist_2D/(2*40.0))',
+        'probability': '1*exp(-dist_2D/(2*40.0))', #'0.5*exp(-dist_2D/(2*40.0))',
         'weight': 0.03, #3 #0.15 #0.03 #0.3
         'threshold': 10,
         'synMech': 'AMPASTD'}
@@ -461,14 +461,10 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
 
     #Plot 2D net cells and connections
-    simConfig.analysis['plot2Dnet']={'view': 'xy',
-            'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
-            'showConns': True ,
-            'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
+    #simConfig.analysis['plot2Dnet']={'view': 'xy',
+    #        'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
+    #        'showConns': True ,
+    #        'saveFig': 'output_files/{}_2Dnet.png'.format(fig_name)}
 
-    simConfig.analysis['plot2Dnet']={'view': 'xy',
-            'include': ['PYR23', 'PYR4', 'BASK23', 'BASK4', 'PYR_memory'],
-            'showConns': False ,
-            'saveFig': 'output_files/{}_2Dnet_nocon.png'.format(fig_name)}
 
     return (netParams, simConfig)
