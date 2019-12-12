@@ -34,8 +34,8 @@ if __name__ == '__main__':
     TASK='flipflop'
     grid_search_array = [
         ['beta_network_ssa_i_{}'.format(i),
-                SIM_TYPE, TASK, 1, [i]] for i in [3,4,5,6,7] ]
+                SIM_TYPE, TASK, 1, [i]] for i in [4,5,6,7] ]
 
 
-    sim_pool_manager = PoolManager(num_workers=1)
+    sim_pool_manager = PoolManager(num_workers=4)
     sim_pool_manager.worker(run_sim, grid_search_array, 999999999)
