@@ -98,11 +98,11 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                   		cellName='pyr_23_asym_stripped')
 
     ## PYR cell of memory layer - defined by the four compartment model
-    cellRule=netParams.importCellParams(label='',
+    '''cellRule=netParams.importCellParams(label='PYR_mem',
                                         conds={'cellType': 'PYR_mem',
                                             'cellModel': 'PYR_Hay_mem'},
                                         fileName='Cells/pyr_23_asym_stripped.hoc',
-                                  		cellName='pyr_23_asym_stripped')
+                                  		cellName='pyr_23_asym_stripped')'''
 
 
 
