@@ -36,25 +36,29 @@ Each cortical layer illustrates a population of excitatory (pyramidal) cells and
 
 Following Bastos et al (2012), layer 2/3 contains a secondary excitatory population supporting the prediction error stream (information stream from deeper regions). More details about it below.
 
-The general network connectivity follows the canonical microcircuit for predictive coding outlined in Bastos et al (2012).  Inter-layer connectivity features excitatory (NMDA, AMPA) and inhibitory (GABA) synapses. Inter-laminar connectivity features short term plasticity via modified AMPA synapses. All but the addition of NMDA receptor is a replication of Kudela et al, (2018). The choice to ass NMDA receptors stemmed from their importance in SZ and MMN (CITE).
+The general network connectivity follows the canonical microcircuit for predictive coding outlined in Bastos et al (2012).  Inter-layer connectivity features excitatory (NMDA, AMPA) and inhibitory (GABA) synapses. Inter-laminar connectivity features short term plasticity via modified AMPA synapses. All but the addition of NMDA receptor is a replication of Kudela et al, (2018). The choice to ass NMDA receptors stemmed from their importance in SZ and MMN.
 
 #### The cellular level
 Simulated neurons were bio-physically realistic
 multi compartmental cell models.
 
-Cortical excitatory cells simulated here via a Hay pyramidal cell model (CITE). The cells of layer 4 incorporate a simple four compartments cell (CITE) (FIG) and the excitatory of layer 2/3 present a more complex model (Beeman) (FIG). (WHY).
+Cortical excitatory cells simulated here via a Hay pyramidal cell model. The cells of layer 4 incorporate a simple four compartments cell and the excitatory of layer 2/3 present a more complex model (Beeman).
 
 - Layer 4 Pyramidal cell (fourcompartment).
 - Layer23 Pyramidal cell (pyr_23_asym_stripped)
+- Memory layer Pyramidal cell (pyr_23_asym_stripped)
 
 
-The inhibitory cells of both layers are a simple two compartments basket cells (Vierling).(WHY)
+The inhibitory cells of both layers are a simple two compartments basket cells (Vierling).
 
 - Basket cell (FS)
 
 #### The biophysical level
 
-
+We employ three types of synaptic mechanisms;
+- Exp2Syn - a double exponential mechanism. Reflects AMPA and GABA.
+- FDSExp2Syn- a variation of Exp2Syn that demonstrates fast facilitation mechanism. Implemeted in  between layer connections.
+- NMDA- special for NMDA cells, displays a magnesium blocked channel.
 
 ### An overview of the experimental design
 
@@ -73,7 +77,7 @@ The inhibitory cells of both layers are a simple two compartments basket cells (
 ### Simulation files
 
 * net_params.py includes NEURON network parameters and the simulation configuration.
-* net_sequence.py the file running the simulation based on the
+* run_sim.py the file running the simulation based on the
 
 ### Directories
 
@@ -81,6 +85,8 @@ The inhibitory cells of both layers are a simple two compartments basket cells (
 * Synapses/ .mod file configuring the kinetic function of the synapses
 * mod_files/  .mod files with ion channels configurations
 * x86_64/ compiles .mod files (mostly to C)
+* output_files/ includes plots and json of previous runs
+* single_cell / includes code for running a single cell model
 
 
 ### utils
@@ -90,16 +96,18 @@ The inhibitory cells of both layers are a simple two compartments basket cells (
 * variation_utils.py includes tools to introduce genetic modifications to the model
 * stimulus_utils.py includes the class that handles the stimulus (converting sensory input from a frequency to an action potential in the correct area of the cortex)
 
-
 * config- includes some basic model configurations, i.e size of the network, length, etc.
+
+### Logging
+* Simulation_log.md tracks the parameters variation and links to the directory holding their outputs.
 
 ## How to run
 
 ### set config for type of experiment and network
-TBD
+Using the docker to set the environment.
 
 ### Run the experiment
-'mpiexec -n {N} python3 net_sequence.py'
+'mpiexec -n {N} python3 run_sim.py'
 
 
 ## License

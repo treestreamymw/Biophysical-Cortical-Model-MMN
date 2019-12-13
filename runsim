@@ -1,2 +1,0 @@
- mpiexec -n [n] /home/kashefy/neuron/neuron76/x86_64/bin/nrniv -python3 -mpi [file]
-
