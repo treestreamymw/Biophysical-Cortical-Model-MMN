@@ -327,8 +327,8 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/revert_network_2/revert_network_2_new_params_more_inh.json'
-    path_list=glob('output_files/revert_network_2_new_params_more_inh_long_stim_more_exc/*.json')
-    FIG_DIR_NAME='revert_network_2_new_params_more_inh_long_stim_more_exc'
+    path_list=glob('output_files/revert_network_2__mmn/*.json')
+    FIG_DIR_NAME='revert_network_2__mmn'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
     plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)

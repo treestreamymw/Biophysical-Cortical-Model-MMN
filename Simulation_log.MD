@@ -132,7 +132,7 @@ REVERT BACK TO 9ed66b8 on Oct 17
 
 
 ### (20) BETA 2 electrode around new params
-- Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh)
+- Files are [here](../output_file/output_files/revert_network_2__mmn)
 - __Observation__:looks better! we see adaptation.
 - __Chosen action__: increase stim to 200 ms
 - __Justification__:
@@ -148,3 +148,10 @@ REVERT BACK TO 9ed66b8 on Oct 17
 - __Observation__:  looks better
 - __Chosen action__: increase pyr4 pyr 23 0.5*exp(-dist_2D/(2*40.0))
 - __Justification__: more exc
+
+
+### (23) BETA 2 add memory layer
+- Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh_long_stim_more_exc)
+- __Observation__: narrow pyr_memopry to bask_23 ('0.8*exp(-dist_3D/(.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...) >>> pyr memory too wide!
+- __Chosen action__: pyr_mem to pyr_mem '0.15*exp(-dist_3D/(1*40.0))'
+- __Justification__:
