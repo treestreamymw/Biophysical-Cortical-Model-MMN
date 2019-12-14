@@ -151,7 +151,28 @@ REVERT BACK TO 9ed66b8 on Oct 17
 
 
 ### (23) BETA 2 add memory layer
-- Files are [here](../output_file/output_files/revert_network_2_new_params_more_inh_long_stim_more_exc)
+- Files are [here](../output_file/output_files/revert_network_2__mmn)
 - __Observation__: narrow pyr_memopry to bask_23 ('0.8*exp(-dist_3D/(.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...) >>> pyr memory too wide!
 - __Chosen action__: pyr_mem to pyr_mem '0.15*exp(-dist_3D/(1*40.0))'
+- __Justification__:
+
+
+### (24) BETA 2 narrow memory layer
+- Files are [here](../output_file/output_files/revert_network_2__mmn_smaller)
+- __Observation__: narrow pyr_memopry to bask_23 ('0.8*exp(-dist_3D/(.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...) >>> pyr memory too wide!
+- __Chosen action__: pyr_mem to pyr_mem '0.15*exp(-dist_3D/(1*40.0))'
+- __Justification__:
+
+
+### (25) BETA 2  increase pyr memory bask 23
+- Files are [here](../output_file/output_files/revert_network_2__mmn_increase_mem_23)
+- __Observation__: too little effect on infreq to freq. maybe mem needs to be stronger
+- __Chosen action__: pyr_mem to bask 23 0.015 (100x)
+- __Justification__:
+
+
+### (26) BETA 2  increase pyr memory bask 23
+- Files are [here](../output_file/output_files/revert_network_2__mmn_more_increase_mem_23)
+- __Observation__: still too little effect on infreq to freq. maybe mem needs to be stronger
+- __Chosen action__: pyr_mem to bask 23 to 1
 - __Justification__:
