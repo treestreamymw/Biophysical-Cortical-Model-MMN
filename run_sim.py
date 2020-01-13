@@ -17,7 +17,7 @@ def run_sim (params):
     NP, SC = set_params(fig_name=fig_name,
             NET_TYPE=net_type,
             TASK=task,
-            debug_params=debug_params,
+            DEBUG_PARAMS=debug_params,
             DEV_LIST=dev_list)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
