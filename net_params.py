@@ -13,7 +13,7 @@ from config import SIM_PARAMS
 from stimulus_utils import Simulation_stimuli_Handler
 
 def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
-    #=DEBUG_PARAMS
+    debug_params=DEBUG_PARAMS
     netParams=specs.NetParams()   # object of class NetParams to store the network parameters
     simConfig=specs.SimConfig()   # object of class SimConfig to store the simulation configuration
 
