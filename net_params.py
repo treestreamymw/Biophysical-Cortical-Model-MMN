@@ -135,7 +135,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                        'tau2': 12.0,
                                        'e': -75.0}
 
-    ## AMPASTD is defined by the FDSExp2Syn model
+    #g
+    # AMPASTD is defined by the FDSExp2Syn model
     # It is a two state kinetic scheme synapse where
     # rise time - tau1,
     # decay time- tau2
@@ -375,7 +376,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     netParams.connParams['PYR_memory->BASK23']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.8*exp(-dist_3D/(.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
+        'probability': '0.8*exp(-dist_3D/(1*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
         'weight': 0.015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
