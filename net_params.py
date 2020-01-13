@@ -13,7 +13,7 @@ from config import SIM_PARAMS
 from stimulus_utils import Simulation_stimuli_Handler
 
 def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
-    p= DEBUG_PARAMS
+    _=DEBUG_PARAMS
     netParams=specs.NetParams()   # object of class NetParams to store the network parameters
     simConfig=specs.SimConfig()   # object of class SimConfig to store the simulation configuration
 
@@ -376,7 +376,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     netParams.connParams['PYR_memory->BASK23']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.8*exp(-dist_3D/(1*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
+        'probability': '0.8*exp(-dist_3D/(0.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
         'weight': 0.015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
