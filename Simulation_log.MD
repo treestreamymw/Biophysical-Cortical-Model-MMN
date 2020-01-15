@@ -172,7 +172,31 @@ REVERT BACK TO 9ed66b8 on Oct 17
 
 
 ### (26) BETA 2  increase pyr memory bask 23
-- Files are [here](../output_file/output_files/revert_network_2__mmn_more_increase_mem_23)
+- Files are [here](../output_file/output_files/revert_network_2_mmn_more_increase_mem_23)
 - __Observation__: still too little effect on infreq to freq. maybe mem needs to be stronger
 - __Chosen action__: pyr_mem to bask 23 to 1
 - __Justification__:
+
+### (26) BETA 2  increase pyr memory bask 23
+- Files are [here](../output_file/output_files/revert_network_2_mmn_increase_mem_23_to_bask)
+- __Observation__: Went backdown. keep in .5
+- __Chosen action__: revert to to 0.5
+- __Justification__: it looked better before
+
+
+#### beta 3: final version
+
+### (26) BETA 3 - multiple runs + expiriments
+ - Running model without memory layer [here](../output_file/output_files/beta_3_multiple_ssa)
+
+  - Running model with the memory layer [here](../output_file/output_files/beta_3_multiple_mmn)
+
+  - Running model - flipflop [here](../output_file/output_files/beta_3_multiple_flipflop)
+
+- Running model - Many-standards [here](../output_file/output_files/beta_3_multiple_many_standards)
+
+- Running model - cascade [here](../output_file/output_files/beta_3_multiple_cascade)
+
+- Running model - cascade with oddball [here](../output_file/output_files/beta_3_multiple_cascade_oddball)
+
+- Running model - omission [here](../output_file/output_files/beta_3_mission)
