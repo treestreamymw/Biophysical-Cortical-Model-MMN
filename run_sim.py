@@ -31,9 +31,9 @@ if __name__ == '__main__':
 
     ## grid_search_array - d1, d2, fig_name
     SIM_TYPE='full'#'full' #short
-    TASK='oddball'
+    TASK='flipflop'
     grid_search_array = [
-        ['beta_network_mmn_flipflop_{}'.format(i),
+        ['beta_network_mmn_{}'.format(i),
                 SIM_TYPE, TASK, 1, [i]] for i in [4] ]
 
 

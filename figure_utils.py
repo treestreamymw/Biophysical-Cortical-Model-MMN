@@ -27,7 +27,9 @@ def get_gid_from_pop(data, pop):
     return cellGids
 
 def get_spk_data_for_pop(data, pop):
-
+    '''
+    retrieve spikes from the given populations
+    '''
     cellGids=get_gid_from_pop(data,pop)
     df = pd.DataFrame(pandaslib.to_object_array([data['simData']['spkt'],\
             data['simData']['spkid']]).transpose(), \
@@ -294,23 +296,24 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
 def plot_SSA_vs_MMN(path_adaptation, path_mmn, N_stim):
     trim=0
 
-    data_pc = exctract_data_LFP([path_mmn], N_stim, trim)
-    data_adaptation = exctract_data_LFP([path_adaptation], N_stim, trim)
+    data_pc = exctract_data_LFP(path_mmn, N_stim, trim)
+    data_adaptation = exctract_data_LFP(path_adaptation, N_stim, trim)
 
 
     MMN_pc = data_pc['freq'] - data_pc['infreq']
     MMN_adaptation = data_adaptation['freq'] - data_adaptation['infreq']
 
-    plt.plot(1000*MMN_pc ,label='PC', c='cadetblue')
-    plt.plot(1000*MMN_adaptation ,label='adaptation', c='coral')
+    plt.plot(1000*MMN_adaptation ,label='adaptation', c='coral', alpha=.7)
+    plt.plot(1000*MMN_pc ,label='MEM', c='cadetblue', alpha=.7)
+
     plt.title('Frequent- Infrequent mean potentials - with and without memory trace')
     plt.xlabel(' T (s)')
     plt.ylabel(' delta in Amplitude (mv)')
 
-    #ax = plt.gca()
-    #ax.invert_yaxis()
+    ax = plt.gca()
+    ax.invert_yaxis()
     plt.legend()
-    plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'MMN'))
+    plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'SSA_vs_MMN'))
     plt.show()
 
 ###################
@@ -327,11 +330,14 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/revert_network_2/revert_network_2_new_params_more_inh.json'
-    path_list=glob('output_files/experiments/beta_3_ssa/*.json')
-    FIG_DIR_NAME='/experiments/beta_3_ssa'
+    path_list=glob('output_files/experiments/beta_3_mmn/*.json')
+    FIG_DIR_NAME='/experiments/beta_3_mmn/'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    #plot_SSA_vs_MMN(path+'beta_network_short_stim_SSA_only5.json',
-    #        path+'beta_network_short_stim_5.json', 8)
+    #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
+    #        glob('output_files/experiments/beta_3_mmn/*.json'), 8)
+
+    data=open_file_as_json(path_list[0])
+    print(data['simData']['stims']['cell_992'])

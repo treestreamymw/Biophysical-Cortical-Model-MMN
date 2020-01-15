@@ -438,7 +438,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
      # electrodes at the stim frequency
     simConfig.recordLFP=x_electrodes_locations
-
+    simConfig.saveLFPCells = True #save each cell LFP
     # Saving
     simConfig.saveFolder='output_files/'
     simConfig.filename='output_files/{}'.format(fig_name)  # Set file output name
