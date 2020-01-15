@@ -187,16 +187,16 @@ REVERT BACK TO 9ed66b8 on Oct 17
 #### beta 3: final version
 
 ### (26) BETA 3 - multiple runs + expiriments
- - Running model without memory layer [here](../output_file/output_files/beta_3_multiple_ssa)
+ - Running model without memory layer [here](../output_files/beta_3_ssa)
 
-  - Running model with the memory layer [here](../output_file/output_files/beta_3_multiple_mmn)
+  - Running model with the memory layer [here](../output_files/experiments/beta_3_mmn)
 
-  - Running model - flipflop [here](../output_file/output_files/beta_3_multiple_flipflop)
+  - Running model - flipflop [here](../output_files/experiments/beta_3_flipflop)
 
-- Running model - Many-standards [here](../output_file/output_files/beta_3_multiple_many_standards)
+- Running model - Many-standards [here](../output_files/experiments/beta_3_many_standards)
 
-- Running model - cascade [here](../output_file/output_files/beta_3_multiple_cascade)
+- Running model - cascade [here](../output_files/experiments/beta_3_cascade)
 
-- Running model - cascade with oddball [here](../output_file/output_files/beta_3_multiple_cascade_oddball)
+- Running model - cascade with oddball [here](../output_files/experiments/beta_3_cascade_oddball)
 
-- Running model - omission [here](../output_file/output_files/beta_3_mission)
+- Running model - omission [here](../output_files/experiments/beta_3_omission)

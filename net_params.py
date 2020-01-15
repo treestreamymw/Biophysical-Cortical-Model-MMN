@@ -254,7 +254,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                            'rate': 200,
                            'noise': 1.0}]}
         # set stimulus column
-        int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']'''
+        int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']
 
         # connect stimulus to pyramidal cells in memory layer
         netParams.connParams[int_stim_pop_name + '->']={
@@ -295,6 +295,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         'weight': 0.003,
         'threshold': 10,
         'synMech': 'GABA'}
+
     '''
     netParams.connParams['BASK4->BASK4']={
         'preConds': {'popLabel': 'BASK4'},
