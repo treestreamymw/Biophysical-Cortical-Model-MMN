@@ -30,7 +30,7 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='full'#'full' #short
+    SIM_TYPE='short'#'full' #short
     TASK='flipflop'
     grid_search_array = [
         ['beta_network_mmn_{}'.format(i),
