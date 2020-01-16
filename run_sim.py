@@ -33,7 +33,7 @@ if __name__ == '__main__':
     SIM_TYPE='short'#'full' #short
     TASK='flipflop'
     grid_search_array = [
-        ['beta_network_mmn_short_{}'.format(i),
+        ['beta_network_ssa_short_{}'.format(i),
                 SIM_TYPE, TASK, 1, [i]] for i in [2] ]
 
 
