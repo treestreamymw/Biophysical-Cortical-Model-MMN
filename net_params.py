@@ -208,7 +208,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
         # External sensory stimuli
         # set stimulus name
-        ext_stim_pop_name='Stim_' + \
+        '''ext_stim_pop_name='Stim_' + \
                 str(external_pulses_info[t_pulse]['pop_name']) +"_"+\
                 str(t_pulse)
 
@@ -238,12 +238,12 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}
+            'synMech': 'AMPA'}'''
 
         # Internal stimuli - memory trace
 
         # set stimulus name
-        '''int_stim_pop_name='internal_' + \
+        int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         # parametarize stimulus
@@ -263,7 +263,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}'''
+            'synMech': 'AMPA'}
 
 
     ###############################################################################
@@ -423,7 +423,6 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             {'Vsoma':{'sec':'soma','loc':0.5,'var':'v'},
             'PYR23-PYR23':{'sec':'oblique2b','loc':0.5,
                 'var':'NMDA','conds':{'cellType':'PYR23'}}}
-
 
     '''
     simConfig.recordStim=True  # record spikes of cell stims
