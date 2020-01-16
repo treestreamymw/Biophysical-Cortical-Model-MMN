@@ -338,6 +338,3 @@ if __name__ == "__main__":
 
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
     #        glob('output_files/experiments/beta_3_mmn/*.json'), 8)
-
-    data=open_file_as_json(path_list[0])
-    print(data['simData']['stims']['cell_992'])

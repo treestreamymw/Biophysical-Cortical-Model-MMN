@@ -38,8 +38,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                     'cellType': 'PYR_asym',
                                     'gridSpacing': 40.0,
                                     'xRange': [20, netParams.sizeX],
-                                    'yRange': [.2*netParams.sizeY,
-                                                .2*netParams.sizeY],
+                                    'yRange': [.05*netParams.sizeY,
+                                                .05*netParams.sizeY],
                                     'color': 'blue'}
 
     ## excitatory cells layer  4 - prediction error layer
@@ -47,8 +47,8 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                                    'cellType': 'PYR_four',
                                    'gridSpacing': 40.0,
                                    'xRange': [20, netParams.sizeX],
-                                   'yRange': [.4*netParams.sizeY,
-                                                .4*netParams.sizeY],
+                                   'yRange': [.1*netParams.sizeY,
+                                                .1*netParams.sizeY],
                                    'color': 'green'}
 
     ## excitatory cells - memory layer
@@ -63,15 +63,15 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     ## inhibitory cells layer 2/3- prediction layer
     netParams.popParams['BASK23']={'cellModel': 'BASK_Vierling',
                                      'cellType': 'BASK', 'gridSpacing': 80.0,
-                                     'yRange': [.2*netParams.sizeY,
-                                                .2*netParams.sizeY],
+                                     'yRange': [.05*netParams.sizeY,
+                                                .05*netParams.sizeY],
                                      'color': 'red'}
 
     ## inhibitory cells layer 4 - prediction error layer
     netParams.popParams['BASK4']={'cellModel': 'BASK_Vierling',
                                     'cellType': 'BASK', 'gridSpacing': 80.0,
-                                    'yRange': [.4*netParams.sizeY,
-                                                .4*netParams.sizeY],
+                                    'yRange': [.1*netParams.sizeY,
+                                                .1*netParams.sizeY],
                                     'color': 'yellow'}
 
 
@@ -438,7 +438,6 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
      # electrodes at the stim frequency
     simConfig.recordLFP=x_electrodes_locations
-    simConfig.saveLFPCells = True #save each cell LFP
     # Saving
     simConfig.saveFolder='output_files/'
     simConfig.filename='output_files/{}'.format(fig_name)  # Set file output name
