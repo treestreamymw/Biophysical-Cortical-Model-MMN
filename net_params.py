@@ -208,7 +208,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
 
         # External sensory stimuli
         # set stimulus name
-        '''ext_stim_pop_name='Stim_' + \
+        ext_stim_pop_name='Stim_' + \
                 str(external_pulses_info[t_pulse]['pop_name']) +"_"+\
                 str(t_pulse)
 
@@ -238,7 +238,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}'''
+            'synMech': 'AMPA'}
 
         # Internal stimuli - memory trace
 

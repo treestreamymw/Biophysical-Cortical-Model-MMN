@@ -329,12 +329,12 @@ if __name__ == "__main__":
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
     '''
 
-    #path='output_files/revert_network_2/revert_network_2_new_params_more_inh.json'
-    path_list=glob('output_files/experiments/beta_3_mmn/*.json')
-    FIG_DIR_NAME='/experiments/beta_3_mmn/'
+    path='output_files/electrode_position_check/beta_network_only_int_short_2.json'
+    #path_list=glob('output_files/experiments/electrode_position_check/beta_network_mmn_short_2.json')
+    FIG_DIR_NAME='/electrode_position_check'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    plot_freq_vs_infreq_LFP([path], 3, Raw=True)
 
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
     #        glob('output_files/experiments/beta_3_mmn/*.json'), 8)
