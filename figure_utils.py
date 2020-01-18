@@ -114,11 +114,17 @@ def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
     else:
         peak_infreq = LFP_peak_matrix[infreq_index]
 
-    return {'infreq':peak_infreq, 'freq':peak_freq_mean}
+    return {'infreq':peak_infreq, 'freq':peak_freq_mean,
+        'control': LFP_peak_matrix[0],
+        'standard': LFP_peak_matrix[infreq_index-1]}
 
 def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
-    all_infreq_LFPs = []
+    all_infreq_LFP = []
     all_freq_LFP = []
+    std = []
+    ctrl = []
+
+    max_values = {'std':[], 'ctrl':[] ,'infreq':[]}
 
     # import all files LFP data
     for file_name in file_names_list:
@@ -135,13 +141,36 @@ def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
 
         prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim, trim, True)
 
-        all_infreq_LFPs.append(prepared_data['infreq'])
+        all_infreq_LFP.append(prepared_data['infreq'])
         all_freq_LFP.append(prepared_data['freq'])
+        std.append(prepared_data['standard'])
+        ctrl.append(prepared_data['control'])
 
-    mean_infreq_LFPs = np.mean(all_infreq_LFPs, axis=0)
+        max_values['std'].append(np.max(prepared_data['standard']))
+        max_values['ctrl'].append(np.max(prepared_data['control']))
+        max_values['infreq'].append(np.max(prepared_data['infreq']))
+
+
+    mean_infreq_LFP = np.mean(all_infreq_LFP, axis=0)
     mean_freq_LFP = np.mean(all_freq_LFP, axis=0)
 
-    return {'infreq':mean_infreq_LFPs, 'freq':mean_freq_LFP}
+    ci_std_LFP = [np.percentile(max_values['std'], 2.5, axis=0),
+                    np.percentile(max_values['std'], 97.5, axis=0)]
+    ci_ctrl_LFP = [np.percentile(max_values['ctrl'], 2.5, axis=0),
+                    np.percentile(max_values['ctrl'], 97.5, axis=0)]
+    ci_infreq_LFP = [np.percentile(max_values['infreq'], 2.5, axis=0),
+                    np.percentile(max_values['infreq'], 97.5, axis=0)]
+
+    return {'infreq':mean_infreq_LFP, 'freq':mean_freq_LFP,
+
+            'mean_max': {'control':np.mean(max_values['ctrl']),
+            'standard':np.mean(max_values['std']),
+            'infreq':np.mean(max_values['infreq'])},
+
+            'CI':{'control':ci_ctrl_LFP,
+            'standard':ci_std_LFP,
+            'infreq':ci_infreq_LFP}
+            }
 
 def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim, Raw=False):
     if Raw:
@@ -189,15 +218,15 @@ def plot_full_LFP(file_names_list, N_stim):
         ms_to_trim=5
         prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim[0], ms_to_trim ,False)
 
-        all_infreq_LFPs=prepared_data['infreq']
+        all_infreq_LFP=prepared_data['infreq']
         all_freq_LFP=prepared_data['freq']
 
         #avg_LFP = [np.mean(i) for i in LFP]
         all_peaks=[]
         for peak in range(N_stim-1):
             if peak==infreq_stim[0]:
-                all_peaks.append(all_infreq_LFPs)
-                all_peaks.append(1000*[all_infreq_LFPs[-1]])
+                all_peaks.append(all_infreq_LFP)
+                all_peaks.append(1000*[all_infreq_LFP[-1]])
                 all_peaks.append(all_freq_LFP[peak])
             else:
                 all_peaks.append(all_freq_LFP[peak])
@@ -205,9 +234,9 @@ def plot_full_LFP(file_names_list, N_stim):
 
         flat_peaks= [-1*item for sublist in all_peaks for item in sublist]
 
-        N_per_stim=len(all_infreq_LFPs)+1000
+        N_per_stim=len(all_infreq_LFP)+1000
 
-        #plt.plot(all_infreq_LFPs, c='black')
+        #plt.plot(all_infreq_LFP, c='black')
         plt.plot(flat_peaks, c='grey')
         plt.plot(range(infreq_stim[0]*N_per_stim,(infreq_stim[0]+1)*N_per_stim),
                             flat_peaks[infreq_stim[0]*N_per_stim:(infreq_stim[0]+1)*N_per_stim],
@@ -316,6 +345,52 @@ def plot_SSA_vs_MMN(path_adaptation, path_mmn, N_stim):
     plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'SSA_vs_MMN'))
     plt.show()
 
+def plot_parras_bars(path, N_stim, measurement):
+    '''
+    follow parras et al (2017) figures.
+
+    Reflects a bar graph comparing control, standard, and devinat across X
+    simulations.
+    the graph counts either the spikes count, the LFP, or the action potentials
+    (based on given param).
+    '''
+
+    if measurement=='LFP':
+        data = exctract_data_LFP(path, N_stim, 0)
+
+        control_mean = data['mean_max']['control']
+        standard_mean = data['mean_max']['standard']
+        deviant_mean = data['mean_max']['infreq']
+
+        control_ci = data['CI']['control']
+        standard_ci = data['CI']['standard']
+        deviant_ci = data['CI']['infreq']
+
+        err = [[d,c,s] for d,c,s in zip(deviant_ci, control_ci, standard_ci)]
+
+    '''elif measurement=='AP':
+        data=
+        err=
+    elif measurement=='NEURONS':
+        data=
+        err='''
+
+
+
+    plt.bar([1,2,3],
+            [deviant_mean, control_mean,standard_mean],
+            .35,
+            color=['coral','darkslateblue','darkcyan'],
+            yerr=err)
+    plt.xticks([1,2,3], ('Deviant','Control', 'Standard'))
+    plt.title('LFP')
+    plt.show()
+
+
+
+
+
+
 ###################
 if __name__ == "__main__":
     '''
@@ -329,12 +404,12 @@ if __name__ == "__main__":
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
     '''
 
-    path='output_files/electrode_position_check/beta_network_only_int_short_2.json'
-    #path_list=glob('output_files/experiments/electrode_position_check/beta_network_mmn_short_2.json')
+    #path='output_files/expiriments/beta_3_mmn'
+    path_list=glob('output_files/experiments/beta_3_ssa/*.json')
     FIG_DIR_NAME='/electrode_position_check'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP([path], 3, Raw=True)
-
+    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    plot_parras_bars(path_list, 8, 'LFP')
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
     #        glob('output_files/experiments/beta_3_mmn/*.json'), 8)

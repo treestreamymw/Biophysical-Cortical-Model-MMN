@@ -243,7 +243,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
         # Internal stimuli - memory trace
 
         # set stimulus name
-        int_stim_pop_name='internal_' + \
+        '''int_stim_pop_name='internal_' + \
             str(internal_pulses_info[t_pulse]['pop_name']) +"_"+ str(t_pulse)
 
         # parametarize stimulus
@@ -263,7 +263,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
             'convergence': 1,
             'weight': 0.02,
             'threshold': 10,
-            'synMech': 'AMPA'}
+            'synMech': 'AMPA'}'''
 
 
     ###############################################################################
