@@ -33,8 +33,8 @@ if __name__ == '__main__':
     SIM_TYPE='full'#'full' #short
     TASK='flipflop'
     grid_search_array = [
-        ['beta_3_mmn_{}'.format(i),
-                SIM_TYPE, TASK, 1, [i]] for i in [4] ]
+        ['beta_4_mmn_{}'.format(i),
+                SIM_TYPE, TASK, 1, [i]] for i in [5] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
