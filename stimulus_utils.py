@@ -95,7 +95,7 @@ class Simulation_stimuli_Handler(object):
 
         # external includes both std and dev based on the dev indexes
         if omission:
-            external_pop_values['dev']={'x_values':[0,0],
+            external_pop_values['dev']={'x_values':[[0,0],[0,0]],
                             'pulses':self.dev_indexes}
         if not omission:
             external_pop_values['dev']={'x_values':deviant_x_values,
@@ -149,7 +149,7 @@ class Simulation_stimuli_Handler(object):
                                 'pulses':[i]} for i in range(self.n_pulses)}
 
         self.stim_pop_values['external']=pop_values
-        self.stim_pop_values['internal']={'std':{'x_values': [0,0],
+        self.stim_pop_values['internal']={'std':{'x_values': [[0,0],[0,0]],
                                 'pulses':[i]} for i in range(self.n_pulses)}
 
     def get_formatted_pulse(self, external=True):
