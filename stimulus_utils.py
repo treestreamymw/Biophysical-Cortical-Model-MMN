@@ -142,11 +142,12 @@ class Simulation_stimuli_Handler(object):
 
         x_values = self._get_all_available_tones()
         shuffle(x_values)
-        pop_values={'std':{i:{'x_values': x_values[i],
-                                'pulses':[i]} for i in range(self.n_pulses)}}
+        pop_values={'std':{'x_values': x_values[i],
+                                'pulses':[i]} for i in range(self.n_pulses)}
 
         self.stim_pop_values['external']=pop_values
-        self.stim_pop_values['internal']={}
+        self.stim_pop_values['internal']={'std':{'x_values': 0,
+                                'pulses':[i]} for i in range(self.n_pulses)}
 
     def get_formatted_pulse(self, external=True):
         '''
@@ -161,7 +162,10 @@ class Simulation_stimuli_Handler(object):
         else:
             stimuli_origin='internal'
 
+        print(self.stim_pop_values[stimuli_origin])
         for pop in self.stim_pop_values[stimuli_origin]:
+            #print(self.stim_pop_values[stimuli_origin][pop] )
+            #print(self.stim_pop_values[stimuli_origin][pop])
             if self.stim_pop_values[stimuli_origin][pop] != {}:
                 for pulse in self.stim_pop_values[stimuli_origin][pop]['pulses']:
                     pulse_dict[pulse]['pop_name']=pop
@@ -176,19 +180,21 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    s=Simulation_stimuli_Handler(300 ,3 ,40,[2],'oddball')
+    TASK='cascade'
+    s=Simulation_stimuli_Handler(300 ,3 ,40,[2],TASK)
 
     s.set_task_stimuli()
     #print(s.population_values)
     NET_TYPE='short'
-    TASK='oddball'
+
     pulses_info=s.get_formatted_pulse(external=False)
+    pulses_info_ext=s.get_formatted_pulse(external=True)
 
     deviant_pulses_indexes = [2]
 
     netparams={}
     times=s.get_pulse_time(external=False)
-
+    '''
     for t_pulse in pulses_info.keys():
 
         stim='Stim_' + str(pulses_info[t_pulse]['pop_name']) + str(t_pulse)
@@ -200,4 +206,4 @@ if __name__=="__main__":
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
         print(x_pyr, x_bask)
-    print (netparams)
+    print (netparams)'''

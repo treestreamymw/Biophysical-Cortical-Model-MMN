@@ -182,8 +182,14 @@ def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim, Raw=False):
     stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
     T=np.linspace(-0.05,0.3,350)
 
+    delta= [infreq-freq for infreq,freq in zip(
+        1000*data['infreq'][stim_set-500:stim_set+3000:10],
+        1000*data['freq'][stim_set-500:stim_set+3000:10])]
+
     plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
     plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
+    #plt.plot(T, delta ,label='MMN', c='cadetblue')
+
 
     plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
     plt.xlabel(' T (s)')
@@ -244,8 +250,10 @@ def plot_full_LFP(file_names_list, N_stim):
         plt.title(' LFP  (trimmed first {} ms)'.format(ms_to_trim))
         plt.show()
 
-def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
+def prepare_spiking_stats(path, N_stim, trim_ms=50, pop=None):
     '''
+
+    prepare data for spiking stats plots
     path - to json files
     plot type - AP or NEURONS
     N peask - the expected number of stimuli
@@ -254,10 +262,8 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
     k- the numebr of ms to bin
     '''
 
-    assert plot_type == 'AP' or plot_type == 'NEURONS', \
-        'choose between AP and NEURONS'
 
-    plot_title= {'AP':'# of AP', 'NEURONS':'# of recruited neurons'}
+
     # get data and prepare it
     data=open_file_as_json(path)
     df=get_spk_data_for_pop(data, pop)
@@ -276,7 +282,6 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
     cells=trimmed_data['n_recruited_neurons']
 
     # prepare dicts to collect data for plot
-
     spike_ids_per_t={i:[] for i in range(N_stim)}
     n_rec_neuron_per_t={i:[] for i in range(N_stim)}
     X={i:[] for i in range(N_stim)}
@@ -295,6 +300,79 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
         X[i].append(t)
         spike_ids_per_t[i].append(spks[time_ind])
         n_rec_neuron_per_t[i].append(cells[time_ind])
+
+    return {'X':X,
+        'spike_ids_per_t':spike_ids_per_t,
+        'n_rec_neuron_per_t':n_rec_neuron_per_t,
+        'infreq_id':infreq_id}
+
+def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim, trim_ms=50):
+    '''
+    counts stats for bar plot comparing std dev and ctrl (parras)
+    '''
+    assert plot_type == 'AP' or plot_type == 'NEURONS', \
+            'choose between AP and NEURONS'
+
+    repeated_dev=[]
+    repeated_std=[]
+    repeated_ctrl=[]
+
+    for path in path_list:
+        data=prepare_spiking_stats(path=path,
+                    N_stim=N_stim,
+                    trim_ms=trim_ms)
+        if plot_type=='AP':
+            spiking_data=data['X']
+        elif plot_type=='NEURONS':
+            spiking_data=data['n_rec_neuron_per_t']
+
+        #n_rec_neuron_per_t=data['n_rec_neuron_per_t']
+        infreq_id=data['infreq_id']
+
+
+        repeated_dev.append(np.max(spiking_data[infreq_id]))
+        repeated_std.append(np.max(spiking_data[infreq_id-1]))
+        repeated_ctrl.append(np.max(spiking_data[0]))
+
+
+    dev_mean=np.mean(repeated_dev)
+    std_mean=np.mean(repeated_std)
+    ctrl_mean=np.mean(repeated_ctrl)
+
+    ci_std = [np.percentile(repeated_std, 2.5, axis=0),
+                    np.percentile(repeated_std, 97.5, axis=0)]
+    ci_ctrl = [np.percentile(repeated_ctrl, 2.5, axis=0),
+                    np.percentile(repeated_ctrl, 97.5, axis=0)]
+    ci_infreq = [np.percentile(repeated_dev, 2.5, axis=0),
+                    np.percentile(repeated_dev, 97.5, axis=0)]
+
+
+    print({'mean_max':{'infreq':dev_mean,'standard':std_mean,'control':ctrl_mean},
+            'CI':{'infreq':ci_infreq,'standard':ci_std,'control':ci_ctrl}})
+    return {'mean_max':{'infreq':dev_mean,'standard':std_mean,'control':ctrl_mean},
+            'CI':{'infreq':ci_infreq,'standard':ci_std,'control':ci_ctrl}}
+
+def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
+    '''
+    path - to json files
+    plot type - AP or NEURONS
+    N peask - the expected number of stimuli
+    trim_ms - the number of ms to ignore at the start of the stim
+    pop - the populations to include
+    k- the numebr of ms to bin
+    '''
+    assert plot_type == 'AP' or plot_type == 'NEURONS', \
+            'choose between AP and NEURONS'
+    plot_title= {'AP':'# of AP', 'NEURONS':'# of recruited neurons'}
+
+    data=prepare_spiking_stats(path=path,
+                N_stim=N_stim,
+                trim_ms=trim_ms)
+
+    X=data['X']
+    spike_ids_per_t=data['spike_ids_per_t']
+    n_rec_neuron_per_t=data['n_rec_neuron_per_t']
+    infreq_id=data['infreq_id']
 
     label_ploted=False
     for stim_i in range(N_stim):
@@ -325,22 +403,24 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
 def plot_SSA_vs_MMN(path_adaptation, path_mmn, N_stim):
     trim=0
 
+
     data_pc = exctract_data_LFP(path_mmn, N_stim, trim)
     data_adaptation = exctract_data_LFP(path_adaptation, N_stim, trim)
 
+    stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
+    T=np.linspace(-0.05,0.3,350)
 
     MMN_pc = data_pc['freq'] - data_pc['infreq']
     MMN_adaptation = data_adaptation['freq'] - data_adaptation['infreq']
 
-    plt.plot(1000*MMN_adaptation ,label='adaptation', c='coral', alpha=.7)
-    plt.plot(1000*MMN_pc ,label='MEM', c='cadetblue', alpha=.7)
+    plt.plot(T, 1000*MMN_adaptation[stim_set-500:stim_set+3000:10] ,label='adaptation', c='coral', alpha=.7)
+    plt.plot(T, 1000*MMN_pc[stim_set-500:stim_set+3000:10] ,label='MEM', c='cadetblue', alpha=.7)
 
     plt.title('Frequent- Infrequent mean potentials - with and without memory trace')
     plt.xlabel(' T (s)')
     plt.ylabel(' delta in Amplitude (mv)')
 
-    ax = plt.gca()
-    ax.invert_yaxis()
+
     plt.legend()
     plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'SSA_vs_MMN'))
     plt.show()
@@ -365,25 +445,30 @@ def plot_parras_bars(path, N_stim, measurement):
         control_ci = data['CI']['control']
         standard_ci = data['CI']['standard']
         deviant_ci = data['CI']['infreq']
-
         err = [[d,c,s] for d,c,s in zip(deviant_ci, control_ci, standard_ci)]
 
-    '''elif measurement=='AP':
-        data=
-        err=
-    elif measurement=='NEURONS':
-        data=
-        err='''
+    else:
+        data=prepare_spiking_data_for_bar_plot(path, measurement, N_stim)
+
+        control_mean = data['mean_max']['control']
+        standard_mean = data['mean_max']['standard']
+        deviant_mean = data['mean_max']['infreq']
+
+        control_ci = data['CI']['control']
+        standard_ci = data['CI']['standard']
+        deviant_ci = data['CI']['infreq']
+
+        err = [[d,c,s] for d,c,s in zip(deviant_ci, control_ci, standard_ci)]
 
 
 
     plt.bar([1,2,3],
             [deviant_mean, control_mean,standard_mean],
-            .35,
-            color=['coral','darkslateblue','darkcyan'],
+            .5,
+            color=['red','green','blue'],
             yerr=err)
     plt.xticks([1,2,3], ('Deviant','Control', 'Standard'))
-    plt.title('LFP')
+    plt.title(measurement)
     plt.show()
 
 
@@ -405,11 +490,13 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/expiriments/beta_3_mmn'
-    path_list=glob('output_files/experiments/beta_3_ssa/*.json')
-    FIG_DIR_NAME='/experiments/beta_3_ssa'
+    path_list=glob('output_files/experiments/beta_3_mmn/*.json')
+    FIG_DIR_NAME='/experiments/beta_3_mmn'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
+    #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
-    #plot_parras_bars(path_list, 8, 'LFP')
+    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+
+    plot_parras_bars(path_list, 8, 'NEURONS')
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
     #        glob('output_files/experiments/beta_3_mmn/*.json'), 8)
