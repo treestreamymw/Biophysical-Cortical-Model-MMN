@@ -94,6 +94,9 @@ class Simulation_stimuli_Handler(object):
         standard_x_values, deviant_x_values = self._get_std_dev_tones()
 
         # external includes both std and dev based on the dev indexes
+        if omission:
+            external_pop_values['dev']={'x_values':[0,0],
+                            'pulses':self.dev_indexes}
         if not omission:
             external_pop_values['dev']={'x_values':deviant_x_values,
                             'pulses':self.dev_indexes}
@@ -179,21 +182,21 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    TASK='cascade'
+    TASK='omission'
     s=Simulation_stimuli_Handler(300 ,3 ,40,[2],TASK)
 
     s.set_task_stimuli()
     #print(s.population_values)
     NET_TYPE='short'
 
-    pulses_info=s.get_formatted_pulse(external=False)
-    pulses_info_ext=s.get_formatted_pulse(external=True)
+    pulses_info=s.get_formatted_pulse(external=True)
+    #pulses_info_ext=s.get_formatted_pulse(external=True)
 
     deviant_pulses_indexes = [2]
 
     netparams={}
     times=s.get_pulse_time(external=False)
-    '''
+
     for t_pulse in pulses_info.keys():
 
         stim='Stim_' + str(pulses_info[t_pulse]['pop_name']) + str(t_pulse)
@@ -202,7 +205,7 @@ if __name__=="__main__":
                    'numCells': 24, 'spkTimes':[0],
                    'pulses':[{'start': t_pulse*1000+times[0],
                        'end': t_pulse*1000.0+times[1], 'rate': 200, 'noise': 1.0}]}
-
+        print(pulses_info[t_pulse]['values'])
         x_pyr, x_bask=pulses_info[t_pulse]['values']
         print(x_pyr, x_bask)
-    print (netparams)'''
+    print (netparams)

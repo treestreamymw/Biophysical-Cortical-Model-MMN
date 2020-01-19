@@ -326,7 +326,6 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim, trim_ms=50):
         elif plot_type=='NEURONS':
             spiking_data=data['n_rec_neuron_per_t']
 
-        #n_rec_neuron_per_t=data['n_rec_neuron_per_t']
         infreq_id=data['infreq_id']
 
 
