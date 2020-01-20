@@ -183,11 +183,11 @@ class Simulation_stimuli_Handler(object):
 
 if __name__=="__main__":
     TASK='cascade'
-    s=Simulation_stimuli_Handler(300 ,3 ,40,[2],TASK)
+    NET_TYPE='full'
+    s=Simulation_stimuli_Handler(300 ,8 ,40,[2],TASK)
 
     s.set_task_stimuli()
-    #print(s.population_values)
-    NET_TYPE='short'
+
 
     pulses_info=s.get_formatted_pulse(external=True)
     #pulses_info_ext=s.get_formatted_pulse(external=True)
@@ -195,7 +195,7 @@ if __name__=="__main__":
     deviant_pulses_indexes = [2]
 
     netparams={}
-    times=s.get_pulse_time(external=False)
+    times=s.get_pulse_time(external=True)
 
     for t_pulse in pulses_info.keys():
         stim='Stim_' + str(pulses_info[t_pulse]['pop_name']) + str(t_pulse)
@@ -206,6 +206,6 @@ if __name__=="__main__":
                        'end': t_pulse*1000.0+times[1], 'rate': 200, 'noise': 1.0}]}
 
         x_pyr, x_bask=pulses_info[t_pulse]['values']
-        #print(x_pyr, x_bask)
+        print(x_pyr, x_bask)
 
     print (netparams)
