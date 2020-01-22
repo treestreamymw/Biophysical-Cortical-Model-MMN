@@ -184,9 +184,9 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    TASK='cascade'
+    TASK='omission'
     NET_TYPE='full'
-    s=Simulation_stimuli_Handler(300 ,8 ,40,[2],TASK)
+    s=Simulation_stimuli_Handler(300 ,8 ,40,[5],TASK)
 
     s.set_task_stimuli()
 
@@ -198,7 +198,6 @@ if __name__=="__main__":
 
     #pulses_info_ext=s.get_formatted_pulse(external=True)
 
-    deviant_pulses_indexes = [5]
 
     netparams={}
 
