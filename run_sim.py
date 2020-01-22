@@ -6,6 +6,8 @@ Frontiers in Neural Circuits, 2018.
 from mpi4py import MPI
 from netpyne import sim
 from net_params import set_params
+import argparse
+
 #from net_params_SSA import set_params
 
 import numpy as np
@@ -30,11 +32,20 @@ if __name__ == '__main__':
     ## basic param modification
 
     ## grid_search_array - d1, d2, fig_name
-    SIM_TYPE='full'#'full' #short
-    TASK='many_standards'
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("task", help="enter stimulus task", type=str)
+    parser.add_argument("type", help="enter type (length)", type=str)
+    args = parser.parse_args()
+
+    TASK=args.task
+    TYPE=args.type
+
+    SIM_TYPE = TYPE or 'full'#'full' #short
+    SIM_TASK = TASK or 'oddball'
     grid_search_array = [
         ['beta_4_many_standards_{}'.format(i),
-                SIM_TYPE, TASK, 1, [i]] for i in [5] ]
+                SIM_TYPE, SIM_TASK, 1, [i]] for i in [5] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
