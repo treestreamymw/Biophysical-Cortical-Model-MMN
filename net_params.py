@@ -219,7 +219,9 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
                        'end': t_pulse*1000.0+external_pulses_time[1],
                        'rate': 200,
                        'noise': 1.0}]}
+
         # set stimulus column
+        print(external_pulses_info[t_pulse]['values'])
         ext_x_pyr, ext_x_bask=external_pulses_info[t_pulse]['values']
 
         # connect stimulus to pyramidal cells in layer 4

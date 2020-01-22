@@ -102,7 +102,8 @@ class Simulation_stimuli_Handler(object):
                             'pulses':self.dev_indexes}
 
         external_pop_values['std']={'x_values':standard_x_values,
-                            'pulses':list(set(range(self.n_pulses)).difference(self.dev_indexes))}
+                            'pulses':list(set(range(self.n_pulses)).\
+                                    difference(self.dev_indexes))}
 
         #internal includes only std for all pulses indexes
         internal_pop_values['std']= {'x_values':standard_x_values,
@@ -171,7 +172,8 @@ class Simulation_stimuli_Handler(object):
             if self.stim_pop_values[stimuli_origin][pop] != {}:
                 for pulse in self.stim_pop_values[stimuli_origin][pop]['pulses']:
                     pulse_dict[pulse]['pop_name']=pop
-                    pulse_dict[pulse]['values']=self.stim_pop_values[stimuli_origin][pop]['x_values']
+                    pulse_dict[pulse]['values']=\
+                            self.stim_pop_values[stimuli_origin][pop]['x_values']
 
         return pulse_dict
 
@@ -190,12 +192,15 @@ if __name__=="__main__":
 
 
     pulses_info=s.get_formatted_pulse(external=True)
+    pulses_info_in=s.get_formatted_pulse(external=False)
+
+    times=s.get_pulse_time(external=True)
+
     #pulses_info_ext=s.get_formatted_pulse(external=True)
 
-    deviant_pulses_indexes = [2]
+    deviant_pulses_indexes = [5]
 
     netparams={}
-    times=s.get_pulse_time(external=True)
 
     for t_pulse in pulses_info.keys():
         stim='Stim_' + str(pulses_info[t_pulse]['pop_name']) + str(t_pulse)
@@ -204,8 +209,9 @@ if __name__=="__main__":
                    'numCells': 24, 'spkTimes':[0],
                    'pulses':[{'start': t_pulse*1000+times[0],
                        'end': t_pulse*1000.0+times[1], 'rate': 200, 'noise': 1.0}]}
-
+        print(pulses_info[t_pulse]['values'])
+        print(pulses_info_in[t_pulse]['values'])
+        print()
         x_pyr, x_bask=pulses_info[t_pulse]['values']
-        print(x_pyr, x_bask)
 
-    print (netparams)
+    #print (netparams)
