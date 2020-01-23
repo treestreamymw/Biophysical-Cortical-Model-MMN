@@ -184,9 +184,9 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    TASK='omission'
-    NET_TYPE='full'
-    s=Simulation_stimuli_Handler(300 ,8 ,40,[5],TASK)
+    TASK='many_standards'
+    NET_TYPE='short'
+    s=Simulation_stimuli_Handler(300 ,3 ,40,[5],TASK)
 
     s.set_task_stimuli()
 
@@ -213,4 +213,4 @@ if __name__=="__main__":
         print()
         x_pyr, x_bask=pulses_info[t_pulse]['values']
 
-    #print (netparams)
+    print (netparams)

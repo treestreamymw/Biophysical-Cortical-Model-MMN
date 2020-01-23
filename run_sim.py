@@ -34,17 +34,19 @@ if __name__ == '__main__':
     ## grid_search_array - d1, d2, fig_name
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("task", help="enter stimulus task", type=str)
-    parser.add_argument("type", help="enter type (length)", type=str)
+    parser.add_argument("task", help="enter stimulus task", type=str,
+        default='oddball')
+    parser.add_argument("type", help="enter type (length)", type=str,
+        default='full')
     args = parser.parse_args()
 
-    TASK=args.task
-    TYPE=args.type
+    TASK = args.task
+    TYPE = args.type
 
-    SIM_TYPE = TYPE or 'full'#'full' #short
-    SIM_TASK = TASK or 'oddball'
+    SIM_TYPE = TYPE
+    SIM_TASK = TASK
     grid_search_array = [
-        ['beta_4_many_standards_{}'.format(i),
+        ['beta_4_{}_{}'.format(TASK,i),
                 SIM_TYPE, SIM_TASK, 1, [i]] for i in [5] ]
 
 
