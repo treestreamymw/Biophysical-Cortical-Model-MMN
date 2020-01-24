@@ -170,7 +170,6 @@ class Simulation_stimuli_Handler(object):
         for pop in self.stim_pop_values[stimuli_origin]:
 
             if self.stim_pop_values[stimuli_origin][pop] != {}:
-                print(pop, self.stim_pop_values[stimuli_origin][pop]['pulses'])
                 for pulse in self.stim_pop_values[stimuli_origin][pop]['pulses']:
                     pulse_dict[pulse]['pop_name']=pop
                     pulse_dict[pulse]['values']=\
