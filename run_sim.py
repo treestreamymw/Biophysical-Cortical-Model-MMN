@@ -15,11 +15,11 @@ from MP_class import PoolManager
 
 def run_sim (params):
     # get params
-    fig_name, net_type, task, debug_params, dev_list=params
+    fig_name, net_type, task, seed, dev_list=params
     NP, SC = set_params(fig_name=fig_name,
             NET_TYPE=net_type,
             TASK=task,
-            DEBUG_PARAMS=debug_params,
+            SEED=seed,
             DEV_LIST=dev_list)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     SIM_TASK = TASK
     grid_search_array = [
         ['beta_4_{}_{}'.format(TASK,i),
-                SIM_TYPE, SIM_TASK, 1, [i]] for i in [5] ]
+                SIM_TYPE, SIM_TASK, [1,2,3], [i]] for i in [5,6] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

@@ -12,8 +12,8 @@ from netpyne import specs
 from config import SIM_PARAMS
 from stimulus_utils import Simulation_stimuli_Handler
 
-def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
-    _=DEBUG_PARAMS
+def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
+    seed=SEED
     netParams=specs.NetParams()   # object of class NetParams to store the network parameters
     simConfig=specs.SimConfig()   # object of class SimConfig to store the simulation configuration
 
@@ -393,7 +393,7 @@ def set_params(fig_name, NET_TYPE, TASK, DEBUG_PARAMS, DEV_LIST):
     simConfig.hParams['celsius']=30.0
     simConfig.duration=SIM_PARAMS[NET_TYPE]['duration']  # Duration of the simulation, in ms
     simConfig.dt=0.05  # Internal integration timestep to use
-    simConfig.seeds={'conn': 1, 'stim': 1, 'loc': 1}  # Seeds for randomizers (conn., input stim. and cell loc.)
+    simConfig.seeds={'conn': seed, 'stim': seed, 'loc': seed}  # Seeds for randomizers (conn., input stim. and cell loc.)
     simConfig.createNEURONObj=1  # create HOC objects when instantiating network
     simConfig.createPyStruct=1  # create Python structure (simulator-independent) when instantiating network
     simConfig.verbose=False  # show detailed messages

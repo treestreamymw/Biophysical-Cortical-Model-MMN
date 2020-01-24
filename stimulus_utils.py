@@ -170,6 +170,7 @@ class Simulation_stimuli_Handler(object):
         for pop in self.stim_pop_values[stimuli_origin]:
 
             if self.stim_pop_values[stimuli_origin][pop] != {}:
+                print(pop, self.stim_pop_values[stimuli_origin][pop]['pulses'])
                 for pulse in self.stim_pop_values[stimuli_origin][pop]['pulses']:
                     pulse_dict[pulse]['pop_name']=pop
                     pulse_dict[pulse]['values']=\
@@ -186,13 +187,13 @@ class Simulation_stimuli_Handler(object):
 if __name__=="__main__":
     TASK='many_standards'
     NET_TYPE='short'
-    s=Simulation_stimuli_Handler(300 ,3 ,40,[5],TASK)
+    s=Simulation_stimuli_Handler(300 ,3 ,40,[2],TASK)
 
     s.set_task_stimuli()
 
 
     pulses_info=s.get_formatted_pulse(external=True)
-    pulses_info_in=s.get_formatted_pulse(external=False)
+    #pulses_info_in=s.get_formatted_pulse(external=False)
 
     times=s.get_pulse_time(external=True)
 
@@ -209,7 +210,7 @@ if __name__=="__main__":
                    'pulses':[{'start': t_pulse*1000+times[0],
                        'end': t_pulse*1000.0+times[1], 'rate': 200, 'noise': 1.0}]}
         print(pulses_info[t_pulse]['values'])
-        print(pulses_info_in[t_pulse]['values'])
+        #print(pulses_info_in[t_pulse]['values'])
         print()
         x_pyr, x_bask=pulses_info[t_pulse]['values']
 
