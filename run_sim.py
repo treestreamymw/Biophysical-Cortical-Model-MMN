@@ -47,7 +47,7 @@ if __name__ == '__main__':
     SIM_TASK = TASK
     grid_search_array = [
         ['beta_4_{}_{}'.format(TASK,i),
-                SIM_TYPE, SIM_TASK, [1], [i]] for i in [6] ]
+                SIM_TYPE, SIM_TASK, 1, [i]] for i in [6] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
