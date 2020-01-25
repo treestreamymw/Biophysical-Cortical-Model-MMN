@@ -67,14 +67,16 @@ def trim_and_round_time_for_spikes(df, N_stim, trim_ms=50, round_k=100):
 
     return {'spikes':spks, 'n_recruited_neurons':cells,'t_index':t_index}
 
-def find_infreq_index(j_data):
+def find_infreq_index(j_data, file_name):
     infreq_indexes =[]
     names = j_data['net']['params']['connParams']
-
     infreq_stims = [s for s in names.keys() if "dev" in s]
-    for stim in infreq_stims:
-        infreq_indexes.append(int(stim[9]))
-
+    if infreq_stims==[]:
+        #if can not find, get it from file name
+        infreq_indexes=[int(file_name[-6:-5])]
+    else:
+        for stim in infreq_stims:
+            infreq_indexes.append(int(stim[9]))
     return infreq_indexes
 
 def open_file_as_json(name):
@@ -132,7 +134,7 @@ def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
         j_data = open_file_as_json(file_name)
         LFP = j_data['simData']['LFP']
 
-        infreq_stim = find_infreq_index(j_data)
+        infreq_stim = find_infreq_index(j_data, file_name)
         if infreq_stim==[]:
             infreq_stim=None
         else:
@@ -200,7 +202,7 @@ def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim, Raw=False):
 
     if Raw:
 
-        plt.title('Frequent vs Infrequent mean potentials  <Raw>')
+        plt.title('Frequent vs Infrequent mean potentials')
         plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs_RAW'))
 
     else:
@@ -219,7 +221,7 @@ def plot_full_LFP(file_names_list, N_stim):
 
     for file_name in file_names_list:
         j_data = open_file_as_json(file_name)
-        infreq_stim = find_infreq_index(j_data)
+        infreq_stim = find_infreq_index(j_data, file_name)
         LFP = j_data['simData']['LFP']
         ms_to_trim=5
         prepared_data = prepare_data_LFP(LFP, N_stim, infreq_stim[0], ms_to_trim ,False)
@@ -267,7 +269,7 @@ def prepare_spiking_stats(path, N_stim, trim_ms=50, pop=None):
     # get data and prepare it
     data=open_file_as_json(path)
     df=get_spk_data_for_pop(data, pop)
-    infreq_id = find_infreq_index(data)
+    infreq_id = find_infreq_index(data, path)
     if infreq_id==[]:
         infreq_id=None
     else:
@@ -470,7 +472,12 @@ def plot_parras_bars(path, N_stim, measurement):
             yerr=err)
     plt.xticks([1,2,3], ('Deviant','Control', 'Standard'))
     plt.title(measurement)
+    plt.ylabel('{}'.format(measurement))
+    plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,
+        'parras_bars_{}'.format(measurement)))
+
     plt.show()
+
 
 
 
@@ -492,12 +499,12 @@ if __name__ == "__main__":
 
     #path='output_files/expiriments/beta_3_mmn'
     path_list=glob('output_files/experiments/beta_3_mmn/*.json')
-    FIG_DIR_NAME='/experiments/beta_4_omission'
+    FIG_DIR_NAME='/experiments/beta_3_mmn'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
     #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    #plot_parras_bars(path_list, 8, 'NEURONS')
-    plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
-            glob('output_files/experiments/beta_3_mmn/*.json'), 8)
+    #plot_parras_bars(path_list, 8, 'AP')
+    #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
+            #glob('output_files/experiments/beta_3_mmn/*.json'), 8)

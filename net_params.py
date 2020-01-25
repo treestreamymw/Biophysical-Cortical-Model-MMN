@@ -431,7 +431,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
 
     external_input_populations=s_handler.stim_pop_values['external']
 
-    x_electrodes_locations=[ [x_value[0]+1, 0, \
+    x_electrodes_locations=[ [x_value[0]+1, 1, \
                         netParams.sizeZ/2] for x_value in \
                     [external_input_populations[ext_pop]['x_values'][0]
                     for ext_pop in external_input_populations] ]
