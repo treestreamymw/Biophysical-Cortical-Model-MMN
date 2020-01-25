@@ -133,7 +133,7 @@ class Simulation_stimuli_Handler(object):
 
         # if odd ball, the external popluation introduces a dev tone
         if oddball:
-            pop_values[self.n_pulses]['x_values']=pop_values[0]['x_values']
+            pop_values[self.dev_indexes[0]]['x_values']=pop_values[0]['x_values']
             self.stim_pop_values['external'] = pop_values
 
     def many_standards_paradigm(self):
@@ -184,7 +184,7 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    TASK='many_standards'
+    TASK='oddball_cascade'
     NET_TYPE='short'
     s=Simulation_stimuli_Handler(300 ,3 ,40,[2],TASK)
 
