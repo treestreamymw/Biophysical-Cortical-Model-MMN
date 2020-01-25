@@ -414,10 +414,10 @@ def plot_SSA_vs_MMN(path_adaptation, path_mmn, N_stim):
 
     plt.plot(T, 1000*MMN_adaptation[stim_set-500:stim_set+3000:10] ,
         label='adaptation', c='coral', alpha=.7)
-    plt.plot(T, 1000*MMN_pc[stim_set-500:stim_set+3000:10] ,label='MEM',
+    plt.plot(T, 1000*MMN_pc[stim_set-500:stim_set+3000:10] ,label='model adjustment',
         c='cadetblue', alpha=.7)
 
-    plt.title('Frequent- Infrequent mean potentials - with and without memory trace')
+    plt.title('Frequent vs infrequent mean potentials')
     plt.xlabel(' T (s)')
     plt.ylabel(' delta in Amplitude (mv)')
 
@@ -498,6 +498,6 @@ if __name__ == "__main__":
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
     #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    plot_parras_bars(path_list, 8, 'NEURONS')
-    #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
-    #        glob('output_files/experiments/beta_3_mmn/*.json'), 8)
+    #plot_parras_bars(path_list, 8, 'NEURONS')
+    plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
+            glob('output_files/experiments/beta_3_mmn/*.json'), 8)

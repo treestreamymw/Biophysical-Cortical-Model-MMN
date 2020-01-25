@@ -40,17 +40,21 @@ if __name__ == '__main__':
         default='full')
     parser.add_argument("oddball", help="index", type=int,
             default=3)
+    parser.add_argument("seed", help="the random seed", type=int,
+            default=1)
+
     args = parser.parse_args()
 
     TASK = args.task
     TYPE = args.type
     ODDBALL = args.oddball
+    SEED = args.seed
 
     SIM_TYPE = TYPE
     SIM_TASK = TASK
     grid_search_array = [
         ['beta_4_{}_{}'.format(TASK,i),
-                SIM_TYPE, SIM_TASK, 1, [i]] for i in [ODDBALL] ]
+                SIM_TYPE, SIM_TASK, SEED, [i]] for i in [ODDBALL] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
