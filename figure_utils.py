@@ -249,7 +249,8 @@ def plot_full_LFP(file_names_list, N_stim):
         plt.plot(range(infreq_stim[0]*N_per_stim,(infreq_stim[0]+1)*N_per_stim),
                             flat_peaks[infreq_stim[0]*N_per_stim:(infreq_stim[0]+1)*N_per_stim],
                             c='coral')
-        plt.title(' LFP  (trimmed first {} ms)'.format(ms_to_trim))
+        plt.title('LFP')
+        plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'full_LFP'))
         plt.show()
 
 def prepare_spiking_stats(path, N_stim, trim_ms=50, pop=None):
@@ -376,7 +377,9 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
     infreq_id=data['infreq_id']
 
     label_ploted=False
+
     for stim_i in range(N_stim):
+
         if stim_i==infreq_id:
             c='coral'
             label='infrequent'
@@ -395,7 +398,7 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
             plt.bar(X[stim_i],n_rec_neuron_per_t[stim_i], color=c)
 
 
-    plt.title('{}, Populations :{}'.format(plot_title[plot_type],pop))
+    plt.title('{}, Populations : {}'.format(plot_title[plot_type],pop or 'All'))
     plt.legend()
     plt.savefig('output_files/{}/{}_{}.png'.format(FIG_DIR_NAME,plot_title[plot_type],pop))
     plt.show()
@@ -498,12 +501,12 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/expiriments/beta_3_mmn'
-    path_list=glob('output_files/experiments/beta_3_mmn/*.json')
-    FIG_DIR_NAME='/experiments/beta_3_mmn'
+    path_list=glob('output_files/experiments/beta_4_oddball_cascade/*.json')
+    FIG_DIR_NAME='/experiments/beta_4_oddball_cascade'
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
-    #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
-    #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR23','PYR_4'])
-    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
+    #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
+    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
     #plot_parras_bars(path_list, 8, 'AP')
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
