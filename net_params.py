@@ -217,7 +217,6 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
 
 
     weights=[i*base_stimuli_weight for i in weights_confidence_multiplier]
-    print(weights)
     # generate pulses
     for t_pulse in external_pulses_info.keys():
 
