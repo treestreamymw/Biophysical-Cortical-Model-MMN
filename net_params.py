@@ -203,6 +203,21 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     internal_pulses_info=s_handler.get_formatted_pulse(external=False)
     internal_pulses_time=s_handler.get_pulse_time(external=False)
 
+    # set dynamic weights
+    base_stimuli_weight=0.02
+
+    weights_confidence_multiplier=[]
+    add_confidence=0
+
+    for pulse_index in range(netParams.sizeX):
+        weights_confidence_multiplier.append(1+j*0.05)
+        add_confidence=add_confidence+1
+        if pulse_index==DEV_LIST[0]:
+            add_confidence=0
+
+
+    weights=weights_confidence_multiplier*base_stimuli_weight
+    print(weights)
     # generate pulses
     for t_pulse in external_pulses_info.keys():
 
@@ -233,6 +248,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
             'synMech': 'AMPA'}
 
         # connect stimulus to basket cells in layer 4
+
         netParams.connParams[ext_stim_pop_name + '->BASK4']={
             'preConds': {'popLabel': ext_stim_pop_name},
             'postConds': {'popLabel': 'BASK4', 'x': ext_x_bask},
@@ -257,12 +273,13 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         # set stimulus column
         int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']
 
+
         # connect stimulus to pyramidal cells in memory layer
         netParams.connParams[int_stim_pop_name + '->']={
             'preConds': {'popLabel': int_stim_pop_name},
             'postConds': {'popLabel': 'PYR_memory', 'x': int_x_pyr},
             'convergence': 1,
-            'weight': 0.02,
+            'weight': weights[t_pulse],## increase weight of internal stim with confidence
             'threshold': 10,
             'synMech': 'AMPA'}
 

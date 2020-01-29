@@ -271,6 +271,7 @@ def prepare_spiking_stats(path, N_stim, trim_ms=50, pop=None):
     data=open_file_as_json(path)
     df=get_spk_data_for_pop(data, pop)
     infreq_id = find_infreq_index(data, path)
+
     if infreq_id==[]:
         infreq_id=None
     else:
@@ -309,7 +310,8 @@ def prepare_spiking_stats(path, N_stim, trim_ms=50, pop=None):
         'n_rec_neuron_per_t':n_rec_neuron_per_t,
         'infreq_id':infreq_id}
 
-def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim, trim_ms=50):
+def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim,
+    trim_ms=50, pop=None):
     '''
     counts stats for bar plot comparing std dev and ctrl (parras)
     '''
@@ -323,14 +325,15 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim, trim_ms=50):
     for path in path_list:
         data=prepare_spiking_stats(path=path,
                     N_stim=N_stim,
-                    trim_ms=trim_ms)
+                    trim_ms=trim_ms,
+                    pop=pop)
+
         if plot_type=='AP':
             spiking_data=data['spike_ids_per_t']
         elif plot_type=='NEURONS':
             spiking_data=data['n_rec_neuron_per_t']
 
         infreq_id=data['infreq_id']
-
 
         repeated_dev.append(np.max(spiking_data[infreq_id]))
         repeated_std.append(np.max(spiking_data[infreq_id-1]))
@@ -369,7 +372,8 @@ def plot_spiking_stats_df(path, plot_type, N_stim, trim_ms=50, pop=None):
 
     data=prepare_spiking_stats(path=path,
                 N_stim=N_stim,
-                trim_ms=trim_ms)
+                trim_ms=trim_ms,
+                pop=pop)
 
     X=data['X']
     spike_ids_per_t=data['spike_ids_per_t']
@@ -431,7 +435,7 @@ def plot_SSA_vs_MMN(path_adaptation, path_mmn, N_stim):
     plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'SSA_vs_MMN'))
     plt.show()
 
-def plot_parras_bars(path, N_stim, measurement):
+def plot_parras_bars(path, N_stim, measurement, trim=50, pop=None):
     '''
     follow parras et al (2017) figures.
 
@@ -454,7 +458,8 @@ def plot_parras_bars(path, N_stim, measurement):
         err = [[d,c,s] for d,c,s in zip(deviant_ci, control_ci, standard_ci)]
 
     else:
-        data=prepare_spiking_data_for_bar_plot(path, measurement, N_stim)
+        data=prepare_spiking_data_for_bar_plot(path, measurement, N_stim,
+                trim, pop)
 
         control_mean = data['mean_max']['control']
         standard_mean = data['mean_max']['standard']
@@ -503,11 +508,11 @@ if __name__ == "__main__":
     #path='output_files/expiriments/beta_3_mmn'
     path_list=glob('output_files/experiments/beta_4_oddball_cascade/*.json')
     FIG_DIR_NAME='/experiments/beta_4_oddball_cascade'
-    #plot_spiking_stats_df(path_list[0], 'AP', 8, 50, ['PYR23','PYR_4'])
-    plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
+    #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
+    #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
-    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    #plot_parras_bars(path_list, 8, 'AP')
+    #plot_parras_bars(path_list, 8, 'AP', 50)
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)
