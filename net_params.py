@@ -207,13 +207,13 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     base_stimuli_weight=0.02
 
     weights_confidence_multiplier=[]
-    add_confidence=0
+    added_confidence=0
 
     for pulse_index in range(netParams.sizeX):
-        weights_confidence_multiplier.append(1+j*0.05)
-        add_confidence=add_confidence+1
+        weights_confidence_multiplier.append(1+added_confidence*0.05)
+        added_confidence=added_confidence+1
         if pulse_index==DEV_LIST[0]:
-            add_confidence=0
+            added_confidence=0
 
 
     weights=weights_confidence_multiplier*base_stimuli_weight
