@@ -210,11 +210,10 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     added_confidence=0
 
     for pulse_index in range(SIM_PARAMS[NET_TYPE]['n_pulses']):
-
-        if pulse_index==DEV_LIST[0]:
-            added_confidence=0
         weights_confidence_multiplier.append(1+(added_confidence*0.1))
         added_confidence=added_confidence+1
+        if pulse_index==DEV_LIST[0]:
+            added_confidence=0
 
 
     weights=[i*base_stimuli_weight for i in weights_confidence_multiplier]
@@ -274,14 +273,15 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         int_x_pyr,int_x_bask=internal_pulses_info[t_pulse]['values']
 
 
+
         # connect stimulus to pyramidal cells in memory layer
-        netParams.connParams[int_stim_pop_name + '->']={
+        '''netParams.connParams[int_stim_pop_name + '->']={
             'preConds': {'popLabel': int_stim_pop_name},
             'postConds': {'popLabel': 'PYR_memory', 'x': int_x_pyr},
             'convergence': 1,
             'weight': weights[t_pulse],## increase weight of internal stim with confidence
             'threshold': 10,
-            'synMech': 'AMPA'}
+            'synMech': 'AMPA'}'''
 
 
     ###############################################################################
