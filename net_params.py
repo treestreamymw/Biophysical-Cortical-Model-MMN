@@ -275,13 +275,13 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
 
 
         # connect stimulus to pyramidal cells in memory layer
-        '''netParams.connParams[int_stim_pop_name + '->']={
+        netParams.connParams[int_stim_pop_name + '->']={
             'preConds': {'popLabel': int_stim_pop_name},
             'postConds': {'popLabel': 'PYR_memory', 'x': int_x_pyr},
             'convergence': 1,
             'weight': weights[t_pulse],## increase weight of internal stim with confidence
             'threshold': 10,
-            'synMech': 'AMPA'}'''
+            'synMech': 'AMPA'}
 
 
     ###############################################################################
