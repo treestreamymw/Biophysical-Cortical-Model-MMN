@@ -53,7 +53,7 @@ if __name__ == '__main__':
     SIM_TYPE = TYPE
     SIM_TASK = TASK
     grid_search_array = [
-        ['beta_4_{}_{}'.format(TASK,i),
+        ['beta_{}_oddball_{}_seed_{}'.format(TASK,i,SEED),
                 SIM_TYPE, SIM_TASK, SEED, [i]] for i in [ODDBALL] ]
 
 
