@@ -348,7 +348,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 1,#0.5,#0.002,#0.001
+        'weight': .7,#0.5,#0.002,#0.001
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -396,7 +396,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'BASK23'},
         'probability': '0.8*exp(-dist_3D/(0.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
-        'weight': 0.015,#0.00015,
+        'weight': 0.03,#0.015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
