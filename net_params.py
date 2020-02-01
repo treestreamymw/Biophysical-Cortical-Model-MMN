@@ -158,7 +158,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
                                           'tau_F': 94.0,
                                           'd1': .9,
                                           'tau_D1': 380,
-                                          'd2': 0.8,
+                                          'd2': 0.76,
                                           'tau_D2': 9200}  # only depression
 
 
@@ -330,7 +330,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
         'probability': '0.15*exp(-dist_3D/(2*40.0))',
-        'weight':[0.0024, 0.00012], #[0.0024,0.00012],#[0.0012,0.0006],
+        'weight':[0.0028, 0.00016], #[0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
