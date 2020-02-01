@@ -156,9 +156,9 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
                                           'e': 0.0,
                                           'f': 0.0,
                                           'tau_F': 94.0,
-                                          'd1': 1,
+                                          'd1': .9,
                                           'tau_D1': 380,
-                                          'd2': 0.86,
+                                          'd2': 0.80,
                                           'tau_D2': 9200}  # only depression
 
 
