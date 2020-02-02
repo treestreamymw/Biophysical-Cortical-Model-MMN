@@ -204,7 +204,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     internal_pulses_time=s_handler.get_pulse_time(external=False)
 
     # set dynamic weights
-    base_stimuli_weight=0.1
+    base_stimuli_weight=0.05
 
     weights_confidence_multiplier=[]
     added_confidence=0
@@ -329,7 +329,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'PYR23'},
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(2*40.0))',
+        'probability': '0.15*exp(-dist_3D/(1*40.0))',
         'weight':[0.0028, 0.00016], #[0.0024,0.00012],#[0.0012,0.0006],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
@@ -347,8 +347,8 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'BASK23'},
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
-        'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': .8,#0.5,#0.002,#0.001
+        'probability': '0.6*exp(-dist_3D/(2*40.0))',
+        'weight': 1,#0.5,#0.002,#0.001
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -366,7 +366,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(.1*40.0))',#'0.15*exp(-dist_3D/(4*40.0))'
+        'probability': '0.15*exp(-dist_3D/(1*40.0))',#'0.15*exp(-dist_3D/(4*40.0))'
         'weight': [0.0024,0.00012],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
