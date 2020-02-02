@@ -73,7 +73,7 @@ def find_infreq_index(j_data, file_name):
     infreq_stims = [s for s in names.keys() if "dev" in s]
     if infreq_stims==[]:
         #if can not find, get it from file name
-        infreq_indexes=[int(file_name[-6:-5])]
+        infreq_indexes=[int(file_name[-13:-12])]
     else:
         for stim in infreq_stims:
             infreq_indexes.append(int(stim[9]))
@@ -506,7 +506,7 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/expiriments/beta_3_mmn'
-    path_list=glob('output_files/experiments/*.json')
+    path_list=glob('output_files/experiments/run2/cascade/*.json')
     FIG_DIR_NAME='/experiments'
     #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
