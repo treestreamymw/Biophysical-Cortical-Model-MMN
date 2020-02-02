@@ -204,7 +204,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     internal_pulses_time=s_handler.get_pulse_time(external=False)
 
     # set dynamic weights
-    base_stimuli_weight=0.05
+    base_stimuli_weight=0.1
 
     weights_confidence_multiplier=[]
     added_confidence=0
