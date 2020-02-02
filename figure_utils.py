@@ -506,7 +506,7 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/expiriments/beta_3_mmn'
-    path_list=glob('output_files/experiments/run2/cascade/*.json')
+    path_list=glob('output_files/experiments/*.json')
     FIG_DIR_NAME='/experiments'
     #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
