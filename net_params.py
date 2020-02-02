@@ -204,7 +204,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     internal_pulses_time=s_handler.get_pulse_time(external=False)
 
     # set dynamic weights
-    base_stimuli_weight=0.05
+    base_stimuli_weight=0.02
 
     weights_confidence_multiplier=[]
     added_confidence=0
@@ -275,13 +275,13 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
 
 
         # connect stimulus to pyramidal cells in memory layer
-        '''netParams.connParams[int_stim_pop_name + '->']={
+        netParams.connParams[int_stim_pop_name + '->']={
             'preConds': {'popLabel': int_stim_pop_name},
             'postConds': {'popLabel': 'PYR_memory', 'x': int_x_pyr},
             'convergence': 1,
             'weight': weights[t_pulse],## increase weight of internal stim with confidence
             'threshold': 10,
-            'synMech': 'AMPA'}'''
+            'synMech': 'AMPA'}
 
 
     ###############################################################################
@@ -366,7 +366,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(1*40.0))',#'0.15*exp(-dist_3D/(4*40.0))'
+        'probability': '0.15*exp(-dist_3D/(.5*40.0))',
         'weight': [0.0024,0.00012],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
