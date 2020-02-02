@@ -159,7 +159,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
                                           'd1': 1,
                                           'tau_D1': 380,
                                           'd2': 0.76,
-                                          'tau_D2': 9200}  # only depression
+                                          'tau_D2': 2500}  # only depression
 
 
     ## NMDA is defined by the NMDA model
