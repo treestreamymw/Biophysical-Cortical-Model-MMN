@@ -117,7 +117,7 @@ def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
         peak_infreq = LFP_peak_matrix[infreq_index]
 
     return {'infreq':peak_infreq, 'freq':peak_freq_mean,
-        'control': LFP_peak_matrix[0],
+        'control': LFP_peak_matrix[1],
         'standard': LFP_peak_matrix[infreq_index-1]}
 
 def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
