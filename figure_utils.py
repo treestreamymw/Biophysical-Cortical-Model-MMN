@@ -506,8 +506,8 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/expiriments/beta_3_mmn'
-    path_list=glob('output_files/experiments/run2/oddball/*.json')
-    FIG_DIR_NAME='/experiments/run2/oddball/'
+    path_list=glob('output_files/experiments/run2/*.json')
+    FIG_DIR_NAME='/experiments/run2/'
     #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
