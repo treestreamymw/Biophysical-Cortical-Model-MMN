@@ -210,7 +210,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     added_confidence=0
 
     for pulse_index in range(SIM_PARAMS[NET_TYPE]['n_pulses']):
-        weights_confidence_multiplier.append(1+(added_confidence*0.1))
+        weights_confidence_multiplier.append(1+(added_confidence*0.05))
         added_confidence=added_confidence+1
         if pulse_index==DEV_LIST[0]:
             added_confidence=0
@@ -366,7 +366,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(.5*40.0))',
+        'probability': '0.15*exp(-dist_3D/(1*40.0))',
         'weight': [0.0024,0.00012],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
