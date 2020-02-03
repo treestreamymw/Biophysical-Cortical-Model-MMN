@@ -204,7 +204,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     internal_pulses_time=s_handler.get_pulse_time(external=False)
 
     # set dynamic weights
-    base_stimuli_weight=0.2
+    base_stimuli_weight=0.1
 
     weights_confidence_multiplier=[]
     added_confidence=0
@@ -395,8 +395,8 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     netParams.connParams['PYR_memory->BASK23']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'BASK23'},
-        'probability': '0.8*exp(-dist_3D/(0.5*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
-        'weight': 0.1,#0.015,#0.00015,
+        'probability': '0.8*exp(-dist_3D/(1*40.0))', # 0.8*exp(-dist_3D/(3*40.0))...
+        'weight': 0.01,#0.015,#0.00015,
         'threshold': 10,
         'synMech': 'AMPASTD'}
 
