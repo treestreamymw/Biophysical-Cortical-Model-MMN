@@ -210,7 +210,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     added_confidence=0
 
     for pulse_index in range(SIM_PARAMS[NET_TYPE]['n_pulses']):
-        weights_confidence_multiplier.append(1+(added_confidence*0.05))
+        weights_confidence_multiplier.append(1+(added_confidence*0.15))
         added_confidence=added_confidence+1
 
         if pulse_index==DEV_LIST[0]:

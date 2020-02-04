@@ -156,12 +156,12 @@ def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
     mean_infreq_LFP = np.mean(all_infreq_LFP, axis=0)
     mean_freq_LFP = np.mean(all_freq_LFP, axis=0)
 
-    ci_std_LFP = [np.percentile(max_values['std'], 2.5, axis=0),
-                    np.percentile(max_values['std'], 97.5, axis=0)]
-    ci_ctrl_LFP = [np.percentile(max_values['ctrl'], 2.5, axis=0),
-                    np.percentile(max_values['ctrl'], 97.5, axis=0)]
-    ci_infreq_LFP = [np.percentile(max_values['infreq'], 2.5, axis=0),
-                    np.percentile(max_values['infreq'], 97.5, axis=0)]
+    ci_std_LFP = [np.percentile(max_values['std'], 2.5, axis=0)- np.mean(max_values['std']),
+                    np.percentile(max_values['std'], 97.5, axis=0)-np.mean(max_values['std'])]
+    ci_ctrl_LFP = [np.percentile(max_values['ctrl'], 2.5, axis=0)-np.mean(max_values['std']),
+                    np.percentile(max_values['ctrl'], 97.5, axis=0)-np.mean(max_values['std'])]
+    ci_infreq_LFP = [np.percentile(max_values['infreq'], 2.5, axis=0)-np.mean(max_values['infreq']),
+                    np.percentile(max_values['infreq'], 97.5, axis=0)-np.mean(max_values['infreq'])]
 
     return {'infreq':mean_infreq_LFP, 'freq':mean_freq_LFP,
 
@@ -345,12 +345,12 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim,
     std_mean=np.mean(repeated_std)
     ctrl_mean=np.mean(repeated_ctrl)
 
-    ci_std = [np.percentile(repeated_std, 2.5, axis=0),
-                    np.percentile(repeated_std, 97.5, axis=0)]
-    ci_ctrl = [np.percentile(repeated_ctrl, 2.5, axis=0),
-                    np.percentile(repeated_ctrl, 97.5, axis=0)]
-    ci_infreq = [np.percentile(repeated_dev, 2.5, axis=0),
-                    np.percentile(repeated_dev, 97.5, axis=0)]
+    ci_std = [np.percentile(repeated_std, 2.5, axis=0)- std_mean,
+                    np.percentile(repeated_std, 97.5, axis=0)-std_mean]
+    ci_ctrl = [np.percentile(repeated_ctrl, 2.5, axis=0)-ctrl_mean,
+                    np.percentile(repeated_ctrl, 97.5, axis=0)-ctrl_mean]
+    ci_infreq = [np.percentile(repeated_dev, 2.5, axis=0)-dev_mean,
+                    np.percentile(repeated_dev, 97.5, axis=0)-dev_mean]
 
     print({'mean_max':{'infreq':dev_mean,'standard':std_mean,'control':ctrl_mean},
             'CI':{'infreq':ci_infreq,'standard':ci_std,'control':ci_ctrl}})
@@ -512,8 +512,8 @@ if __name__ == "__main__":
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR_memory'])
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
-    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    plot_parras_bars(path_list, 8, 'AP', 50)
+    plot_parras_bars(path_list, 8, 'AP', 50, ['PYR_memory'])
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)
