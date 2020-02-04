@@ -506,13 +506,13 @@ if __name__ == "__main__":
     '''
 
     #path='output_files/expiriments/beta_3_mmn'
-    path_list=glob('output_files/experiments/run2/omission/*.json')
-    FIG_DIR_NAME='/experiments/run2/omission/'
+    path_list=glob('output_files/experiments/run2/*.json')
+    FIG_DIR_NAME='/experiments/run2/'
     #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
-    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    plot_parras_bars(path_list, 8, 'AP', 50, ['PYR_memory'])
+    plot_parras_bars(path_list, 8, 'AP', 50)
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)
