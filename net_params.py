@@ -135,7 +135,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
                                        'tau2': 12.0,
                                        'e': -75.0}
 
-    #g
+
     # AMPASTD is defined by the FDSExp2Syn model
     # It is a two state kinetic scheme synapse where
     # rise time - tau1,
@@ -212,6 +212,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
     for pulse_index in range(SIM_PARAMS[NET_TYPE]['n_pulses']):
         weights_confidence_multiplier.append(1+(added_confidence*0.05))
         added_confidence=added_confidence+1
+
         if pulse_index==DEV_LIST[0]:
             added_confidence=0
 
@@ -348,7 +349,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(2*40.0))',
-        'weight': .1,
+        'weight': 0.1,
         'threshold': 10,
         'synMech': 'GABA'}
 

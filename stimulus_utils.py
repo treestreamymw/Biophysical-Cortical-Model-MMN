@@ -138,7 +138,7 @@ class Simulation_stimuli_Handler(object):
 
         if oddball:
             self.stim_pop_values['external'][self.
-                dev_indexes[0]]['x_values']= ext_pop_values[3]['x_values']
+                dev_indexes[0]]['x_values']= ext_pop_values[2]['x_values']
 
 
     def many_standards_paradigm(self):

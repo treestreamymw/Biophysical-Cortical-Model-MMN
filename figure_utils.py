@@ -340,6 +340,7 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim,
         repeated_ctrl.append(np.max(spiking_data[0]))
 
 
+
     dev_mean=np.mean(repeated_dev)
     std_mean=np.mean(repeated_std)
     ctrl_mean=np.mean(repeated_ctrl)
@@ -350,7 +351,6 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim,
                     np.percentile(repeated_ctrl, 97.5, axis=0)]
     ci_infreq = [np.percentile(repeated_dev, 2.5, axis=0),
                     np.percentile(repeated_dev, 97.5, axis=0)]
-
 
     print({'mean_max':{'infreq':dev_mean,'standard':std_mean,'control':ctrl_mean},
             'CI':{'infreq':ci_infreq,'standard':ci_std,'control':ci_ctrl}})
@@ -469,7 +469,8 @@ def plot_parras_bars(path, N_stim, measurement, trim=50, pop=None):
         standard_ci = data['CI']['standard']
         deviant_ci = data['CI']['infreq']
 
-        err = [[d,c,s] for d,c,s in zip(deviant_ci, control_ci, standard_ci)]
+        err = [[d,c,s] for d,c,s
+                in zip(deviant_ci, control_ci, standard_ci)]
 
 
 
@@ -508,11 +509,11 @@ if __name__ == "__main__":
     #path='output_files/expiriments/beta_3_mmn'
     path_list=glob('output_files/experiments/run2/*.json')
     FIG_DIR_NAME='/experiments/run2/'
-    #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
+    plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR_memory'])
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
-    plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    plot_parras_bars(path_list, 8, 'AP', 50)
+    #plot_parras_bars(path_list, 8, 'AP', 50)
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)
