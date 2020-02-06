@@ -364,13 +364,12 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
 
     ## memory layer
 
-
     netParams.connParams['PYR_memory->PYR_memory']={
         'preConds': {'popLabel': 'PYR_memory'},
         'postConds': {'popLabel': 'PYR_memory'},
         'sec':'oblique2b',
-        'probability': '0.15*exp(-dist_3D/(4*40.0))',
-        'weight': [0.0012,0.0006],
+        'probability': '0.15*exp(-dist_3D/(1*40.0))',
+        'weight': [0.0024,0.0012],
         'threshold': 10,
         'synMech': ['AMPA','NMDA']}
 
