@@ -150,11 +150,15 @@ class Simulation_stimuli_Handler(object):
         '''
 
         x_values = self._get_all_available_tones()
-        shuffle(x_values)
+
+        many_standards_values={}
+        for i in range(self.n_pulses)
+        current_x_value = np.random.randint(8)
+            many_standards_values[i]={'x_values': x_values[current_x_value],
+            'pulses':[i]}
 
 
-        self.stim_pop_values['external']={i:{'x_values': x_values[i],
-            'pulses':[i]} for i in range(self.n_pulses)}
+        self.stim_pop_values['external']=many_standards_values
         self.stim_pop_values['internal']={i:{'x_values': [[0,0],[0,0]],
             'pulses':[i]} for i in range(self.n_pulses)}
 
