@@ -511,9 +511,9 @@ if __name__ == "__main__":
     FIG_DIR_NAME='/experiments/run2/'
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR_memory'])
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
-    #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50,['PYR_memory'])
+    plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
     #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    plot_parras_bars(path_list, 8, 'LFP', 50, ['PYR_memory'])
+    #plot_parras_bars(path_list, 8, 'AP', 50)
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)

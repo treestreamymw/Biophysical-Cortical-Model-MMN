@@ -213,7 +213,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         weights_confidence_multiplier.append(1+(added_confidence*0.15))
         added_confidence=added_confidence+1
 
-        if pulse_index==DEV_LIST[0]+1:
+        if pulse_index==DEV_LIST[0]:
             added_confidence=0
 
 
