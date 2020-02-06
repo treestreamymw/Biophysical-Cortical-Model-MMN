@@ -151,12 +151,12 @@ class Simulation_stimuli_Handler(object):
 
         x_values = self._get_all_available_tones()
         shuffle(x_values)
-        pop_values={i:{'x_values': x_values[i],
-                                'pulses':[i] } for i in range(self.n_pulses)}
 
-        self.stim_pop_values['external']=pop_values
-        self.stim_pop_values['internal']={'std':{'x_values': [[0,0],[0,0]],
-                                'pulses':[i for i in range(self.n_pulses)]}}
+
+        self.stim_pop_values['external']={i:{'x_values': x_values[i],
+            'pulses':[i]} for i in range(self.n_pulses)}
+        self.stim_pop_values['internal']={i:{'x_values': [[0,0],[0,0]],
+            'pulses':[i]} for i in range(self.n_pulses)}
 
     def get_formatted_pulse(self, external=True):
         '''
@@ -187,7 +187,7 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    TASK='oddball_cascade'
+    TASK='many_standards'
     NET_TYPE='full'
     s=Simulation_stimuli_Handler(300 ,8 ,40,[6],TASK)
 

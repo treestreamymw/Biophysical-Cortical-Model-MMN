@@ -352,8 +352,6 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim,
     ci_infreq = [np.percentile(repeated_dev, 2.5, axis=0)-dev_mean,
                     np.percentile(repeated_dev, 97.5, axis=0)-dev_mean]
 
-    print({'mean_max':{'infreq':dev_mean,'standard':std_mean,'control':ctrl_mean},
-            'CI':{'infreq':ci_infreq,'standard':ci_std,'control':ci_ctrl}})
     return {'mean_max':{'infreq':dev_mean,'standard':std_mean,'control':ctrl_mean},
             'CI':{'infreq':ci_infreq,'standard':ci_std,'control':ci_ctrl}}
 
@@ -435,9 +433,15 @@ def plot_SSA_vs_MMN(path_adaptation, path_mmn, N_stim):
     plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'SSA_vs_MMN'))
     plt.show()
 
+
 def plot_parras_bars(path, N_stim, measurement, trim=50, pop=None):
     '''
     follow parras et al (2017) figures.
+
+    Using one simulation
+    dev- is the infrequent stimulus
+    control is the first stimulus
+    and standard is the stimulus before the infrequent
 
     Reflects a bar graph comparing control, standard, and devinat across X
     simulations.
@@ -488,6 +492,64 @@ def plot_parras_bars(path, N_stim, measurement, trim=50, pop=None):
     plt.show()
 
 
+def new_parras_bars(path_list, N_stim, measurement, trim=50, pop=None):
+    '''
+    based on three figures:
+    experiment with oddball as devinat
+    experiment without oddball as control
+    and many standards as standard
+    '''
+    def get_data(path_list, N_stim, measurement, trim, pop):
+
+        if measurement=='LFP':
+            data = exctract_data_LFP(path_list, N_stim, 0)
+            mean = data['mean_max']['infreq']
+            ci = data['CI']['infreq']
+        else:
+            data=prepare_spiking_data_for_bar_plot(path_list,
+                measurement, N_stim,
+                    trim, pop)
+            mean = data['mean_max']['infreq']
+            ci = data['CI']['infreq']
+
+        return {'mean':mean, 'ci':ci}
+
+
+    paths_by_role = {'DEV':[] ,'CTRL':[], 'STD':[]}
+    for path in path_list:
+        if 'oddball' in path:
+            paths_by_role['DEV'].append(path)
+        elif 'many_standards' in path:
+            paths_by_role['STD'].append(path)
+        else:
+            paths_by_role['CTRL'].append(path)
+
+    ## get dev data
+    dev_data=get_data(paths_by_role['DEV'], N_stim, measurement, trim, pop)
+    ## get ctrl data
+    ctrl_data=get_data(paths_by_role['CTRL'], N_stim, measurement, trim, pop)
+    ## get std data
+    std_data=get_data(paths_by_role['STD'], N_stim, measurement, trim, pop)
+
+
+    err = [[d,c,s] for d,c,s
+            in zip(dev_data['ci'], ctrl_data['ci'], std_data['ci'])]
+    data_to_plot=[dev_data['mean'], ctrl_data['mean'],std_data['mean']]
+    plt.bar([1,2,3],data_to_plot, .5,
+            color=['red','green','blue'],
+            yerr=err)
+    plt.xticks([1,2,3], ('Deviant','Control', 'Standard'))
+    plt.title(measurement)
+
+    for i in range(3):
+        plt.annotate(round(data_to_plot[i],5),xy=[i+1, data_to_plot[i]])
+
+    plt.ylabel('{}'.format(measurement))
+    plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,
+        'new_parras_bars_{}_{}'.format(measurement, pop)))
+
+    plt.show()
+
 
 
 
@@ -511,9 +573,11 @@ if __name__ == "__main__":
     FIG_DIR_NAME='/experiments/run2/'
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR_memory'])
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
-    plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
-    #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
+    #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
+    #plot_freq_vs_infreq_LFP([path_list[1]], 8, Raw=True)
 
-    #plot_parras_bars(path_list, 8, 'AP', 50)
+    #print(path_list[2])
+    #plot_parras_bars([path_list[2]], 8, 'AP', 50)
+    new_parras_bars(path_list, 8, 'LFP', 50)
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)
