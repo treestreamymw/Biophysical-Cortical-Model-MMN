@@ -117,7 +117,7 @@ def prepare_data_LFP(LFP_dict, N_stim, infreq_index, ms_to_trim=50, mean=True):
         peak_infreq = LFP_peak_matrix[infreq_index]
 
     return {'infreq':peak_infreq, 'freq':peak_freq_mean,
-        'control': LFP_peak_matrix[0],
+        'control': LFP_peak_matrix[1],
         'standard': LFP_peak_matrix[infreq_index-1]}
 
 def exctract_data_LFP(file_names_list, N_stim, trim=1.5):
@@ -337,7 +337,7 @@ def prepare_spiking_data_for_bar_plot(path_list,plot_type, N_stim,
 
         repeated_dev.append(np.max(spiking_data[infreq_id]))
         repeated_std.append(np.max(spiking_data[infreq_id-1]))
-        repeated_ctrl.append(np.max(spiking_data[0]))
+        repeated_ctrl.append(np.max(spiking_data[1]))
 
 
 
@@ -483,7 +483,7 @@ def plot_parras_bars(path, N_stim, measurement, trim=50, pop=None):
     plt.title(measurement)
     plt.ylabel('{}'.format(measurement))
     plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,
-        'parras_bars_{}'.format(measurement)))
+        'parras_bars_{}_{}'.format(measurement, pop)))
 
     plt.show()
 
@@ -511,9 +511,9 @@ if __name__ == "__main__":
     FIG_DIR_NAME='/experiments/run2/'
     #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50, ['PYR_memory'])
     #plot_spiking_stats_df(path_list[0], 'AP', 8, 50)
-    #plot_spiking_stats_df(path_list[0], 'NEURONS', 8, 50)
+    plot_spiking_stats_df(path_list[0], 'AP', 8, 50,['PYR_memory'])
     #plot_freq_vs_infreq_LFP(path_list, 8, Raw=True)
 
-    plot_parras_bars(path_list, 8, 'AP', 50, ['PYR_memory'])
+    #plot_parras_bars(path_list, 8, 'LFP', 50, ['PYR_memory'])
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)
