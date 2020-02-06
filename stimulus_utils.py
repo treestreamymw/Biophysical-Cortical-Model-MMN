@@ -154,7 +154,7 @@ class Simulation_stimuli_Handler(object):
         many_standards_values={}
         for i in range(self.n_pulses)
         current_x_value = np.random.randint(8)
-            many_standards_values[i]={'x_values': x_values[current_x_value],
+        many_standards_values[i]={'x_values': x_values[current_x_value],
             'pulses':[i]}
 
 
