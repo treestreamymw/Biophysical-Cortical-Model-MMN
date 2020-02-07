@@ -211,8 +211,6 @@ def plot_freq_vs_infreq_LFP (PATH_LIST, N_stim, Raw=False):
         plt.savefig('output_files/{}/{}.png'.format(FIG_DIR_NAME,'freq_infreq_LFPs'))
 
 
-
-
     plt.show()
     print ('LFP plot saved')
 
@@ -567,7 +565,6 @@ if __name__ == "__main__":
     JSON_FILE_NAME=args.JSON#'prediction_layer_decrease_w_pyr4_pyr23.json'
     path='output_files/{}/{}'.format(FIG_DIR_NAME,JSON_FILE_NAME)
     '''
-
     #path='output_files/expiriments/beta_3_mmn'
     path_list=glob('output_files/experiments/run2/*.json')
     FIG_DIR_NAME='/experiments/run2/'
@@ -576,8 +573,8 @@ if __name__ == "__main__":
     #plot_spiking_stats_df(path_list[1], 'AP', 8, 50)
     #plot_freq_vs_infreq_LFP([path_list[1]], 8, Raw=True)
 
-    #print(path_list[2])
+    print(path_list[1])
     #plot_parras_bars([path_list[2]], 8, 'AP', 50)
-    new_parras_bars(path_list, 8, 'LFP', 50)
+    #new_parras_bars(path_list, 8, 'AP', 50)
     #plot_SSA_vs_MMN(glob('output_files/experiments/beta_3_ssa/*.json'),
             #glob('output_files/experiments/beta_3_mmn/*.json'), 8)

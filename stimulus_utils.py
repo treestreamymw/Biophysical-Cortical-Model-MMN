@@ -35,6 +35,7 @@ class Simulation_stimuli_Handler(object):
                             'cascade': partial(self.cascade_paradigm, False),
                             'oddball_cascade': partial(self.cascade_paradigm, True),
                             'many_standards': self.many_standards_paradigm,
+                            'no_oddball':self.no_oddball_paradigm,
                             'omission': partial(self.oddball_paradigm, False, True)}
 
         self.stim_pop_values={'external':[], 'internal':[]}
@@ -73,6 +74,27 @@ class Simulation_stimuli_Handler(object):
             '''
             all_tone=self._get_all_available_tones()
             return [all_tone[0],all_tone[-1]]
+
+    def no_oddball_paradigm(self):
+        '''
+        normal stimuli no oddball
+
+        '''
+        # stores the x values and indexes for the different stimuli population
+        # internally and externally
+
+        internal_pop_values = {}
+        external_pop_values = {}
+
+        deviant_x_values, standard_x_values = self._get_std_dev_tones()
+
+        pop_values = {i:{'x_values': deviant_x_values,
+        'pulses':[i]} for i in range(self.n_pulses)}
+
+        # generally both take the std cascade
+        self.stim_pop_values['internal'] = pop_values
+        self.stim_pop_values['external'] = pop_values
+
 
     def oddball_paradigm(self, flipflop=False, omission=False):
         '''
@@ -187,7 +209,7 @@ class Simulation_stimuli_Handler(object):
             return self.stimulus_time['internal']
 
 if __name__=="__main__":
-    TASK='many_standards'
+    TASK='no_oddball'
     NET_TYPE='full'
     s=Simulation_stimuli_Handler(300 ,8 ,40,[6],TASK)
 
