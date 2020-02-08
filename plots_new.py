@@ -481,5 +481,5 @@ FIG_DIR_NAME='output_files/experiments/run2/classic_oddball'
 
 
 #plot_freq_vs_infreq_LFP(DEV_LIST, 8, Raw=True)
-plot_parras_bars(DEV_LIST, CTRL_LIST, [STD_LIST[3]], 8, 'AP', 50)
+plot_parras_bars(DEV_LIST, CTRL_LIST, ['output_files/experiments/run2/many_standards/beta_many_standards_5_seed_8.json'], 8, 'AP', 50)
 #plot_spiking_stats_df(DEV_LIST[0],'NEURONS',8, 50)

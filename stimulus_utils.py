@@ -178,7 +178,7 @@ class Simulation_stimuli_Handler(object):
 
         self.stim_pop_values['external']=ext_pop_values
         self.stim_pop_values['internal']={i:{'x_values': x_values[i],
-        'pulses':[j]} for i,j in zip(range(self.n_pulses),[4,7,5,1,0,3,2,6])}
+        'pulses':[j]} for i,j in zip(range(self.n_pulses),[3,2,7,1,6,4,0,5])}
 
     def get_formatted_pulse(self, external=True):
         '''
