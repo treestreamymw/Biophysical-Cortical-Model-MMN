@@ -86,7 +86,7 @@ class Simulation_stimuli_Handler(object):
         internal_pop_values = {}
         external_pop_values = {}
 
-        deviant_x_values, standard_x_values = self._get_std_dev_tones()
+        deviant_x_values, standard_x_values = self._get_all_available_tones()[2]
 
         pop_values = {i:{'x_values': deviant_x_values,
         'pulses':[i]} for i in range(self.n_pulses)}

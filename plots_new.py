@@ -165,8 +165,8 @@ def get_mean_LFP_from_list(file_names_list, N_stim, trim=1.5):
     mean_infreq_LFP = np.mean(all_infreq_LFP, axis=0)
     mean_freq_LFP = np.mean(all_freq_LFP, axis=0)
 
-    infreq_CI = [np.percentile(max_values, 2.5, axis=0)-np.mean(max_values),
-                    np.percentile(max_values, 97.5, axis=0)-np.mean(max_values)]
+    infreq_CI = [np.percentile(max_values, 2.5, axis=0),
+                    np.percentile(max_values, 97.5, axis=0)]
 
     return {'infreq':mean_infreq_LFP, 'freq':mean_freq_LFP,
                 'max':{'mean':np.mean(max_values),
@@ -253,8 +253,8 @@ def prepare_spiking_data_for_bar_plot(path_list, plot_type, N_stim, trim_ms=50, 
 
     infreq_mean=np.mean(infreq_data)
 
-    infreq_ci = [np.percentile(infreq_data, 2.5, axis=0)- infreq_mean,
-                    np.percentile(infreq_data, 97.5, axis=0)-infreq_mean]
+    infreq_ci = [np.percentile(infreq_data, 2.5, axis=0),
+                    np.percentile(infreq_data, 97.5, axis=0)]
 
     return {'mean':infreq_mean, 'CI':infreq_ci}
 
@@ -410,13 +410,13 @@ def plot_parras_bars(dev_path, ctrl_path, std_path, N_stim, measurement, trim=50
         if measurement=='LFP':
             data = get_mean_LFP_from_list(path_list, N_stim, 0)
             mean = data['max']['mean']
-            ci = data['max']['CI']
+            ci = [np.abs(i-mean) for i in data['max']['CI']]
         else:
             data=prepare_spiking_data_for_bar_plot(path_list,
                 measurement, N_stim,
                     trim, pop)
             mean = data['mean']
-            ci = data['CI']
+            ci = [np.abs(i-mean) for i in data['CI']]
 
         return {'mean':mean, 'ci':ci}
 
@@ -437,7 +437,7 @@ def plot_parras_bars(dev_path, ctrl_path, std_path, N_stim, measurement, trim=50
     plt.title(measurement)
 
     for i in range(3):
-        plt.annotate(round(data_to_plot[i],5),xy=[i+1, data_to_plot[i]])
+        plt.annotate(round(data_to_plot[i],5),xy=[i+1, .05*data_to_plot[i]])
 
     plt.ylabel('{}'.format(measurement))
     plt.savefig('{}/{}.png'.format(FIG_DIR_NAME,
@@ -445,15 +445,41 @@ def plot_parras_bars(dev_path, ctrl_path, std_path, N_stim, measurement, trim=50
 
     plt.show()
 
+def plot_A_vs_B(path_A, path_B, name_A, name_B, N_stim):
+    trim=0
+
+    data_A = get_mean_LFP_from_list(path_A, N_stim, trim)
+    data_B = get_mean_LFP_from_list(path_B, N_stim, trim)
+
+    stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
+    T=np.linspace(-0.05,0.3,350)
+
+    MMN_A = data_A['freq'] - data_A['infreq']
+    MMN_B = data_B['freq'] - data_B['infreq']
+
+    plt.plot(T, 1000*MMN_A[stim_set-500:stim_set+3000:10] ,
+        label=name_A, c='coral', alpha=.7)
+    plt.plot(T, 1000*MMN_B[stim_set-500:stim_set+3000:10] ,label=name_B,
+        c='cadetblue', alpha=.7)
+
+    plt.title('MMN {} vs {}'.format(name_A,name_B))
+    plt.xlabel(' T (s)')
+    plt.ylabel(' delta in Amplitude (mv)')
+
+
+    plt.legend()
+    plt.savefig('{}/{}.png'.format(FIG_DIR_NAME,'A_vs_B'))
+    plt.show()
 
 ###################
 
-DEV_LIST=glob('output_files/experiments/run2/classic_oddball/*.json')
-CTRL_LIST=glob('output_files/experiments/run2/cascade/*.json')
-STD_LIST=glob('output_files/experiments/run2/many_standards/*.json')
+DEV_LIST=glob('output_files/experiments/run2/classic_oddball/*.json') # oddball
+CTRL_LIST=glob('output_files/experiments/run2/no_oddball/*.json') # no oddball
+STD_LIST=glob('output_files/experiments/run2/many_standards/*.json') # ms
 
 FIG_DIR_NAME='output_files/experiments/run2/classic_oddball'
 
+
 #plot_freq_vs_infreq_LFP(DEV_LIST, 8, Raw=True)
-#plot_parras_bars(DEV_LIST,CTRL_LIST,STD_LIST, 8, 'AP', 50)
-#plot_spiking_stats_df(DEV_LIST[0],'AP',8, 50)
+plot_parras_bars(DEV_LIST, CTRL_LIST, [STD_LIST[3]], 8, 'AP', 50)
+#plot_spiking_stats_df(DEV_LIST[0],'NEURONS',8, 50)
