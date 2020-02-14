@@ -43,7 +43,7 @@ if __name__ == '__main__':
             default=3)
     parser.add_argument("seed", help="the random seed", type=int,
             default=1)
-    parser.add_argument("gaba_w", help="the gaba w", type=int,
+    parser.add_argument("gaba_w", help="the gaba w", type=float,
             default=1)
 
     args = parser.parse_args()
