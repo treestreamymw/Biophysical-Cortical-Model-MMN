@@ -15,7 +15,7 @@ from MP_class import PoolManager
 
 def run_sim (params):
     # get params
-fig_name, net_type, task, seed, weight, dev_list=params
+    fig_name, net_type, task, seed, weight, dev_list=params
     NP, SC = set_params(fig_name=fig_name,
             NET_TYPE=net_type,
             TASK=task,
