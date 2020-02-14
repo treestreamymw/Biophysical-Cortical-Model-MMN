@@ -12,8 +12,10 @@ from netpyne import specs
 from config import SIM_PARAMS
 from stimulus_utils import Simulation_stimuli_Handler
 
-def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
+def set_params(fig_name, NET_TYPE, TASK, SEED, GABA_W, DEV_LIST):
     seed=SEED
+    GABA_W=GABA_W
+
     netParams=specs.NetParams()   # object of class NetParams to store the network parameters
     simConfig=specs.SimConfig()   # object of class SimConfig to store the simulation configuration
 
@@ -311,7 +313,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'preConds': {'popLabel': 'BASK4'},
         'postConds': {'popLabel': 'PYR4'},
         'probability': '0.6*exp(-dist_3D/(4*40.0))',
-        'weight': 0.003,
+        'weight': 0.003*GABA_W,
         'threshold': 10,
         'synMech': 'GABA'}
 
@@ -349,7 +351,7 @@ def set_params(fig_name, NET_TYPE, TASK, SEED, DEV_LIST):
         'postConds': {'popLabel': 'PYR23'},
         'sec':'oblique2a',
         'probability': '0.6*exp(-dist_3D/(2*40.0))',
-        'weight': 0.1,
+        'weight': 0.1*GABA_W,
         'threshold': 10,
         'synMech': 'GABA'}
 

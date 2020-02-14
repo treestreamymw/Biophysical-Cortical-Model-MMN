@@ -20,6 +20,7 @@ def run_sim (params):
             NET_TYPE=net_type,
             TASK=task,
             SEED=seed,
+            GABA_W=GABA_W,
             DEV_LIST=dev_list)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
@@ -42,6 +43,8 @@ if __name__ == '__main__':
             default=3)
     parser.add_argument("seed", help="the random seed", type=int,
             default=1)
+    parser.add_argument("gaba_w", help="the gaba w", type=int,
+            default=1)
 
     args = parser.parse_args()
 
@@ -49,12 +52,13 @@ if __name__ == '__main__':
     TYPE = args.type
     ODDBALL = args.oddball
     SEED = args.seed
+    GABA_W = args.gaba_w
 
     SIM_TYPE = TYPE
     SIM_TASK = TASK
     grid_search_array = [
         ['beta_{}_{}_seed_{}'.format(TASK,i,SEED),
-                SIM_TYPE, SIM_TASK, SEED, [i]] for i in [ODDBALL] ]
+                SIM_TYPE, SIM_TASK, SEED, GABA_W,[i]] for i in [ODDBALL] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)

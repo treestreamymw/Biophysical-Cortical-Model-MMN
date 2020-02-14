@@ -454,15 +454,18 @@ def plot_A_vs_B(path_A, path_B, name_A, name_B, N_stim):
     stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
     T=np.linspace(-0.05,0.3,350)
 
-    MMN_A = data_A['freq'] - data_A['infreq']
-    MMN_B = data_B['freq'] - data_B['infreq']
+    MMN_A = [infreq-freq for infreq,freq in zip(
+        1000*data_A['infreq'][stim_set-500:stim_set+3000:10],
+        1000*data_A['freq'][stim_set-500:stim_set+3000:10])]
 
-    plt.plot(T, 1000*MMN_A[stim_set-500:stim_set+3000:10] ,
-        label=name_A, c='coral', alpha=.7)
-    plt.plot(T, 1000*MMN_B[stim_set-500:stim_set+3000:10] ,label=name_B,
-        c='cadetblue', alpha=.7)
+    MMN_B = [infreq-freq for infreq,freq in zip(
+        1000*data_B['infreq'][stim_set-500:stim_set+3000:10],
+        1000*data_B['freq'][stim_set-500:stim_set+3000:10])]
 
-    plt.title('MMN {} vs {}'.format(name_A,name_B))
+    plt.plot(T, MMN_A,label=name_A, c='coral')
+    plt.plot(T, MMN_B, label=name_B, c='cadetblue')
+
+    plt.title('MMN: {} vs {}'.format(name_A,name_B))
     plt.xlabel(' T (s)')
     plt.ylabel(' delta in Amplitude (mv)')
 
@@ -471,15 +474,52 @@ def plot_A_vs_B(path_A, path_B, name_A, name_B, N_stim):
     plt.savefig('{}/{}.png'.format(FIG_DIR_NAME,'A_vs_B'))
     plt.show()
 
+def plot_A_vs_B_bars(path_A, path_B, name_A, name_B, N_stim):
+    '''
+    compare 2 simulations
+    '''
+
+    data_A = get_mean_LFP_from_list(path_A, N_stim, 0)
+    mean_A = data_A['max']['mean']
+    ci_A = [np.abs(i-mean_A) for i in data_A['max']['CI']]
+
+    data_B = get_mean_LFP_from_list(path_B, N_stim, 0)
+    mean_B = data_B['max']['mean']
+    ci_B = [np.abs(i-mean_B) for i in data_B['max']['CI']]
+
+
+    err = [[A,B] for A,B
+            in zip(ci_A, ci_B)]
+    data_to_plot=[mean_A, mean_B]
+    plt.bar([1,2],data_to_plot, .5,
+            color=['cadetblue','forestgreen'],
+            yerr=err)
+    plt.xticks([1,2], (name_A, name_B))
+    plt.title('Comapring MMN between earlier to later oddball')
+
+    for i in range(2):
+        plt.annotate(round(data_to_plot[i],5),xy=[i+1, .05*data_to_plot[i]])
+
+    plt.ylabel('{}'.format('LFP'))
+    plt.savefig('{}/{}.png'.format(FIG_DIR_NAME,
+        'comparing_bars'))
+
+    plt.show()
+
+
 ###################
 
-DEV_LIST=glob('output_files/experiments/run2/classic_oddball/*.json') # oddball
-CTRL_LIST=glob('output_files/experiments/run2/no_oddball/*.json') # no oddball
-STD_LIST=glob('output_files/experiments/run2/many_standards/*.json') # ms
+DEV_LIST=glob('output_files/experiments/run2/oddball_cascade/*.json') # oddball
+CTRL_LIST=glob('output_files/experiments/run2/many_standards/beta_many_standards_3_seed_8.json') # ms
+#CTRL_W_MEM=['output_files/experiments/run2/many_standards/beta_many_standards_3_seed_8.json']
+STD_LIST=glob('output_files/experiments/run2/cascade/*.json') # no oddball
 
-FIG_DIR_NAME='output_files/experiments/run2/classic_oddball'
+#DEV_LIST_2=glob('output_files/experiments/run2/omission/*.json') # oddball
 
 
+FIG_DIR_NAME='output_files/experiments/run2/omission'
+
+#plot_A_vs_B_bars(DEV_LIST, DEV_LIST_2, 'oddball=2','oddball=5',8)
 #plot_freq_vs_infreq_LFP(DEV_LIST, 8, Raw=True)
-plot_parras_bars(DEV_LIST, CTRL_LIST, ['output_files/experiments/run2/many_standards/beta_many_standards_5_seed_8.json'], 8, 'AP', 50)
-#plot_spiking_stats_df(DEV_LIST[0],'NEURONS',8, 50)
+plot_parras_bars(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'AP', 50)
+#plot_spiking_stats_df(DEV_LIST[0],'NEURONS',8, 50, ['PYR23'])
