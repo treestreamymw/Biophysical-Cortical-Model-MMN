@@ -15,12 +15,12 @@ from MP_class import PoolManager
 
 def run_sim (params):
     # get params
-    fig_name, net_type, task, seed, dev_list=params
+fig_name, net_type, task, seed, weight, dev_list=params
     NP, SC = set_params(fig_name=fig_name,
             NET_TYPE=net_type,
             TASK=task,
             SEED=seed,
-            GABA_W=GABA_W,
+            GABA_W=weight,
             DEV_LIST=dev_list)
 
     sim.createSimulateAnalyze(netParams=NP, simConfig=SC)
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     SIM_TASK = TASK
     grid_search_array = [
         ['beta_{}_{}_seed_{}'.format(TASK,i,SEED),
-                SIM_TYPE, SIM_TASK, SEED, GABA_W,[i]] for i in [ODDBALL] ]
+                SIM_TYPE, SIM_TASK, SEED, GABA_W ,[i]] for i in [ODDBALL] ]
 
 
     sim_pool_manager = PoolManager(num_workers=1)
