@@ -191,8 +191,8 @@ def set_var (variation_dict):
 
 
     print ('Re-compiling all changes')
-    #shutil.rmtree('x86_64')
-    #sp.call(["nrnivmodl  mod_files/"])
+    shutil.rmtree('x86_64')
+    sp.call(["nrnivmodl  mod_files/"])
 
     print (new_param_list)
 
