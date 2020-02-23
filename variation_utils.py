@@ -3,7 +3,7 @@ import re
 import subprocess as sp
 import multiprocessing as mp
 from config import VAR_FACTOR_TYPE
-from variations import SAMPLE_VAR, SINGLE_VAR
+from genetic_variations import SAMPLE_VAR, SINGLE_VAR, MULTI_GENE_VAR
 
 from decimal import *
 import shutil
