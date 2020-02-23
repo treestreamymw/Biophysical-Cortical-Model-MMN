@@ -106,9 +106,10 @@ def restore_default():
     shutil.rmtree(to_path)
     shutil.copytree(from_path, to_path)
 
-
 def update_content(content, new_params_list, line_indexes):
     # insert new values to the full list from the original file
+    print(new_params_list)
+    print(line_indexes)
     assert (len(new_params_list)== len(line_indexes))
 
     for line_ind, line_content in zip(line_indexes, new_params_list):
@@ -190,10 +191,10 @@ def set_var (variation_dict):
 
 
     print ('Re-compiling all changes')
-    shutil.rmtree('x86_64')
-    sp.call(["nrnivmodl  mod_files/"])
+    #shutil.rmtree('x86_64')
+    #sp.call(["nrnivmodl  mod_files/"])
 
     print (new_param_list)
 
-#restore_default()
-set_var(MULTI_GENE_VAR)
+restore_default()
+#set_var(SINGLE_VAR)

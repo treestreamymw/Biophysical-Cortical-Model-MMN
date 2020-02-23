@@ -37,4 +37,8 @@ MULTI_GENE_VAR = [{'gene_name':'CACNA1C',
                 'ref':'45,46,S43,S44',
                 'file':'mod_files/CaDynamics_E2.mod',
                 'channel':'CaDynamics_E2',
-                'variation':[{ 'gamma': 0.6, 'c': 0.179}]}]
+                'variation':[{ 'gamma': 0.6,
+                                'c': 0.179,
+                                'decay':1,
+                                'depth':1,
+                                'minCai':1}]}]
