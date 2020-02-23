@@ -10,10 +10,12 @@ SAMPLE_VAR = [{'gene_name':'name',
                         'sloh': 1.28, 'tauh': 3.52, 'c' : 0.105}]}]
 
 SINGLE_VAR = [{'gene_name':'CACNA1C',
-                'ref':'31,S29',
+                'ref':'28,S26',
                 'file':'mod_files/Ca_HVA.mod',
                 'channel':'Ca_HVA',
-                'variation':[{'offm': 1, 'offh': -3.1,'sloh':1.24,'c' : 0.236}]}]
+                'variation':[{'offm': -31.4, 'offh': 16.3,
+                    'slom':0.85, 'sloh': 0.72, 'c': 0.076}]}]
+
 
 MULTI_GENE_VAR = [{'gene_name':'CACNA1C',
                 'ref':'27,S24, 36,S34',

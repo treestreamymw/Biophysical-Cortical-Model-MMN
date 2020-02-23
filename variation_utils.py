@@ -72,9 +72,7 @@ def prepare_param_section_list(new_params, param_units ):
     return new_unit_param_section_list
 
 
-
-def calc_new_vals(variation_setting, curr_values, \
-    factor_rules = VAR_FACTOR_TYPE):
+def calc_new_vals(variation_setting, curr_values, factor_rules = VAR_FACTOR_TYPE):
     # update params values
 
     # copy
@@ -192,11 +190,10 @@ def set_var (variation_dict):
 
 
     print ('Re-compiling all changes')
-    #shutil.rmtree('x86_64')
-
-    #sp.call(["nrnivmodl  mod_files/"])
+    shutil.rmtree('x86_64')
+    sp.call(["nrnivmodl  mod_files/"])
 
     print (new_param_list)
 
 #restore_default()
-#set_var(SAMPLE_VAR)
+set_var(MULTI_GENE_VAR)
