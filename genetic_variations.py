@@ -35,6 +35,6 @@ MULTI_GENE_VAR = [{'gene_name':'CACNA1C',
 
         {'gene_name':'ATP2A2',
                 'ref':'45,46,S43,S44',
-                'file':'mod_files/CaDynamics_E2',
+                'file':'mod_files/CaDynamics_E2.mod',
                 'channel':'CaDynamics_E2',
                 'variation':[{ 'gamma': 0.6, 'c': 0.179}]}]
