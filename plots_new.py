@@ -285,9 +285,11 @@ def plot_freq_vs_infreq_LFP(PATH_LIST, N_stim, Raw=False):
         1000*data['infreq'][stim_set-500:stim_set+3000:10],
         1000*data['freq'][stim_set-500:stim_set+3000:10])]
 
-    plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,label='frequent', c='grey')
-    plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,label='infrequent', c='coral')
-    #plt.plot(T, delta ,label='MMN', c='cadetblue')
+    plt.plot(T, 1000*data['freq'][stim_set-500:stim_set+3000:10] ,
+        label='frequent', c='grey', alpha=0.7)
+    plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,
+        label='infrequent', c='coral', alpha=0.7)
+    plt.plot(T, delta ,label='MMN', c='royalblue')
 
 
     plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
@@ -507,7 +509,7 @@ def plot_A_vs_B_bars(path_A, path_B, name_A, name_B, N_stim):
     data_to_plot=[mean_A, mean_B]
     plt.bar([1,2],data_to_plot, .5,
             color=['cadetblue','forestgreen'],
-            yerr=err, label=r'$p-val\leq{}$'.format(round(t,2)))
+            yerr=err, label=r'$p-val\leq {}$'.format(round(t,2)))
     plt.legend()
     plt.xticks([1,2], (name_A, name_B))
     plt.title('Comapring MMN between earlier to later oddball')
@@ -678,10 +680,116 @@ def plot_irs_ipe(data, paradigm, measurement):
     plt.savefig('{}/{}_{}.png'.format(FIG_DIR_NAME,measurement,paradigm))
     plt.show()
 
+def plot_irs_ipe_DOUBLE(data, paradigm, measurement, names):
+    '''
+    plt irs and ipe error plots og three gaba levels
+    '''
+
+    DATA1=data[0]
+    DATA2=data[1]
+
+    irs=[DATA1['irs'],DATA2['irs']]
+    irs_err=[DATA1['irs_ci'],DATA2['irs_ci']]
+    irs_err=np.transpose(irs_err)
+
+    ipe=[DATA1['ipe'],DATA2['ipe']]
+    ipe_err=[DATA1['ipe_ci'],DATA2['ipe_ci']]
+    ipe_err=np.transpose(ipe_err)
+
+    imm=[DATA1['imm'],DATA2['imm']]
+    imm_err=[DATA1['imm_ci'],DATA2['imm_ci']]
+    imm_err=np.transpose(imm_err)
+
+    X=names
+    fig, ax = plt.subplots()
+
+    trans_mm = Affine2D().translate(-0.15, 0.0) + ax.transData
+    trans_pe = Affine2D().translate(-0.05, 0.0) + ax.transData
+    trans_rs = Affine2D().translate(+0.05, 0.0) + ax.transData
+
+    plt.errorbar(X, imm, yerr=imm_err, fmt='o',linestyle="none",
+        transform=trans_mm, capsize=3, capthick=1, label='iMM')
+
+    plt.errorbar(X, irs, yerr=irs_err, fmt='o',linestyle="none",
+        transform=trans_rs, capsize=3, capthick=1, label='iRS')
+    data_irs = {
+        'x': X,
+        'y1': [y - e for y, e in zip(irs, irs_err[0])],
+        'y2': [y + e for y, e in zip(irs, irs_err[1])]}
+
+    #plt.fill_between(**data_irs, alpha=.25, transform=trans1)
+
+    plt.errorbar(X, ipe, yerr=ipe_err, fmt='o',linestyle="none",
+        transform=trans_pe, capsize=3, capthick=1, label='iPE')
+    data_ipe = {
+        'x': X,
+        'y1': [y - e for y, e in zip(ipe, ipe_err[0])],
+        'y2': [y + e for y, e in zip(ipe, ipe_err[1])]}
+
+    #plt.fill_between(**data_ipe, alpha=.25, transform=trans2)
+
+
+    plt.ylabel(measurement)
+    plt.title('{} delta : {} paradigm'.format(measurement,paradigm))
+    plt.legend()
+    plt.savefig('{}/{}_{}.png'.format(FIG_DIR_NAME,measurement,paradigm))
+    plt.show()
+
+def plot_A_vs_B_vs_C(path_A, path_B, path_C, name_A, name_B, name_C, N_stim):
+    trim=0
+
+    data_A = get_mean_LFP_from_list(path_A, N_stim, trim)
+    data_B = get_mean_LFP_from_list(path_B, N_stim, trim)
+    data_C = get_mean_LFP_from_list(path_C, N_stim, trim)
+
+
+    stim_set=5000-500 ## 5000 reach the auditory cortex, 50ms delay from ear
+    T=np.linspace(-0.05,0.3,350)
+
+    MMN_A = [infreq-freq for infreq,freq in zip(
+        1000*data_A['infreq'][stim_set-500:stim_set+3000:10],
+        1000*data_A['freq'][stim_set-500:stim_set+3000:10])]
+
+    MMN_B = [infreq-freq for infreq,freq in zip(
+        1000*data_B['infreq'][stim_set-500:stim_set+3000:10],
+        1000*data_B['freq'][stim_set-500:stim_set+3000:10])]
+
+    MMN_C = [infreq-freq for infreq,freq in zip(
+        1000*data_C['infreq'][stim_set-500:stim_set+3000:10],
+        1000*data_C['freq'][stim_set-500:stim_set+3000:10])]
+
+    fig, ax = plt.subplots(2, 3)
+
+    ax[0,0].title(name_A)
+    ax[0,0].plot(T, MMN_A,label=name_A)
+    ax[0,1].title(name_B)
+    ax[0,1].plot(T, MMN_B, label=name_B)
+    ax[0,2].title(name_C)
+    ax[0,2].plot(T, MMN_C, label=name_C)
+
+    ax[1,0].plot(T, 1000*data_A['freq'][stim_set-500:stim_set+3000:10],label=name_A)
+    ax[1,0].plot(T, 1000*data_A['infreq'][stim_set-500:stim_set+3000:10],label=name_A)
+
+    ax[1,1].plot(T, 1000*data_B['freq'][stim_set-500:stim_set+3000:10], label=name_B)
+    ax[1,1].plot(T, 1000*data_B['infreq'][stim_set-500:stim_set+3000:10],label=name_B)
+
+    ax[1,2].plot(T, 1000*data_C['freq'][stim_set-500:stim_set+3000:10], label=name_C)
+    ax[1,2].plot(T, 1000*data_C['infreq'][stim_set-500:stim_set+3000:10],label=name_C)
+
+
+
+    plt.title('MMN: {}, {}, and {}'.format(name_A, name_B, name_C))
+    plt.xlabel(' T (s)')
+    plt.ylabel(' delta in Amplitude (mv)')
+
+
+    plt.legend()
+    plt.savefig('{}/{}.png'.format(FIG_DIR_NAME,'A_vs_B_vs_C'))
+    plt.show()
 ###################
-FIG_DIR_NAME='output_files/experiments/NeuroTypical/'
 
-
+### DATA COLLECTION ###
+### oddball neurotypical
 DEV_LIST=glob('output_files/experiments/NeuroTypical/classic_oddball/*.json') # oddball
 CTRL_LIST=glob('output_files/experiments/NeuroTypical/many_standards/*.json') # ms
 #CTRL_W_MEM=['output_files/experiments/run2/many_standards/beta_many_standards_3_seed_8.json']
@@ -689,6 +797,8 @@ STD_LIST=glob('output_files/experiments/NeuroTypical/no_oddball/*.json') # no od
 
 #DEV_LIST_2=glob('output_files/experiments/gaba_alteration/no_oddball_gaba_.5/*.json') # oddball
 DEV_LIST_2=glob('output_files/experiments/NeuroTypical/oddball_2/*.json') # no oddball
+
+### oddball neuroAtypical
 
 
 DEV_0_5_LIST=glob('output_files/experiments/gaba_alteration/oddball_gaba_.5/*.json')
@@ -699,17 +809,13 @@ DEV_0_7_LIST=glob('output_files/experiments/gaba_alteration/oddball_gaba_.7/*.js
 CTRL_0_7_LIST=glob('output_files/experiments/gaba_alteration/many_standards_.7/*.json') # ms
 STD_0_7_LIST=glob('output_files/experiments/gaba_alteration/no_oddball_gaba_.7/*.json')
 
-
-#oddball_data_gaba1=calc_irs_ipe(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'NEURONS', 50)
-#oddball_data_gaba_07=calc_irs_ipe(DEV_0_7_LIST, CTRL_0_7_LIST, STD_0_7_LIST, 8, 'NEURONS', 50)
-#oddball_data_gaba_05=calc_irs_ipe(DEV_0_5_LIST, CTRL_0_5_LIST, STD_0_5_LIST, 8, 'NEURONS', 50)
-
-
-#plot_irs_ipe([oddball_data_gaba_0_5,oddball_data_gaba_07,oddball_data_gaba1],'Oddball','NEURONS')
+### cascade neurotypical
 
 CASCADE_DEV_LIST=glob('output_files/experiments/NeuroTypical/oddball_cascade/*.json') # oddball
 CASCADE_CTRL_LIST=glob('output_files/experiments/NeuroTypical/many_standards_5/*.json') # ms
 CASCADE_STD_LIST=glob('output_files/experiments/NeuroTypical/cascade/*.json') # no oddball
+
+### cascade neuroAtypical
 
 CASCADE_DEV_0_5_LIST=glob('output_files/experiments/gaba_alteration/oddball_cascade_gaba_.5/*.json')
 CASCADE_CTRL_0_5_LIST=glob('output_files/experiments/gaba_alteration/many_standards_.5_5/*.json') # ms
@@ -719,28 +825,62 @@ CASCADE_DEV_0_7_LIST=glob('output_files/experiments/gaba_alteration/oddball_casc
 CASCADE_CTRL_0_7_LIST=glob('output_files/experiments/gaba_alteration/many_standards_.7_5/*.json') # ms
 CASCADE_STD_0_7_LIST=glob('output_files/experiments/gaba_alteration/cascade_gaba_.7/*.json')
 
-
-cascade_data_gaba1=calc_irs_ipe(CASCADE_DEV_LIST, CASCADE_CTRL_LIST, CASCADE_STD_LIST, 8, 'AP', 50)
-cascade_data_gaba_07=calc_irs_ipe(CASCADE_DEV_0_7_LIST, CASCADE_CTRL_0_7_LIST, CASCADE_STD_0_7_LIST, 8, 'AP', 50)
-cascade_data_gaba_05=calc_irs_ipe(CASCADE_DEV_0_5_LIST, CASCADE_CTRL_0_5_LIST, CASCADE_STD_0_5_LIST, 8, 'AP', 50)
-
-
-#plot_irs_ipe([cascade_data_gaba_05,cascade_data_gaba_07,cascade_data_gaba1],'Casacde','AP')
-
-
+## oddball index comparing
 ind_2=glob('output_files/experiments/NeuroTypical/oddball_2/*.json') # no oddball
 ind_3=glob('output_files/experiments/NeuroTypical/oddball_3/*.json') # no oddball
 ind_4=glob('output_files/experiments/NeuroTypical/oddball_4/*.json') # no oddball
 ind_5=glob('output_files/experiments/NeuroTypical/classic_oddball/*.json') # no oddball
 
-#plot_corr_LFP([ind_2, ind_3, ind_4, ind_5],[2,3,4,5], 8, 'index')
-
+## oddball corr different GABA levels
 oddball_gaba_0_5=glob('output_files/experiments/gaba_alteration/oddball_gaba_.5/*.json')#[:2] # no oddball
 oddball_gaba_0_7=glob('output_files/experiments/gaba_alteration/oddball_gaba_.7/*.json') # no oddball
 oddball_gaba_1=glob('output_files/experiments/NeuroTypical/classic_oddball/*.json')#[:2] # no oddball
 
+
+### FIG SAVE ###
+FIG_DIR_NAME='output_files/experiments/NeuroTypical/'
+
+
+### PLOTS ###
+DEV_gene=glob('output_files/experiments/genetic_single/oddball/*.json')
+CTRL_gene=glob('output_files/experiments/genetic_single/many_standards/*.json')
+STD_gene=glob('output_files/experiments/genetic_single/no_oddball/*.json')
+
+oddball_data_gaba1=calc_irs_ipe(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'AP', 50)
+oddball_data_gene=calc_irs_ipe(DEV_gene[::2], CTRL_gene[::2], STD_gene[::2], 8, 'AP', 50)
+#cascade_data_gaba1=calc_irs_ipe(CASCADE_DEV_LIST, CASCADE_CTRL_LIST, CASCADE_STD_LIST, 8, 'AP', 50)
+#plot_A_vs_B_vs_C(DEV_LIST, CTRL_LIST, CASCADE_DEV_LIST, 'oddball', 'many standards', 'cascade', 8)
+
+
+#plot_freq_vs_infreq_LFP(DEV_gene, 8, Raw=True)
+
+plot_irs_ipe_DOUBLE([oddball_data_gaba1,oddball_data_gene],'Oddball','AP' , ["Neurotypical","CACNA1C variant"])
+
+#plot_irs_ipe_DOUBLE([oddball_data_gaba1,cascade_data_gaba1],'NeuroTypical','AP', ["Oddball", "Cascade"])
+
+#plot_A_vs_B_bars(DEV_LIST, DEV_gene, 'Neurotypical', 'CACNA1C variant',8)
+
+#plot_parras_bars(DEV_gene, CTRL_gene, STD_gene, 8, 'AP', 50)#, ['PYR23', 'BASK23'])
+
+#plot_corr_LFP([ind_2, ind_3, ind_4, ind_5],[2,3,4,5], 8, 'index')
+
+
+#oddball_data_gaba1=calc_irs_ipe(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'NEURONS', 50)
+#oddball_data_gaba_07=calc_irs_ipe(DEV_0_7_LIST, CTRL_0_7_LIST, STD_0_7_LIST, 8, 'NEURONS', 50)
+#oddball_data_gaba_05=calc_irs_ipe(DEV_0_5_LIST, CTRL_0_5_LIST, STD_0_5_LIST, 8, 'NEURONS', 50)
+
+
+#plot_irs_ipe([oddball_data_gaba_0_5,oddball_data_gaba_07,oddball_data_gaba1],'Oddball','NEURONS')
+
+
+#cascade_data_gaba1=calc_irs_ipe(CASCADE_DEV_LIST, CASCADE_CTRL_LIST, CASCADE_STD_LIST, 8, 'AP', 50)
+#cascade_data_gaba_07=calc_irs_ipe(CASCADE_DEV_0_7_LIST, CASCADE_CTRL_0_7_LIST, CASCADE_STD_0_7_LIST, 8, 'AP', 50)
+#cascade_data_gaba_05=calc_irs_ipe(CASCADE_DEV_0_5_LIST, CASCADE_CTRL_0_5_LIST, CASCADE_STD_0_5_LIST, 8, 'AP', 50)
+#plot_irs_ipe([cascade_data_gaba_05,cascade_data_gaba_07,cascade_data_gaba1],'Casacde','AP')
+
+
 #plot_corr_LFP([gaba_0_5, gaba_0_7, gaba_1],[0.5,0.7,1], 8, 'GABA')
 #plot_A_vs_B_bars(DEV_LIST, DEV_LIST_2, 'High index','Low index',8)
-#plot_freq_vs_infreq_LFP(DEV_LIST, 8, Raw=True)
-plot_parras_bars(CASCADE_DEV_LIST, CASCADE_CTRL_LIST, CASCADE_STD_LIST, 8, 'AP', 50)#, ['PYR23', 'BASK23'])
+#plot_freq_vs_infreq_LFP(oddball_gene, 8, Raw=True)
+#plot_parras_bars(CASCADE_DEV_LIST, CASCADE_CTRL_LIST, CASCADE_STD_LIST, 8, 'AP', 50)#, ['PYR23', 'BASK23'])
 #plot_spiking_stats_df(DEV_LIST[0],'NEURONS',8, 50, ['PYR23'])

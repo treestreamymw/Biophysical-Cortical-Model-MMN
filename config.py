@@ -36,7 +36,4 @@ VAR_FACTOR_TYPE = {'offm':'add',
                     'sloh':'mul',
                     'taum':'mul',
                     'tauh':'mul',
-                    'gamma':'mul',
-                    'decay':'mul',
-                    'depth':'mul',
-                    'minCai':'mul'}
+                    'gamma':'mul'}
