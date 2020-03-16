@@ -1,4 +1,4 @@
-# MMN in the auditory cortex
+# MMN in the Auditory Cortex
 
 
 This repository includes a biophysical spiking neuron model of perceptual inference, based on the predictive coding framework. The model, implemented through NetPyNE (and NEURON), incorporates various single-cell models of both excitatory and inhibitory neurons, mimicking the circuits of the auditory cortex.
@@ -16,12 +16,12 @@ Install [Docker](https://docs.docker.com/install/) and use [this](https://github
 
 
 
-### An overview of the model
+### An Overview of the Model
 
 ![Model overview](https://github.com/karnigili/Biophysical-Crotical-Model-MMN/blob/master/model_scheme.png)
 
 
-### An overview of the experimental design
+### An Overview of the Experimental Design
 
 1. Classic Oddball - Oddball introduces repetitive (standard) tone, which is replaced randomly by a different (deviant) tone with a low probability. We expect to see SSA to the standard tone, thus higher response to the deviant one. SSA is a property explained both by RS and MMN. This experiment helps set the baseline.
 2. Flip-Flop Oddball - flipflop presents two oddball sequences with the roles of deviant and standard sounds reversed. This experiment helps control for the physical differences between the neurons associated with deviant to those associated with standard and ascribe the phenomena to adaptation rather than physiology.  
@@ -32,9 +32,9 @@ Install [Docker](https://docs.docker.com/install/) and use [this](https://github
 5. Omitted Oddball- This paradigm presents a repetitive (standard) tone, which is replaced randomly by a lack of stimulus with a low probability. A lack of response to a lack of stimulus is expected in the adaptation framework. However, a response will demonstrate the neural activity to an absence of stimulus rather than an adaptation, supporting MMN.
 
 
-## What do we have here
+## What Do We Have Here
 
-### Simulation files
+### Simulation Files
 
 * `net_params.py` includes NEURON network parameters and the simulation configuration.
 * `run_sim.py` the file running the simulation based on the
@@ -49,7 +49,7 @@ Install [Docker](https://docs.docker.com/install/) and use [this](https://github
 * single_cell / includes code for running a single cell model
 
 
-### utils
+### Util files
 
 * `figure_utils.py` has plotting tools
 * `MP_class.py` has multiprocessing tools
@@ -61,9 +61,9 @@ Install [Docker](https://docs.docker.com/install/) and use [this](https://github
 ### Logging
 * `Simulation_log.md` tracks the parameter variation and links to the directory holding their outputs.
 
-## How to run
+## How To Run
 
-### Run the experiment
+### Run The Experiment
 Run an experiment with the `run_sim.py` passing the parameters via the command-line interface.
 
 `mpiexec -n {N} python3 run_sim.py [task] [type] [oddball] [seed] [gaba weight]`
@@ -73,6 +73,9 @@ Run an experiment with the `run_sim.py` passing the parameters via the command-l
 - *Oddball* indicates the index of the oddball stimulus. Any integer within the configured number of pulses is acceptable. The default is 3.
 - *Seed* indicates the randomization seed for the specific simulation. Any integer is acceptable. The default is 1.
 - *GABA weight* reflects the percentage of GABA activity. 0 indicates no GABA, and 1 means neurotypical GABA participation. The default is 1.
+
+### Run Analysis
+Use `figure_utils.py` to generate the figures (see examples below).
 
 #### Example
 
