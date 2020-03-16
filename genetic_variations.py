@@ -33,10 +33,10 @@ MULTI_GENE_VAR = [{'gene_name':'CACNA1C',
 		{'offh': -26.5, 'sloh': 0.64, 'c': 0.296 },
 		{'offh': 3.9, 'tauh': 0.88, 'c': 1.226}]},
 
-        '''{'gene_name':'ATP2A2',
+        {'gene_name':'ATP2A2',
                 'ref':'45,46,S43,S44',
                 'file':'mod_files/CaDynamics_E2.mod',
                 'channel':'CaDynamics_E2',
                 'variation':[{'gamma': 0.6,
-                                'c': 0.179}]}'''
+                                'c': 0.179}]}
                                 ]

@@ -289,7 +289,7 @@ def plot_freq_vs_infreq_LFP(PATH_LIST, N_stim, Raw=False):
         label='frequent', c='grey', alpha=0.7)
     plt.plot(T, 1000*data['infreq'][stim_set-500:stim_set+3000:10] ,
         label='infrequent', c='coral', alpha=0.7)
-    plt.plot(T, delta ,label='MMN', c='royalblue')
+    #plt.plot(T, delta ,label='MMN', c='royalblue')
 
 
     plt.axvline(x=0, label='Stimulus onset', c='cadetblue')
@@ -837,28 +837,39 @@ oddball_gaba_0_7=glob('output_files/experiments/gaba_alteration/oddball_gaba_.7/
 oddball_gaba_1=glob('output_files/experiments/NeuroTypical/classic_oddball/*.json')#[:2] # no oddball
 
 
-### FIG SAVE ###
-FIG_DIR_NAME='output_files/experiments/NeuroTypical/'
+## multi gene
 
-
-### PLOTS ###
 DEV_gene=glob('output_files/experiments/genetic_single/oddball/*.json')
 CTRL_gene=glob('output_files/experiments/genetic_single/many_standards/*.json')
 STD_gene=glob('output_files/experiments/genetic_single/no_oddball/*.json')
 
-oddball_data_gaba1=calc_irs_ipe(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'AP', 50)
-oddball_data_gene=calc_irs_ipe(DEV_gene[::2], CTRL_gene[::2], STD_gene[::2], 8, 'AP', 50)
+
+DEV_combo_gene=glob('output_files/experiments/genetic_combo/oddball/*.json')
+CTRL_combo_gene=glob('output_files/experiments/genetic_combo/many_standards/*.json')
+STD_combo_gene=glob('output_files/experiments/genetic_combo/no_oddball/*.json')
+
+### FIG SAVE ###
+FIG_DIR_NAME='output_files/experiments/genetic_single/'
+
+
+### PLOTS ###
+
+#oddball_data_gaba1=calc_irs_ipe(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'NEURONS', 50)
+#oddball_data_gene=calc_irs_ipe(DEV_gene[::2], CTRL_gene[::2], STD_gene[::2], 8, 'AP', 50)
 #cascade_data_gaba1=calc_irs_ipe(CASCADE_DEV_LIST, CASCADE_CTRL_LIST, CASCADE_STD_LIST, 8, 'AP', 50)
+
 #plot_A_vs_B_vs_C(DEV_LIST, CTRL_LIST, CASCADE_DEV_LIST, 'oddball', 'many standards', 'cascade', 8)
 
+#oddball_data_COMBO_gene=calc_irs_ipe(DEV_combo_gene, CTRL_combo_gene, STD_combo_gene, 8, 'NEURONS', 50)
 
+#plot_freq_vs_infreq_LFP(DEV_combo_gene, 8, Raw=True)
 #plot_freq_vs_infreq_LFP(DEV_gene, 8, Raw=True)
 
-plot_irs_ipe_DOUBLE([oddball_data_gaba1,oddball_data_gene],'Oddball','AP' , ["Neurotypical","CACNA1C variant"])
 
-#plot_irs_ipe_DOUBLE([oddball_data_gaba1,cascade_data_gaba1],'NeuroTypical','AP', ["Oddball", "Cascade"])
+#plot_parras_bars(DEV_combo_gene, CTRL_combo_gene, STD_combo_gene, 8, 'AP', 50)#, ['PYR23', 'BASK23'])
+#plot_irs_ipe_DOUBLE([oddball_data_gaba1,oddball_data_COMBO_gene],'NeuroTypical','NEURONS', ["NeuroTypical", "Combo variant"])
 
-#plot_A_vs_B_bars(DEV_LIST, DEV_gene, 'Neurotypical', 'CACNA1C variant',8)
+#plot_A_vs_B_bars(DEV_LIST, DEV_combo_gene, 'Neurotypical', 'Combo variant',8)
 
 #plot_parras_bars(DEV_gene, CTRL_gene, STD_gene, 8, 'AP', 50)#, ['PYR23', 'BASK23'])
 
@@ -868,6 +879,9 @@ plot_irs_ipe_DOUBLE([oddball_data_gaba1,oddball_data_gene],'Oddball','AP' , ["Ne
 #oddball_data_gaba1=calc_irs_ipe(DEV_LIST, CTRL_LIST, STD_LIST, 8, 'NEURONS', 50)
 #oddball_data_gaba_07=calc_irs_ipe(DEV_0_7_LIST, CTRL_0_7_LIST, STD_0_7_LIST, 8, 'NEURONS', 50)
 #oddball_data_gaba_05=calc_irs_ipe(DEV_0_5_LIST, CTRL_0_5_LIST, STD_0_5_LIST, 8, 'NEURONS', 50)
+
+#plot_freq_vs_infreq_LFP(DEV_gene, 8, Raw=True)
+plot_spiking_stats_df(DEV_gene[0],'NEURONS',8, 50)
 
 
 #plot_irs_ipe([oddball_data_gaba_0_5,oddball_data_gaba_07,oddball_data_gaba1],'Oddball','NEURONS')
