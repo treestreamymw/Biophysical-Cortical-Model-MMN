@@ -1,8 +1,11 @@
 # MMN in the auditory cortex
 
 
+This repository includes a biophysical spiking neuron model of perceptual inference, based on the predictive coding framework. The model, implemented through NetPyNE (and NEURON), incorporates various single-cell models of both excitatory and inhibitory neurons, mimicking the circuits of the auditory cortex.
 
-This repository includes a NEURON model of the auditory cortex.
+It allows for the exploration of the effects that biogenetic variants (expressed via ion-channels or alteration of synaptic mechanisms) have on auditory mismatch negativity (MMN) deficits, a common biomarker for schizophrenia. More specifically, the model distinguishes between repetition suppression and prediction error and examines their respective contribution to the MMN.
+
+**A full manuscript coming soon**
 
 ## Getting Started
 
@@ -12,53 +15,11 @@ Install [Docker](https://docs.docker.com/install/) and use [this](https://github
 *Otherwise*, install NEURON (see the specific version below) and run locally.
 
 
-## Goal and simulation descriptions
-
-This code simulates activation in the auditory cortex, including layer 2/3 and layer 4. The full-size network contains 18 (9) rows with 24 (12) neurons at each row (to simulate eight frequencies), and the short version includes 8 (4) rows with 24 (12) neurons at each row (to simulate two frequencies).
-
-We aim to explore the differences between Stimulus Specific Adaptation (SSA) and MisMatch Negativity (MMN) in healthy in SZ-like cortical systems.
-
-*A full manuscript coming soon*
 
 ### An overview of the model
 
-The model is designed to reflect a primary auditory cortex to study the MMN phenomenon. The model architecture is based on the canonical microcircuit for predictive coding outlined in Bastos et al. (2012), which presents a simplified scheme. The model includes a granular (Layer 4) and super-granular (Layer 2/3). We do not incorporate an infra-granular (Layer 5/6) layer, for reasons explained below. Each includes an excitatory and inhibitory population.
+![Model overview](.model_scheme.png)
 
-#### The network level
-
-The network's architecture synthesizes Kudela et al. (2018) work on SSA in the auditory cortex, and Bastos et al. (2012) work on predictive coding.
-
-The network consists of two cortical layers; layer 2/3 and layer 4. We discount layer 5/6 since it does not significantly support MMN (Bastos et al, 2012) and would increase the computational load. An additional auxiliary layer demonstrates the auditory afferent inputs from the thalamus to layer 4.
-
-The model represents the frequency-specific (tonotopic) organization of the auditory cortex, such that each row of neurons corresponds to a different frequency.   
-
-Each cortical layer illustrates a population of excitatory (pyramidal) cells and inhibitory (basket) cells. Each excitatory population has 336 neurons organized in 14 rows (24 neurons per row), and each inhibitory population had 84 neurons arranged in 7 rows (12 neurons per row). Such a ratio and organization follow the biological structure of the cortex. The auxiliary layer consists of eight populations of 24 cells, corresponding with the number of stimuli presented to the model.
-
-Following Bastos et al. (2012), layer 2/3 contains a secondary excitatory population supporting the prediction error stream (information stream from deeper regions). More details about it below.
-
-The general network connectivity follows the canonical microcircuit for predictive coding outlined in Bastos et al. (2012).  Inter-layer connectivity features excitatory (NMDA, AMPA) and inhibitory (GABA) synapses. Inter-laminar connectivity features short term plasticity via modified AMPA synapses. All but the addition of the NMDA receptor is a replication of Kudela et al., (2018). The choice to ass NMDA receptors stemmed from their importance in SZ and MMN.
-
-#### The cellular level
-Simulated neurons were biophysically realistic
-multi compartmental cell models.
-
-Cortical excitatory cells simulated here via a Hay pyramidal cell model. The cells of layer 4 incorporate a simple four compartments cell, and the excitatory of layer 2/3 present a more complex model.
-
-- Layer 4 Pyramidal cell (fourcompartment).
-- Layer23 Pyramidal cell (pyr_23_asym_stripped)
-- Memory layer Pyramidal cell (pyr_23_asym_stripped)
-
-
-The inhibitory cells of both layers are simple two compartments basket cells.
-
-- Basket cell (FS)
-
-#### The biophysical level
-
-We employ three types of synaptic mechanisms;
-- Exp2Syn - a double exponential mechanism used in the AMPA and GABA synapses.
-- FDSExp2Syn- a variation of Exp2Syn that demonstrates fast facilitation mechanism. Implemented in-between layer connections.
-- NMDA- unique for NMDA cells, displays a magnesium blocked channel.
 
 ### An overview of the experimental design
 
@@ -71,7 +32,6 @@ We employ three types of synaptic mechanisms;
 5. Omitted Oddball- This paradigm presents a repetitive (standard) tone, which is replaced randomly by a lack of stimulus with a low probability. A lack of response to a lack of stimulus is expected in the adaptation framework. However, a response will demonstrate the neural activity to an absence of stimulus rather than an adaptation, supporting MMN.
 
 
-
 ## What do we have here
 
 ### Simulation files
@@ -79,8 +39,8 @@ We employ three types of synaptic mechanisms;
 * `net_params.py` includes NEURON network parameters and the simulation configuration.
 * `run_sim.py` the file running the simulation based on the
 
-### Directories
 
+### Directories
 * Cells/ .hoc files configuring the different cells
 * Synapses/ .mod file configuring the kinetic function of the synapses
 * mod_files/  .mod files with ion channels configurations
@@ -113,6 +73,10 @@ Run an experiment with the `run_sim.py` passing the parameters via the command-l
 - *Oddball* indicates the index of the oddball stimulus. Any integer within the configured number of pulses is acceptable. The default is 3.
 - *Seed* indicates the randomization seed for the specific simulation. Any integer is acceptable. The default is 1.
 - *GABA weight* reflects the percentage of GABA activity. 0 indicates no GABA, and 1 means neurotypical GABA participation. The default is 1.
+
+#### Example
+
+See the results of running three randomized experiments of a full simulation with a classic oddball task [here](https://github.com/karnigili/Biophysical-Crotical-Model-MMN/tree/master/output_files_sample/classic_oddball)
 
 
 ## Requirements
