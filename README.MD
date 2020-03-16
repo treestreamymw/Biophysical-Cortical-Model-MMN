@@ -18,7 +18,7 @@ Install [Docker](https://docs.docker.com/install/) and use [this](https://github
 
 ### An overview of the model
 
-![Model overview](.model_scheme.png)
+![Model overview](https://github.com/karnigili/Biophysical-Crotical-Model-MMN/blob/master/model_scheme.png)
 
 
 ### An overview of the experimental design
