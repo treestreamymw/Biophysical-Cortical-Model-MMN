@@ -88,7 +88,7 @@ See the results of running three randomized experiments of a full simulation wit
 - [nrn-7.6.2](https://neuron.yale.edu/ftp/neuron/versions/v7.6/7.6.2/nrn-7.6.2.tar.gz)
 - python3
 
-See 'requirements.txt' for python requirements.
+See `requirements.txt` for python requirements.
 
 
 ## References
