@@ -87,8 +87,8 @@ See the results of running three randomized experiments of a full simulation wit
 - [iv-19](https://neuron.yale.edu/ftp/neuron/versions/v7.6/iv-19.tar.gz)
 - [nrn-7.6.2](https://neuron.yale.edu/ftp/neuron/versions/v7.6/7.6.2/nrn-7.6.2.tar.gz)
 - python3
-- mpi4py
-- NetPyNE
+
+See 'requirements.txt' for python requirements.
 
 
 ## References
